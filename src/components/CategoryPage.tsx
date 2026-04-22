@@ -152,7 +152,7 @@ export default function CategoryPage({ cat, onHome, highlightedToolId }: Categor
           </div>
 
           <div className="footer">
-            © 2026 Director.ai · Data updated weekly · We earn referral fees from some links
+            © 2026 Directr.ai · Data updated weekly · We earn referral fees from some links
           </div>
         </main>
       </div>

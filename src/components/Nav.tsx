@@ -21,7 +21,7 @@ export default function Nav({ onHome, showSearch, onSearch, onCategory, currentQ
     <>
       <nav className="nav">
         <div className="nav-logo" onClick={onHome}>
-          director<span className="nav-logo-accent">.ai</span>
+          directr<span className="nav-logo-accent">.ai</span>
         </div>
 
         <div className="nav-center">
