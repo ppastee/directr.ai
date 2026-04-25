@@ -218,13 +218,29 @@ All icons: `viewBox="0 0 24 24"` · `strokeWidth="1.75"` · stroke-based · `fil
 
 ---
 
+## SEO Sessions — Completed
+
+### Session 1 — URL routing (done)
+- Category pages live at `/category/[id]` (e.g. `/category/animation`)
+- `sitemap.ts` + `robots.ts` in place
+- `generateMetadata` on category pages
+
+### Session 2 — Tool detail pages (done, deployed)
+- Tool pages live at `/tool/[slug]` — slug derived from `nameToSlug(name)` in `tools.ts`
+- `src/app/tool/[slug]/page.tsx` — static generation + SEO metadata
+- `src/components/ToolRoute.tsx` — client wrapper (Nav + AnimatedBg)
+- `src/components/ToolDetailPage.tsx` — hero, at-a-glance chips, comparison table, alternatives
+- Comparison table: rating bars, price, free tier, API access, output res, watermark vs top 3 in category
+- Tool cards on category pages click through to detail pages (via `onCardClick` prop)
+- Sitemap updated with all tool URLs (~100+ entries)
+- Anchor text on alternatives cards is descriptive ("View Synthesia →" not "View →")
+
 ## Outstanding Work (priority order)
 
-1. **URL routing** — shareable paths e.g. `/category/animation`
-2. **Tool detail page** — full breakdown, pricing tiers, user reviews
-3. **Persistent theme** — save to `localStorage`
-4. **"List a Tool" API** — wire ListToolModal form to POST /api/submit-tool
-5. **More tools** — expand beyond 63, especially underrepresented categories (3D has only 4)
+1. **Persistent theme** — save to `localStorage`
+2. **"List a Tool" API** — wire ListToolModal form to POST /api/submit-tool
+3. **More tools** — expand beyond current set, especially 3D (only 4 tools)
+4. **Session 3 SEO** — TBD (structured data / JSON-LD schema, review schema on tool pages?)
 
 ---
 
