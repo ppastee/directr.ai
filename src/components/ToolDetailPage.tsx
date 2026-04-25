@@ -292,7 +292,7 @@ export default function ToolDetailPage({ tool, categoryId, cat }: Props) {
                           {t.rating}
                         </div>
                       )}
-                      <span className="visit-btn" style={{ pointerEvents: 'none' }}>View →</span>
+                      <span className="visit-btn" style={{ pointerEvents: 'none' }}>View {t.name} →</span>
                     </div>
                   </div>
                 </div>
