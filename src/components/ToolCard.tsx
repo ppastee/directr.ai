@@ -38,11 +38,12 @@ interface ToolCardProps {
   tool: Tool
   rank?: number
   highlighted?: boolean
+  onCardClick?: () => void
 }
 
-export default function ToolCard({ tool, rank, highlighted }: ToolCardProps) {
+export default function ToolCard({ tool, rank, highlighted, onCardClick }: ToolCardProps) {
   return (
-    <div className={`tool-card${highlighted ? ' tool-highlighted' : ''}`}>
+    <div className={`tool-card${highlighted ? ' tool-highlighted' : ''}`} onClick={onCardClick}>
       <div className="tool-card-header">
         <ToolLogo tool={tool} />
         <div>

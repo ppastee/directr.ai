@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useMemo, useEffect } from 'react'
-import { TOOLS, Category, Tool } from '@/data/tools'
+import { useRouter } from 'next/navigation'
+import { TOOLS, Category, Tool, nameToSlug } from '@/data/tools'
 import ToolCard from './ToolCard'
 
 function monthlyPrice(price: string): number {
@@ -35,6 +36,7 @@ interface CategoryPageProps {
 }
 
 export default function CategoryPage({ cat, onHome, highlightedToolId }: CategoryPageProps) {
+  const router = useRouter()
   const rawTools = TOOLS[cat.id] ?? TOOLS.animation
   const [sort, setSort] = useState('best-match')
   const [freeOnly, setFreeOnly] = useState(false)
@@ -146,7 +148,10 @@ export default function CategoryPage({ cat, onHome, highlightedToolId }: Categor
           <div className="tool-grid">
             {filtered.map((t, i) => (
               <div key={t.id} data-tool-id={t.id} style={{ '--tool-i': i } as React.CSSProperties}>
-                <ToolCard tool={t} rank={i + 1} highlighted={t.id === activeHighlight} />
+                <ToolCard
+                  tool={t} rank={i + 1} highlighted={t.id === activeHighlight}
+                  onCardClick={() => router.push(`/tool/${nameToSlug(t.name)}`)}
+                />
               </div>
             ))}
           </div>

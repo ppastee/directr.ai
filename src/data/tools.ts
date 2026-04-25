@@ -1917,3 +1917,21 @@ export const CATEGORIES: Category[] = RAW_CATEGORIES.map((c) => ({
   ...c,
   count: (TOOLS[c.id] ?? []).length,
 }))
+
+export function nameToSlug(name: string): string {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+}
+
+export function findToolBySlug(slug: string): { tool: Tool; categoryId: string } | null {
+  for (const [catId, tools] of Object.entries(TOOLS)) {
+    const tool = tools.find((t) => nameToSlug(t.name) === slug)
+    if (tool) return { tool, categoryId: catId }
+  }
+  return null
+}
+
+export function getAllToolSlugs(): { slug: string; categoryId: string }[] {
+  return Object.entries(TOOLS).flatMap(([catId, tools]) =>
+    tools.map((t) => ({ slug: nameToSlug(t.name), categoryId: catId }))
+  )
+}

@@ -1,4 +1,4 @@
-import { CATEGORIES } from '@/data/tools'
+import { CATEGORIES, getAllToolSlugs } from '@/data/tools'
 
 const BASE = 'https://directr.ai'
 
@@ -10,13 +10,16 @@ export default function sitemap() {
     priority: 0.8,
   }))
 
+  const toolUrls = getAllToolSlugs().map(({ slug }) => ({
+    url: `${BASE}/tool/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }))
+
   return [
-    {
-      url: BASE,
-      lastModified: new Date(),
-      changeFrequency: 'daily' as const,
-      priority: 1,
-    },
+    { url: BASE, lastModified: new Date(), changeFrequency: 'daily' as const, priority: 1 },
     ...categoryUrls,
+    ...toolUrls,
   ]
 }
