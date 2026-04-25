@@ -1,26 +1,34 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Theme, Category } from '@/data/tools'
+import { useRouter } from 'next/navigation'
+import { Category } from '@/data/tools'
 import Nav from '@/components/Nav'
 import HomePage from '@/components/HomePage'
-import CategoryPage from '@/components/CategoryPage'
 import SearchResultsPage from '@/components/SearchResultsPage'
 import AnimatedBg from '@/components/AnimatedBg'
 
-type Page = 'home' | 'category' | 'search'
+type Page = 'home' | 'search'
 
 export default function App() {
-  const [theme, setTheme] = useState<Theme>('signal')
+  const router = useRouter()
   const [page, setPage] = useState<Page>('home')
-  const [activeCat, setActiveCat] = useState<Category | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
-  const [highlightedToolId, setHighlightedToolId] = useState<number | null>(null)
   const [heroScrolled, setHeroScrolled] = useState(false)
 
   useEffect(() => {
-    document.body.className = `theme-${theme}`
-  }, [theme])
+    document.body.className = 'theme-signal'
+  }, [])
+
+  // Handle ?q= param when arriving from a category-page search
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get('q')
+    if (q) {
+      setSearchQuery(q)
+      setPage('search')
+      window.history.replaceState({}, '', '/')
+    }
+  }, [])
 
   useEffect(() => {
     if (page !== 'home') { setHeroScrolled(false); return }
@@ -31,15 +39,11 @@ export default function App() {
   }, [page])
 
   function handleCategory(cat: Category, toolId?: number) {
-    setActiveCat(cat)
-    setHighlightedToolId(toolId ?? null)
-    setPage('category')
-    window.scrollTo({ top: 0, behavior: toolId ? 'instant' : 'smooth' })
+    router.push(`/category/${cat.id}${toolId ? `?highlight=${toolId}` : ''}`)
   }
 
   function handleHome() {
     setPage('home')
-    setActiveCat(null)
     setSearchQuery('')
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -54,7 +58,7 @@ export default function App() {
     <>
       <AnimatedBg />
       <div style={{ position: 'relative', zIndex: 1 }}>
-<Nav
+        <Nav
           onHome={handleHome}
           showSearch={page !== 'home' || heroScrolled}
           onSearch={handleSearch}
@@ -63,9 +67,6 @@ export default function App() {
         />
         {page === 'home' && (
           <HomePage onCategory={handleCategory} onSearch={handleSearch} />
-        )}
-        {page === 'category' && activeCat && (
-          <CategoryPage cat={activeCat} onHome={handleHome} highlightedToolId={highlightedToolId} />
         )}
         {page === 'search' && (
           <SearchResultsPage

@@ -9,7 +9,7 @@ interface NavProps {
   onHome: () => void
   showSearch?: boolean
   onSearch?: (query: string) => void
-  onCategory?: (cat: Category) => void
+  onCategory?: (cat: Category, toolId?: number) => void
   currentQuery?: string
 }
 
@@ -47,7 +47,7 @@ export default function Nav({ onHome, showSearch, onSearch, onCategory, currentQ
           initialValue={currentQuery}
           onClose={() => setSearchOpen(false)}
           onSearch={(q) => { onSearch?.(q); setSearchOpen(false) }}
-          onCategory={(cat) => { onCategory?.(cat); setSearchOpen(false) }}
+          onCategory={(cat, toolId) => { onCategory?.(cat, toolId); setSearchOpen(false) }}
         />
       )}
       {showListModal && <ListToolModal onClose={() => setShowListModal(false)} />}
