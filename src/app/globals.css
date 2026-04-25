@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 16px; }
@@ -994,4 +994,18 @@ thead .compare-col-hero { border-bottom: 2px solid var(--accent); }
   .nav { padding: 0 1rem; }
   .nav-links a { display: none; }
   .nav-links a.nav-cta-wrap { display: flex; }
+
+  .hero-pills { display: none; }
+
+  .finder-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  .finder-card {
+    padding: 1rem;
+    min-width: 0;
+  }
+  .finder-cat-name { white-space: normal; }
+  .finder-tool-list { display: none; }
+  .finder-card-header { margin-bottom: 0; gap: 0.6rem; }
 }

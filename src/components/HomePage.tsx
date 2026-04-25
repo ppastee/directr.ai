@@ -149,7 +149,7 @@ export default function HomePage({ onCategory, onSearch }: HomePageProps) {
       {/* Category grid */}
       <div className="section">
         <div className="section-header">
-          <h2 className="section-title">Browse by category</h2>
+          <h2 className="section-title">What are you building?</h2>
         </div>
         <div ref={gridRef} className={`finder-grid${gridVisible ? ' grid-visible' : ''}`}>
           {CATEGORIES.map((c, idx) => {
