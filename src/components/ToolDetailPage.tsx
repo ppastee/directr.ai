@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Tool, Category, TOOLS, nameToSlug } from '@/data/tools'
+import { EXAMPLES } from '@/data/examples'
 
 function Stars({ n }: { n: number }) {
   const full = Math.round(n)
@@ -74,6 +75,7 @@ interface Props {
 }
 
 export default function ToolDetailPage({ tool, categoryId, cat }: Props) {
+  const examples = EXAMPLES[tool.id] ?? []
   const categoryTools = TOOLS[categoryId] ?? []
 
   const comparators = categoryTools
@@ -134,6 +136,19 @@ export default function ToolDetailPage({ tool, categoryId, cat }: Props) {
         <div className="tag-row" style={{ marginTop: '1rem' }}>
           {tool.tags.map((tag) => <span key={tag} className="tag">{tag}</span>)}
         </div>
+        {examples.length > 0 && (
+          <div className="tool-examples-grid">
+            {examples.map((ex, i) => (
+              <div key={i} className="tool-example-card">
+                <div className="tool-example-img-wrap">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={ex.image} alt={ex.title} className="tool-example-img" />
+                </div>
+                <p className="tool-example-title">{ex.title}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* At a glance */}
