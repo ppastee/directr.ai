@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Tool, Category, TOOLS, nameToSlug } from '@/data/tools'
 import { EXAMPLES } from '@/data/examples'
+import { PRICING } from '@/data/pricing'
 
 function Stars({ n }: { n: number }) {
   const full = Math.round(n)
@@ -76,6 +77,7 @@ interface Props {
 
 export default function ToolDetailPage({ tool, categoryId, cat }: Props) {
   const examples = EXAMPLES[tool.id] ?? []
+  const plans = PRICING[tool.id] ?? []
   const categoryTools = TOOLS[categoryId] ?? []
 
   const comparators = categoryTools
@@ -97,38 +99,59 @@ export default function ToolDetailPage({ tool, categoryId, cat }: Props) {
       </div>
 
       {/* Hero */}
-      <div className="tool-detail-hero">
-        <div className="tool-detail-hero-top">
-          <div className="tool-detail-logo-wrap">
-            <ToolLogo tool={tool} size={72} />
-          </div>
-          <div className="tool-detail-title-block">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-              <h1 className="tool-detail-name">{tool.name}</h1>
-              {tool.sponsored && <span className="badge badge-best">Sponsored</span>}
-              {tool.freeTierLabel && <span className="badge badge-free">{tool.freeTierLabel}</span>}
+      <div className={`tool-detail-hero${plans.length > 0 ? ' tool-detail-hero--has-pricing' : ''}`}>
+        <div className="tool-detail-hero-left">
+          <div className="tool-detail-hero-top">
+            <div className="tool-detail-logo-wrap">
+              <ToolLogo tool={tool} size={72} />
             </div>
-            <p className="tool-detail-tagline">{tool.tagline}</p>
-            <div className="tool-detail-meta">
-              <div className="tool-rating">
-                <Stars n={tool.rating} />
-                <strong style={{ color: 'var(--fg)' }}>{tool.rating}</strong>
-                {tool.reviews > 0 && (
-                  <span style={{ color: 'var(--fg3)' }}>({tool.reviews.toLocaleString()} reviews)</span>
-                )}
+            <div className="tool-detail-title-block">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+                <h1 className="tool-detail-name">{tool.name}</h1>
+                {tool.sponsored && <span className="badge badge-best">Sponsored</span>}
+                {tool.freeTierLabel && <span className="badge badge-free">{tool.freeTierLabel}</span>}
               </div>
-              <span className="tool-detail-price">{tool.price}</span>
+              <p className="tool-detail-tagline">{tool.tagline}</p>
+              <div className="tool-detail-meta">
+                <div className="tool-rating">
+                  <Stars n={tool.rating} />
+                  <strong style={{ color: 'var(--fg)' }}>{tool.rating}</strong>
+                  {tool.reviews > 0 && (
+                    <span style={{ color: 'var(--fg3)' }}>({tool.reviews.toLocaleString()} reviews)</span>
+                  )}
+                </div>
+                <span className="tool-detail-price">{tool.price}</span>
+              </div>
             </div>
           </div>
+          <div className="tool-detail-actions">
+            <Link href={`/category/${categoryId}`} className="tool-detail-back">
+              ← All {cat.name}
+            </Link>
+            <a href={tool.url} target="_blank" rel="noopener noreferrer" className="tool-detail-visit">
+              Visit {tool.name} →
+            </a>
+          </div>
         </div>
-        <div className="tool-detail-actions">
-          <Link href={`/category/${categoryId}`} className="tool-detail-back">
-            ← All {cat.name}
-          </Link>
-          <a href={tool.url} target="_blank" rel="noopener noreferrer" className="tool-detail-visit">
-            Visit {tool.name} →
-          </a>
-        </div>
+        {plans.length > 0 && (
+          <div className="tool-detail-pricing">
+            <p className="pricing-section-label">Pricing plans</p>
+            {plans.map((plan, i) => (
+              <div key={i} className={`pricing-plan${plan.bestValue ? ' pricing-plan--best' : ''}`}>
+                <div className="pricing-plan-header">
+                  <span className="pricing-plan-name">{plan.name}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    {plan.bestValue && <span className="pricing-best-badge">Best value</span>}
+                    <span className="pricing-plan-price">{plan.price}</span>
+                  </div>
+                </div>
+                <ul className="pricing-features">
+                  {plan.features.map((f, j) => <li key={j}>{f}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* About */}
