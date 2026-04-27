@@ -98,34 +98,36 @@ export default function ToolDetailPage({ tool, categoryId, cat }: Props) {
 
       {/* Hero */}
       <div className="tool-detail-hero">
-        <div className="tool-detail-logo-wrap">
-          <ToolLogo tool={tool} size={72} />
-        </div>
-        <div className="tool-detail-title-block">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-            <h1 className="tool-detail-name">{tool.name}</h1>
-            {tool.sponsored && <span className="badge badge-best">Sponsored</span>}
-            {tool.freeTierLabel && <span className="badge badge-free">{tool.freeTierLabel}</span>}
+        <div className="tool-detail-hero-top">
+          <div className="tool-detail-logo-wrap">
+            <ToolLogo tool={tool} size={72} />
           </div>
-          <p className="tool-detail-tagline">{tool.tagline}</p>
-          <div className="tool-detail-meta">
-            <div className="tool-rating">
-              <Stars n={tool.rating} />
-              <strong style={{ color: 'var(--fg)' }}>{tool.rating}</strong>
-              {tool.reviews > 0 && (
-                <span style={{ color: 'var(--fg3)' }}>({tool.reviews.toLocaleString()} reviews)</span>
-              )}
+          <div className="tool-detail-title-block">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+              <h1 className="tool-detail-name">{tool.name}</h1>
+              {tool.sponsored && <span className="badge badge-best">Sponsored</span>}
+              {tool.freeTierLabel && <span className="badge badge-free">{tool.freeTierLabel}</span>}
             </div>
-            <span className="tool-detail-price">{tool.price}</span>
+            <p className="tool-detail-tagline">{tool.tagline}</p>
+            <div className="tool-detail-meta">
+              <div className="tool-rating">
+                <Stars n={tool.rating} />
+                <strong style={{ color: 'var(--fg)' }}>{tool.rating}</strong>
+                {tool.reviews > 0 && (
+                  <span style={{ color: 'var(--fg3)' }}>({tool.reviews.toLocaleString()} reviews)</span>
+                )}
+              </div>
+              <span className="tool-detail-price">{tool.price}</span>
+            </div>
           </div>
-          <div className="tool-detail-actions">
-            <a href={tool.url} target="_blank" rel="noopener noreferrer" className="tool-detail-visit">
-              Visit {tool.name} →
-            </a>
-            <Link href={`/category/${categoryId}`} className="tool-detail-back">
-              ← All {cat.name}
-            </Link>
-          </div>
+        </div>
+        <div className="tool-detail-actions">
+          <Link href={`/category/${categoryId}`} className="tool-detail-back">
+            ← All {cat.name}
+          </Link>
+          <a href={tool.url} target="_blank" rel="noopener noreferrer" className="tool-detail-visit">
+            Visit {tool.name} →
+          </a>
         </div>
       </div>
 
