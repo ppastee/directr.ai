@@ -70,9 +70,6 @@ export default function ToolCard({ tool, rank, highlighted, onCardClick }: ToolC
       <div className="tool-footer">
         <div>
           <div className="tool-price">{tool.price}</div>
-          {tool.free && tool.freeTierLabel && (
-            <span className="tool-free">{tool.freeTierLabel}</span>
-          )}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           {tool.reviews > 0 && (
