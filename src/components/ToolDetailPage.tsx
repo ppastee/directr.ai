@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Tool, Category, TOOLS, nameToSlug } from '@/data/tools'
-import { EXAMPLES } from '@/data/examples'
 import { PRICING } from '@/data/pricing'
 
 function Stars({ n }: { n: number }) {
@@ -76,7 +75,6 @@ interface Props {
 }
 
 export default function ToolDetailPage({ tool, categoryId, cat }: Props) {
-  const examples = EXAMPLES[tool.id] ?? []
   const plans = PRICING[tool.id] ?? []
   const categoryTools = TOOLS[categoryId] ?? []
 
@@ -99,39 +97,46 @@ export default function ToolDetailPage({ tool, categoryId, cat }: Props) {
       </div>
 
       {/* Hero */}
-      <div className={`tool-detail-hero${plans.length > 0 ? ' tool-detail-hero--has-pricing' : ''}`}>
-        <div className="tool-detail-hero-left">
-          <div className="tool-detail-hero-top">
-            <div className="tool-detail-logo-wrap">
-              <ToolLogo tool={tool} size={72} />
+      <div className="tool-detail-hero">
+        <div className="tool-detail-hero-top">
+          <div className="tool-detail-logo-wrap">
+            <ToolLogo tool={tool} size={72} />
+          </div>
+          <div className="tool-detail-title-block">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+              <h1 className="tool-detail-name">{tool.name}</h1>
+              {tool.sponsored && <span className="badge badge-best">Sponsored</span>}
+              {tool.freeTierLabel && <span className="badge badge-free">{tool.freeTierLabel}</span>}
             </div>
-            <div className="tool-detail-title-block">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-                <h1 className="tool-detail-name">{tool.name}</h1>
-                {tool.sponsored && <span className="badge badge-best">Sponsored</span>}
-                {tool.freeTierLabel && <span className="badge badge-free">{tool.freeTierLabel}</span>}
+            <p className="tool-detail-tagline">{tool.tagline}</p>
+            <div className="tool-detail-meta">
+              <div className="tool-rating">
+                <Stars n={tool.rating} />
+                <strong style={{ color: 'var(--fg)' }}>{tool.rating}</strong>
+                {tool.reviews > 0 && (
+                  <span style={{ color: 'var(--fg3)' }}>({tool.reviews.toLocaleString()} reviews)</span>
+                )}
               </div>
-              <p className="tool-detail-tagline">{tool.tagline}</p>
-              <div className="tool-detail-meta">
-                <div className="tool-rating">
-                  <Stars n={tool.rating} />
-                  <strong style={{ color: 'var(--fg)' }}>{tool.rating}</strong>
-                  {tool.reviews > 0 && (
-                    <span style={{ color: 'var(--fg3)' }}>({tool.reviews.toLocaleString()} reviews)</span>
-                  )}
-                </div>
-                <span className="tool-detail-price">{tool.price}</span>
-              </div>
+              <span className="tool-detail-price">{tool.price}</span>
             </div>
           </div>
-          <div className="tool-detail-actions">
-            <Link href={`/category/${categoryId}`} className="tool-detail-back">
-              ← All {cat.name}
-            </Link>
-            <a href={tool.url} target="_blank" rel="noopener noreferrer" className="tool-detail-visit">
-              Visit {tool.name} →
-            </a>
-          </div>
+        </div>
+        <div className="tool-detail-actions">
+          <Link href={`/category/${categoryId}`} className="tool-detail-back">
+            ← All {cat.name}
+          </Link>
+          <a href={tool.url} target="_blank" rel="noopener noreferrer" className="tool-detail-visit">
+            Visit {tool.name} →
+          </a>
+        </div>
+      </div>
+
+      {/* About */}
+      <div className="tool-detail-section">
+        <h2 className="tool-detail-section-title">About {tool.name}</h2>
+        <p style={{ color: 'var(--fg2)', lineHeight: 1.65, maxWidth: 680 }}>{tool.desc}</p>
+        <div className="tag-row" style={{ marginTop: '1rem' }}>
+          {tool.tags.map((tag) => <span key={tag} className="tag">{tag}</span>)}
         </div>
         {plans.length > 0 && (
           <div className="tool-detail-pricing">
@@ -148,28 +153,6 @@ export default function ToolDetailPage({ tool, categoryId, cat }: Props) {
                 <ul className="pricing-features">
                   {plan.features.map((f, j) => <li key={j}>{f}</li>)}
                 </ul>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* About */}
-      <div className="tool-detail-section">
-        <h2 className="tool-detail-section-title">About {tool.name}</h2>
-        <p style={{ color: 'var(--fg2)', lineHeight: 1.65, maxWidth: 680 }}>{tool.desc}</p>
-        <div className="tag-row" style={{ marginTop: '1rem' }}>
-          {tool.tags.map((tag) => <span key={tag} className="tag">{tag}</span>)}
-        </div>
-        {examples.length > 0 && (
-          <div className="tool-examples-grid">
-            {examples.map((ex, i) => (
-              <div key={i} className="tool-example-card">
-                <div className="tool-example-img-wrap">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={ex.image} alt={ex.title} className="tool-example-img" />
-                </div>
-                <p className="tool-example-title">{ex.title}</p>
               </div>
             ))}
           </div>

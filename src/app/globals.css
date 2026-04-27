@@ -907,13 +907,10 @@ body.theme-studio {
   animation: fadeIn 0.3s ease both;
 }
 .tool-detail-hero {
-  display: grid; grid-template-columns: 1fr;
-  gap: 2rem; align-items: start;
+  display: flex; flex-direction: column; gap: 1.25rem;
   padding: 1.75rem 0 0;
   animation: fadeIn 0.4s ease 0.05s both;
 }
-.tool-detail-hero--has-pricing { grid-template-columns: 1fr 296px; }
-.tool-detail-hero-left { display: flex; flex-direction: column; gap: 1.25rem; }
 .tool-detail-hero-top { display: flex; gap: 1.75rem; align-items: flex-start; }
 .tool-detail-logo-wrap { flex-shrink: 0; }
 .tool-detail-title-block { flex: 1; min-width: 0; }
@@ -946,11 +943,12 @@ body.theme-studio {
 }
 .tool-detail-back:hover { border-color: var(--accent); color: var(--accent); }
 
-/* Pricing plans sidebar */
-.tool-detail-pricing { display: flex; flex-direction: column; gap: 0.5rem; }
+/* Pricing plans */
+.tool-detail-pricing { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.75rem; margin-top: 1.5rem; }
 .pricing-section-label {
   font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.09em; color: var(--fg3); margin: 0 0 0.25rem;
+  letter-spacing: 0.09em; color: var(--fg3); margin: 0;
+  grid-column: 1 / -1;
 }
 .pricing-plan {
   border: var(--card-border); border-radius: 10px;
@@ -1054,7 +1052,7 @@ thead .compare-col-hero { border-bottom: 2px solid var(--accent); }
 
 @media (max-width: 640px) {
   .tool-examples-grid { grid-template-columns: 1fr; }
-  .tool-detail-hero--has-pricing { grid-template-columns: 1fr; }
+  .tool-examples-grid { grid-template-columns: 1fr; }
   .tool-detail-name { font-size: 1.75rem; }
   .tool-compare-detail { font-size: 0.8rem; }
   .tool-compare-detail th, .tool-compare-detail td { padding: 0.65rem 0.75rem; }
