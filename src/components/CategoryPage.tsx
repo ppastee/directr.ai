@@ -39,13 +39,8 @@ export default function CategoryPage({ cat, onHome, highlightedToolId }: Categor
   const router = useRouter()
   const rawTools = TOOLS[cat.id] ?? TOOLS.animation
   const [sort, setSort] = useState('best-match')
-  const [freeOnly, setFreeOnly] = useState(false)
-  const [apiOnly, setApiOnly] = useState(false)
-  const [noWatermark, setNoWatermark] = useState(false)
-  const [under20, setUnder20] = useState(false)
-  const [under50, setUnder50] = useState(false)
-  const [minRating, setMinRating] = useState(1)
   const [activeHighlight, setActiveHighlight] = useState<number | null>(highlightedToolId ?? null)
+  const [showAll, setShowAll] = useState(false)
 
   useEffect(() => {
     if (!highlightedToolId) return
@@ -58,67 +53,11 @@ export default function CategoryPage({ cat, onHome, highlightedToolId }: Categor
     return () => clearTimeout(scrollTimer)
   }, [highlightedToolId])
 
-  const filtered = useMemo(() => {
-    let tools = rawTools
-    if (freeOnly)    tools = tools.filter((t) => t.free)
-    if (apiOnly)     tools = tools.filter((t) => t.apiAccess)
-    if (noWatermark) tools = tools.filter((t) => !t.watermark)
-    if (under20)     tools = tools.filter((t) => monthlyPrice(t.price) <= 20)
-    if (under50)     tools = tools.filter((t) => monthlyPrice(t.price) <= 50)
-    if (minRating > 1) tools = tools.filter((t) => t.rating >= minRating)
-    return sortTools(tools, sort)
-  }, [rawTools, freeOnly, apiOnly, noWatermark, under20, under50, minRating, sort])
+  const sorted = useMemo(() => sortTools(rawTools, sort), [rawTools, sort])
 
   return (
     <div className="page">
       <div className="cat-page">
-        {/* Sidebar */}
-        <aside className="sidebar">
-          <div className="sidebar-card">
-            <div className="sidebar-title">Pricing</div>
-            <label className="filter-opt">
-              <input type="checkbox" checked={freeOnly} onChange={(e) => setFreeOnly(e.target.checked)} />
-              <label>Free tier available</label>
-            </label>
-            <label className="filter-opt">
-              <input type="checkbox" checked={under20} onChange={(e) => setUnder20(e.target.checked)} />
-              <label>Under $20/mo</label>
-            </label>
-            <label className="filter-opt">
-              <input type="checkbox" checked={under50} onChange={(e) => setUnder50(e.target.checked)} />
-              <label>Under $50/mo</label>
-            </label>
-          </div>
-
-          <div className="sidebar-card">
-            <div className="sidebar-title">Features</div>
-            <label className="filter-opt">
-              <input type="checkbox" checked={apiOnly} onChange={(e) => setApiOnly(e.target.checked)} />
-              <label>API access</label>
-            </label>
-            <label className="filter-opt">
-              <input type="checkbox" checked={noWatermark} onChange={(e) => setNoWatermark(e.target.checked)} />
-              <label>No watermark</label>
-            </label>
-          </div>
-
-          <div className="sidebar-card">
-            <div className="sidebar-title">Min. Rating</div>
-            <div className="price-range">
-              <input
-                type="range" min="1" max="5" step="0.5"
-                value={minRating}
-                onChange={(e) => setMinRating(parseFloat(e.target.value))}
-              />
-              <div className="price-labels">
-                <span>Any</span>
-                <span>{minRating > 1 ? `${minRating}+` : 'All'}</span>
-              </div>
-            </div>
-          </div>
-        </aside>
-
-        {/* Main content */}
         <main className="cat-main">
           <div className="cat-page-header">
             <div className="breadcrumb">
@@ -128,7 +67,7 @@ export default function CategoryPage({ cat, onHome, highlightedToolId }: Categor
             </div>
             <h1 className="cat-page-title">Best {cat.name} AI Tools</h1>
             <p className="cat-page-sub">
-              Comparing {filtered.length} tools · Prices updated April 2026
+              Comparing {sorted.length} tools · Prices updated April 2026
             </p>
           </div>
 
@@ -146,8 +85,11 @@ export default function CategoryPage({ cat, onHome, highlightedToolId }: Categor
           </div>
 
           <div className="tool-grid">
-            {filtered.map((t, i) => (
-              <div key={t.id} data-tool-id={t.id} style={{ '--tool-i': i } as React.CSSProperties}>
+            {sorted.map((t, i) => (
+              <div key={t.id} data-tool-id={t.id}
+                className={!showAll && i >= 4 ? 'tool-row-hidden' : ''}
+                style={{ '--tool-i': i } as React.CSSProperties}
+              >
                 <ToolCard
                   tool={t} rank={i + 1} highlighted={t.id === activeHighlight}
                   onCardClick={() => router.push(`/tool/${nameToSlug(t.name)}`)}
@@ -155,6 +97,12 @@ export default function CategoryPage({ cat, onHome, highlightedToolId }: Categor
               </div>
             ))}
           </div>
+
+          {sorted.length > 4 && (
+            <button className="show-more-btn" onClick={() => setShowAll(o => !o)}>
+              {showAll ? 'Show less' : `Show all ${sorted.length} tools`}
+            </button>
+          )}
 
           <div className="footer">
             © 2026 Directr · Data updated weekly · We earn referral fees from some links

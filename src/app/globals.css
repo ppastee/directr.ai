@@ -407,24 +407,9 @@ body.theme-studio {
   display: flex; gap: 2rem; padding: 2.5rem 2rem;
   max-width: 1200px; margin: 0 auto;
 }
-.sidebar { width: 240px; flex-shrink: 0; }
-.sidebar-card {
-  background: var(--bg2); border: var(--card-border);
-  border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem;
-  box-shadow: var(--card-shadow);
-}
-.sidebar-title {
-  font-size: 0.775rem; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.08em; color: var(--fg3); margin-bottom: 1rem;
-}
-.filter-opt { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem; cursor: pointer; }
-.filter-opt input { accent-color: var(--accent); cursor: pointer; }
-.filter-opt label { font-size: 0.85rem; color: var(--fg2); cursor: pointer; }
-.price-range { margin-top: 0.5rem; }
-.price-range input[type=range] { width: 100%; accent-color: var(--accent); }
-.price-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--fg3); margin-top: 0.3rem; }
 
 .cat-main { flex: 1; min-width: 0; }
+.show-more-btn { display: none; }
 .cat-page-header { margin-bottom: 1.75rem; }
 .breadcrumb { font-size: 0.78rem; color: var(--fg3); margin-bottom: 0.75rem; }
 .breadcrumb-link { color: var(--fg2); cursor: pointer; }
@@ -816,9 +801,6 @@ body.theme-studio {
 .sort-bar {
   animation: fadeIn 0.4s ease 0.3s both;
 }
-.sidebar-card:nth-child(1) { animation: slide-from-left 0.45s cubic-bezier(0.16,1,0.3,1) 0.06s both; }
-.sidebar-card:nth-child(2) { animation: slide-from-left 0.45s cubic-bezier(0.16,1,0.3,1) 0.14s both; }
-.sidebar-card:nth-child(3) { animation: slide-from-left 0.45s cubic-bezier(0.16,1,0.3,1) 0.22s both; }
 
 /* ── FOOTER ── */
 .footer {
@@ -1060,8 +1042,22 @@ thead .compare-col-hero { border-bottom: 2px solid var(--accent); }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
-  .cat-page { flex-direction: column; }
-  .sidebar { width: 100%; }
+  .tool-grid > .tool-row-hidden { display: none; }
+  .show-more-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: var(--bg2);
+    color: var(--fg);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
   .stats-bar { gap: 1.5rem; }
   .nav { padding: 0 1rem; }
   .nav-links a { display: none; }
