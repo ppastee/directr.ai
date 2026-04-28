@@ -45,7 +45,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'heygen.com',
       url: 'https://heygen.com',
       tagline: 'AI avatar & talking head video',
-      desc: 'Create professional spokesperson videos with AI avatars. Best for marketing and training content at scale.',
+      desc: 'Type a script, pick an avatar, and have a professional spokesperson video ready in minutes — no camera, studio, or scheduling a shoot. With 230+ avatars and translation into 140+ languages, it\'s used by over 40,000 businesses to produce training content, product demos, and marketing videos at a scale that\'d be impossible with traditional production.',
       price: 'From $29/mo',
       free: true, freeTier: '1 video/mo', freeTierLabel: 'Free tier available',
       rating: 4.8, reviews: 1478,  // G2 verified
@@ -59,7 +59,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'synthesia.io',
       url: 'https://synthesia.io',
       tagline: 'AI presenter videos in minutes',
-      desc: 'Turn a script into a polished video with a photorealistic AI presenter. 230+ avatars, 140+ languages.',
+      desc: 'Photorealistic AI presenters rendered in your browser — choose from 230+ avatars, clone your own, and produce in 140+ languages without a camera or crew. The enterprise standard for replacing costly video production with scalable content that consistently looks better than most corporate shoots, with LMS integrations for automated delivery pipelines.',
       price: 'From $29/mo',
       free: true, freeTier: '3 videos/mo', freeTierLabel: 'Free tier available',
       rating: 4.7, reviews: 2375,  // G2 verified
@@ -73,7 +73,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'veed.io',
       url: 'https://veed.io',
       tagline: 'AI-powered video editor',
-      desc: 'Browser-based video editor with AI auto-subtitles, background removal, and noise cancellation.',
+      desc: 'The online video editor built for people who never want to touch Premiere or Final Cut. Auto-subtitles, background removal, noise cancellation, and screen recording sit behind an interface clean enough that you can produce polished output on your first session — faster than traditional editors for every task that doesn\'t require frame-level precision.',
       price: 'From $18/mo',
       free: true, freeTier: '25 min exports/mo', freeTierLabel: 'Free tier available',
       rating: 4.6, reviews: 932,  // G2 verified
@@ -87,7 +87,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'runwayml.com',
       url: 'https://runwayml.com',
       tagline: 'Gen-3 Alpha video generation',
-      desc: 'Industry-leading AI video tool with inpainting, motion brush, and real-time generation. Best for professional creators.',
+      desc: 'Where professional filmmakers and AI-first creators overlap. Inpainting, motion brush, real-time generation, and an ever-expanding toolset make Runway the most capable end-to-end AI video platform available — used in production at major studios, ad agencies, and by music video directors who\'ve quietly made the switch.',
       price: 'From $15/mo',
       free: true, freeTier: 'Limited credits', freeTierLabel: 'Free trial',
       rating: 4.6, reviews: 680,  // G2 verified
@@ -101,7 +101,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'klingai.com',
       url: 'https://klingai.com',
       tagline: 'Hyper-realistic motion AI',
-      desc: 'Produces remarkably realistic motion from text or reference images. Strong at physics simulation and face animation.',
+      desc: 'Kling\'s physics simulation engine produces motion that looks like someone actually filmed it — water, fabric, hair, and hands that behave like the real thing rather than the approximations most AI video tools settle for. Best in category for realistic human movement, and increasingly competitive with Runway for commercial-grade video production.',
       price: 'From $10/mo',
       free: true, freeTier: 'Daily credits', freeTierLabel: 'Free tier available',
       rating: 4.6, reviews: 340,  // limited G2 data; community-based
@@ -115,7 +115,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'pika.art',
       url: 'https://pika.art',
       tagline: 'Fast, expressive video creation',
-      desc: 'Create cinematic clips from text or images. Excellent motion control and style options for social content.',
+      desc: 'Creates cinematic clips from text or images with strong motion control and a wide range of visual styles. Popular with social content creators and marketers who need polished, platform-ready video fast — and with directors who want to iterate on a concept before committing to a shoot. Solid free tier to get started without a credit card.',
       price: 'From $8/mo',
       free: true, freeTier: '150 credits/mo', freeTierLabel: 'Free tier available',
       rating: 4.5, reviews: 420,  // G2 verified
@@ -129,7 +129,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'invideo.io',
       url: 'https://invideo.io',
       tagline: 'Text to publish-ready video',
-      desc: 'Describe a video and get a fully-edited clip with voiceover, stock footage, and captions in minutes.',
+      desc: 'Paste a script or idea and get a fully-edited clip — voiceover, stock footage, captions, background music — without touching a timeline. The fastest path from concept to shareable video for marketers, educators, and creators who need something that looks professional without the production overhead. Over 5,000 templates cover every format and platform.',
       price: 'From $20/mo',
       free: true, freeTier: '4 exports/wk', freeTierLabel: 'Free tier available',
       rating: 4.5, reviews: 170,  // G2 verified
@@ -143,7 +143,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'openai.com',
       url: 'https://sora.com',
       tagline: "OpenAI's video generation model",
-      desc: 'Long-form video generation with cinematic quality. Excellent prompt adherence and consistency across frames.',
+      desc: 'OpenAI\'s flagship video model produces cinematic long-form clips with exceptional prompt adherence and visual consistency that most tools lose after a few seconds. Available to ChatGPT Plus subscribers — the clearest benchmark for high-quality AI video generation and the tool most often cited when the conversation turns to what\'s genuinely impressive in this category.',
       price: 'From $20/mo',
       free: false, freeTierLabel: null,
       rating: 4.4, reviews: 220,  // G2 verified (limited reviews)
@@ -157,7 +157,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'lumalabs.ai',
       url: 'https://lumalabs.ai/dream-machine',
       tagline: 'Dreamlike video from any input',
-      desc: 'Specialises in creative and surreal video styles. Great for mood pieces and artistic animation loops.',
+      desc: 'Specialises in creative, surreal, and expressively stylised video — fluid motion and dreamlike aesthetics that feel genuinely intentional rather than algorithmically generated. Strong for mood pieces, abstract visuals, and artistic animation loops where the vibe matters more than realism. Frequently used in music video production and experimental creative work.',
       price: 'From $10/mo',
       free: true, freeTier: '30 generations/mo', freeTierLabel: 'Free tier available',
       rating: 4.3, reviews: 280,  // G2 verified
@@ -171,7 +171,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'd-id.com',
       url: 'https://d-id.com',
       tagline: 'Animate any face with AI',
-      desc: 'Upload a photo and turn it into a talking video. Popular for personalized outreach and e-learning.',
+      desc: 'Upload any photo and watch it speak — D-ID turns static images into talking, lip-synced avatars using your script and a generated or cloned voice. Widely used across e-learning modules, personalised video outreach, and interactive storytelling. One of the more mature tools in the space, with a solid API and meaningful enterprise integrations.',
       price: 'From $5.9/mo',
       free: true, freeTier: '20 credits', freeTierLabel: 'Free trial',
       rating: 4.2, reviews: 340,  // G2/Capterra verified
@@ -185,7 +185,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'genmo.ai',
       url: 'https://genmo.ai',
       tagline: 'Creative video from images',
-      desc: 'Specialises in animating still images into fluid video. Strong for artistic and experimental projects.',
+      desc: 'Animates still images into fluid, expressive video with a focus on artistic and experimental output that doesn\'t look like templated AI content. Strong for music visualisers, creative loops, and projects where you\'d rather have something interesting than something generic. Simpler than Runway but more artistically adventurous than most quick-turn video tools.',
       price: 'From $9/mo',
       free: true, freeTier: '100 credits/mo', freeTierLabel: 'Free tier available',
       rating: 4.0, reviews: 180,  // G2 verified (limited data)
@@ -203,7 +203,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'canva.com',
       url: 'https://canva.com/ai-image-generator',
       tagline: 'AI image generation in Canva',
-      desc: 'Generate images directly inside your Canva designs. Great for non-designers who want fast, on-brand visuals.',
+      desc: 'The creative suite most non-designers already live in, now with a genuinely useful image generator built directly into the canvas. Generate, edit, and drop images straight into your existing designs — no context switching, no new subscription if you\'re already on Canva Pro. The pragmatic choice for marketers and small teams who need visual output without a separate design workflow.',
       price: 'Free / $15/mo Pro',
       free: true, freeTier: '50 generations/mo', freeTierLabel: 'Free',
       rating: 4.7, reviews: 6833,  // G2 verified (Canva overall)
@@ -217,7 +217,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'blackforestlabs.ai',
       url: 'https://blackforestlabs.ai',
       tagline: 'State-of-the-art open model',
-      desc: 'Black Forest Labs\' Flux model rivals Midjourney for photorealism. Fast, open weights, widely used in pipelines.',
+      desc: 'FLUX.1 from Black Forest Labs is the model quietly powering half the AI image pipelines you\'ve encountered online — open weights, fast inference, and photorealism that rivals anything behind a paywall. The default choice for developers building image generation into products, and increasingly the standard API model for teams that want quality without lock-in.',
       price: 'Free (open weights)',
       free: true, freeTierLabel: 'Free',
       rating: 4.6, reviews: 320,  // community/ProductHunt (no G2 listing)
@@ -231,7 +231,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'recraft.ai',
       url: 'https://recraft.ai',
       tagline: 'Vector & brand design AI',
-      desc: 'Generate editable SVGs, icons, and illustrations with consistent brand style. Unique among AI image tools.',
+      desc: 'The only major AI image tool that generates editable vector SVGs natively — brand-consistent icons, illustrations, and graphics with a real style system rather than one-off outputs. Far more useful than a generic image generator for production design work, particularly for anyone building or maintaining a brand identity at scale.',
       price: 'Free / $12/mo Pro',
       free: true, freeTier: '50 generations/mo', freeTierLabel: 'Free',
       rating: 4.6, reviews: 70,  // G2 verified
@@ -245,7 +245,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'ideogram.ai',
       url: 'https://ideogram.ai',
       tagline: 'Best AI for text in images',
-      desc: 'Unmatched ability to render legible, styled text inside generated images. Great for posters, logos, and mockups.',
+      desc: 'Solved the problem that plagued AI image generation for years: legible, well-styled text rendered inside generated images. If your output needs readable words — posters, social graphics, product mockups, ad overlays — Ideogram is the clear answer when every other tool produces garbled letter soup. Increasingly used by designers for fast concepting and production-ready assets.',
       price: 'Free / $7/mo Basic',
       free: true, freeTier: '25 slow credits/day', freeTierLabel: 'Free',
       rating: 4.5, reviews: 180,  // G2 verified (approximate)
@@ -259,7 +259,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'midjourney.com',
       url: 'https://midjourney.com',
       tagline: 'Most artistic image generation',
-      desc: 'Stunning, painterly outputs. Best for concept art, illustration, and creative exploration.',
+      desc: 'Still the benchmark for painterly, atmospheric, and artistically ambitious image generation. V6 produces stunning results for concept art, illustration, fashion, and editorial — with an aesthetic distinct enough to have genuinely influenced visual culture broadly. Community-first with a Discord-native workflow, though web access and an API are now available.',
       price: 'From $10/mo',
       free: false, freeTierLabel: null,
       rating: 4.4, reviews: 94,  // G2 verified
@@ -273,7 +273,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'leonardo.ai',
       url: 'https://leonardo.ai',
       tagline: 'Game assets & creative images',
-      desc: 'Purpose-built for game artists and designers. Fine-tuned models, real-time canvas, and motion generation.',
+      desc: 'Originally built for game asset production, Leonardo has grown into a full creative stack — fine-tuned models for different visual styles, a real-time generation canvas, and motion generation for animation. The right tool for game studios, character artists, and digital illustrators who need volume, consistency, and the ability to train on their own visual style.',
       price: 'Free / $10/mo Apprentice',
       free: true, freeTier: '150 tokens/day', freeTierLabel: 'Free',
       rating: 4.4, reviews: 18,  // G2 verified (limited reviews)
@@ -287,7 +287,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'stability.ai',
       url: 'https://stability.ai',
       tagline: 'Open-source powerhouse',
-      desc: 'Fully open-source, runs locally or in the cloud. Unlimited generations, total control over fine-tuning.',
+      desc: 'The model that democratised AI image generation — fully open-source, runs on your own hardware, and offers complete control over fine-tuning, custom checkpoints, and generation pipelines. No output limits, no content restrictions, no subscription. Steeper learning curve than hosted alternatives, but the ceiling for what you can produce is effectively unlimited.',
       price: 'Free (self-hosted)',
       free: true, freeTierLabel: 'Free',
       rating: 4.3, reviews: 520,  // G2 verified
@@ -301,7 +301,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'adobe.com',
       url: 'https://firefly.adobe.com',
       tagline: 'Commercially safe AI images',
-      desc: 'Trained on licensed content — safe for commercial use. Deep integration with the Adobe Creative Suite.',
+      desc: 'The AI image tool corporate design teams can actually deploy without IP headaches — trained entirely on licensed content and cleared for commercial use. Deeply integrated into Photoshop, Illustrator, and the rest of the Creative Suite. The right choice when legal clearance matters as much as creative output quality.',
       price: 'From $4.99/mo',
       free: true, freeTierLabel: 'Free tier available',
       rating: 4.2, reviews: 380,  // G2 verified (approximate)
@@ -315,7 +315,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'openai.com',
       url: 'https://openai.com/dall-e-3',
       tagline: "OpenAI's image generator",
-      desc: 'Excellent at following complex instructions. Integrated into ChatGPT for easy iteration.',
+      desc: 'GPT-4\'s image generation module makes prompt iteration genuinely conversational — describe what you want, describe what you\'d change, and the model follows complex multi-part instructions better than most alternatives. Accessible directly inside ChatGPT with no extra subscription required, making it the lowest-friction entry point for anyone already using OpenAI products.',
       price: 'Included in ChatGPT Plus',
       free: false, freeTierLabel: null,
       rating: 3.9, reviews: 32,  // G2 verified (limited reviews)
@@ -333,7 +333,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'writesonic.com',
       url: 'https://writesonic.com',
       tagline: 'SEO-focused AI writer',
-      desc: 'Generates SEO-optimised articles, ads, and landing pages fast. Includes Chatsonic with web browsing.',
+      desc: 'An AI writing platform built for teams that need volume without sacrificing SEO performance. Generates optimised articles, ad copy, and landing pages quickly, with Chatsonic adding live web browsing when your content needs to reference current events or real pricing. A solid content marketing workhorse — not flashy, but reliably useful at scale.',
       price: 'From $16/mo',
       free: true, freeTier: '10k words/mo', freeTierLabel: 'Free tier available',
       rating: 4.7, reviews: 2214,  // G2 verified
@@ -347,7 +347,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'jasper.ai',
       url: 'https://jasper.ai',
       tagline: 'Marketing copy at scale',
-      desc: 'Purpose-built for marketing teams. Brand voice training, templates, and SEO tools built in.',
+      desc: 'Built for marketing teams that need consistent brand voice across dozens of campaigns and hundreds of content pieces. Train it on your brand guidelines, build from proven templates, and produce output that sounds like your best copywriter — at the output rate of ten of them. Deep SEO and campaign workflow integrations make it practical for serious content operations.',
       price: 'From $49/mo',
       free: false, freeTierLabel: null,
       rating: 4.7, reviews: 1200,  // G2 verified
@@ -361,7 +361,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'rytr.me',
       url: 'https://rytr.me',
       tagline: 'Affordable AI writer',
-      desc: 'Budget-friendly writing assistant with 40+ use cases. Good for quick drafts, emails, and social captions.',
+      desc: 'The most affordable entry point in AI writing without sacrificing genuine usefulness — 40+ use cases from a single, simple tool. Covers quick drafts, email sequences, social captions, and basic ad copy without the overhead of a platform designed for enterprise marketing teams. The right fit for solo operators and small teams that need functional output, not a full content management platform.',
       price: 'From $9/mo',
       free: true, freeTier: '10k characters/mo', freeTierLabel: 'Free tier available',
       rating: 4.7, reviews: 819,  // G2 verified
@@ -375,7 +375,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'grammarly.com',
       url: 'https://grammarly.com',
       tagline: 'AI writing & grammar assistant',
-      desc: 'Real-time grammar, clarity, and tone suggestions. The go-to tool for polishing any piece of writing.',
+      desc: 'The writing safety net that catches what you miss in your third readthrough. Real-time grammar, clarity, style, and tone suggestions that work across every app you write in — Google Docs, Outlook, Slack, your CMS — without copying text into a separate editor. Widely used for good reason: it makes most writing measurably better with minimal friction.',
       price: 'From $12/mo',
       free: true, freeTier: 'Basic grammar checks only', freeTierLabel: 'Free tier available',
       rating: 4.5, reviews: 14000,  // G2 verified
@@ -389,7 +389,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'claude.ai',
       url: 'https://claude.ai',
       tagline: 'Long-form & nuanced writing',
-      desc: 'Exceptional at analysis, long documents, and nuanced tone. Widely used for professional writing.',
+      desc: 'Anthropic\'s AI assistant handles nuanced, long-context writing better than almost anything else — multi-document analysis, research synthesis, and professional content that requires careful reasoning rather than confident-sounding filler. Consistently cited by writers and editors for producing outputs that don\'t scan as AI-written, which is a harder problem than most tools advertise solving.',
       price: 'Free / $20/mo Pro',
       free: true, freeTierLabel: 'Free',
       rating: 4.5, reviews: 122,  // G2 verified
@@ -403,7 +403,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'copy.ai',
       url: 'https://copy.ai',
       tagline: 'Fast marketing copy',
-      desc: 'Hundreds of copy templates for ads, emails, product descriptions, and social posts.',
+      desc: 'Hundreds of proven copy templates for ads, emails, product descriptions, and social posts — structured so you get output you can actually use rather than something that needs a full rewrite to become usable. Practical, fast, and built around how marketing teams actually work rather than how writing theoretically works.',
       price: 'From $36/mo',
       free: true, freeTierLabel: 'Free tier available',
       rating: 4.4, reviews: 182,  // G2 verified
@@ -417,7 +417,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'quillbot.com',
       url: 'https://quillbot.com',
       tagline: 'Paraphrase & summarise instantly',
-      desc: 'Best-in-class paraphrasing, summarisation, and grammar tools. Widely used by students and academics.',
+      desc: 'The go-to tool for paraphrasing, summarising, and grammar — particularly useful for students, academics, researchers, and non-native writers who need to refine existing text rather than generate from scratch. Best-in-class paraphrase modes with genuine nuance in how they handle tone and formality, and a summariser that actually retains the important parts.',
       price: 'From $8.33/mo',
       free: true, freeTier: '125 words/paraphrase', freeTierLabel: 'Free tier available',
       rating: 4.4, reviews: 113,  // G2 verified
@@ -431,7 +431,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'sudowrite.com',
       url: 'https://sudowrite.com',
       tagline: 'AI writing partner for fiction',
-      desc: 'Built specifically for novelists and screenwriters. Story bible, character arcs, and scene-writing tools.',
+      desc: 'Built specifically for fiction writers, not content marketers — story bible tools, character arc development, scene-writing modes, and prose suggestions that understand narrative structure. One of the rare AI writing tools that genuinely helps you write a novel rather than just generating text in the general direction of one. Used by bestselling authors and screenwriters.',
       price: 'From $10/mo',
       free: false, freeTierLabel: 'Free trial',
       rating: 4.4, reviews: 42,  // G2 very limited; estimate from community
@@ -449,7 +449,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'v0.dev',
       url: 'https://v0.dev',
       tagline: 'UI generation from text prompts',
-      desc: 'Generate React/shadcn UI components from text descriptions. Best for rapidly prototyping front-end layouts without writing code.',
+      desc: 'Vercel\'s component generator turns text descriptions into production-quality React and shadcn/ui components you can paste directly into a project. Best for prototyping front-end layouts quickly — especially in the Vercel/Next.js ecosystem where you want output that doesn\'t need extensive cleanup before it\'s usable in a real codebase.',
       price: 'From $20/mo',
       free: true, freeTier: '$5 credits/mo', freeTierLabel: 'Free tier available',
       rating: 5.0, reviews: 36,  // G2 verified (small sample)
@@ -463,7 +463,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'cursor.com',
       url: 'https://cursor.com',
       tagline: 'AI-first code editor',
-      desc: 'Fork of VS Code with deep AI integration. Codebase-aware chat, multi-file edits, and command-line generation.',
+      desc: 'VS Code rebuilt with AI deep in the architecture. Codebase-aware chat, multi-file edits, and terminal generation that understands your whole project rather than just the file you have open. Rapidly became the default IDE for AI-native development teams — and the tool most developers mean when they say they can\'t imagine writing code without AI anymore.',
       price: 'From $20/mo',
       free: true, freeTierLabel: 'Free tier available',
       rating: 4.7, reviews: 190,  // G2 verified
@@ -477,7 +477,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'lovable.dev',
       url: 'https://lovable.dev',
       tagline: 'AI full-stack app builder',
-      desc: 'Build and ship full-stack apps with AI. Describe features in plain English and Lovable writes React code, connects to Supabase, and deploys to production.',
+      desc: 'Describe what you want to build in plain English and Lovable writes the React code, connects to Supabase, and deploys to production. Genuine full-stack app generation from a text prompt — faster than most developers can scaffold a new project, and genuinely useful for founders who need to ship before they can afford engineering headcount.',
       price: 'From $20/mo',
       free: true, freeTier: '5 credits/day', freeTierLabel: 'Free tier available',
       rating: 4.6, reviews: 207,  // G2 verified
@@ -491,7 +491,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'codeium.com',
       url: 'https://codeium.com/windsurf',
       tagline: 'Agentic AI code editor',
-      desc: 'Codeium\'s agentic IDE that can plan and execute multi-step coding tasks end-to-end. Fast and free to start.',
+      desc: 'Codeium\'s agentic IDE plans and executes multi-step coding tasks end-to-end rather than just suggesting the next line. Fast, capable, and free to start — a serious alternative to Cursor for engineers who want an AI that handles longer-horizon tasks without needing to be constantly prompted and redirected at every step.',
       price: 'Free / $15/mo Pro',
       free: true, freeTierLabel: 'Free',
       rating: 4.5, reviews: 480,  // G2 verified (approximate)
@@ -505,7 +505,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'replit.com',
       url: 'https://replit.com/ai',
       tagline: 'AI coding in the browser',
-      desc: 'Build, run, and deploy code entirely in the browser with AI assistance. Great for prototyping and learning.',
+      desc: 'Build, run, and deploy code entirely in the browser — no local setup, no package conflicts, no environment issues. AI assistance from the first line, making it genuinely useful for rapid prototyping, learning without friction, and sharing working code with someone who shouldn\'t need to install anything to run it.',
       price: 'From $20/mo',
       free: true, freeTier: 'Basic AI', freeTierLabel: 'Free tier available',
       rating: 4.5, reviews: 329,  // G2 verified
@@ -519,7 +519,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'github.com',
       url: 'https://github.com/features/copilot',
       tagline: 'AI pair programmer in your IDE',
-      desc: 'Real-time code suggestions directly in VS Code, JetBrains, and more. Trained on millions of repos.',
+      desc: 'The original AI pair programmer — real-time code suggestions across VS Code, JetBrains, and more, trained on hundreds of millions of public repositories. Deep GitHub integration, enterprise security controls, and the brand recognition that effectively made AI-assisted coding mainstream. The baseline most other tools are still measured against.',
       price: 'From $10/mo',
       free: true, freeTierLabel: 'Free tier available',
       rating: 4.5, reviews: 227,  // G2 verified
@@ -533,7 +533,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'bolt.new',
       url: 'https://bolt.new',
       tagline: 'Full-stack apps from a single prompt',
-      desc: 'Build, edit, and deploy full-stack web apps entirely in the browser. Describe what you want and Bolt writes the code, installs packages, and runs the server.',
+      desc: 'Build and deploy full-stack web apps from the browser by describing what you want. Bolt writes the code, installs the packages, and runs the server — no local environment required and no setup time. Strong for rapid prototyping and for non-developers who need something working fast rather than a codebase they\'ll be maintaining long-term.',
       price: 'From $20/mo',
       free: true, freeTier: '150k tokens/day', freeTierLabel: 'Free tier available',
       rating: 4.5, reviews: 180,  // G2/community verified (approximate)
@@ -547,7 +547,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'claude.ai',
       url: 'https://claude.ai/code',
       tagline: 'Agentic CLI coding assistant',
-      desc: 'Runs in your terminal, reads your whole codebase, and executes multi-file tasks autonomously. Built for engineers.',
+      desc: 'Anthropic\'s CLI agent reads your entire codebase, plans multi-file changes, runs tests, and executes complex engineering tasks autonomously from the terminal. Built for engineers who want AI that understands a full project in context rather than autocompleting in isolation — agentic by design and unusually good at not breaking things.',
       price: 'Usage-based (API)',
       free: false, freeTierLabel: null,
       rating: 4.5, reviews: 122,  // G2 verified (part of Claude)
@@ -561,7 +561,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'aws.amazon.com',
       url: 'https://aws.amazon.com/q/developer',
       tagline: 'AWS-native AI developer tool',
-      desc: 'Amazon\'s coding assistant with deep AWS integration. Inline suggestions, chat, and security scanning.',
+      desc: 'Amazon\'s coding assistant with native AWS integration — inline completions, conversational debugging, and security scanning across your codebase. Most valuable for teams building on AWS infrastructure who want an AI that understands the services they\'re already using rather than producing generic suggestions that need to be adapted.',
       price: 'Free / $19/mo Pro',
       free: true, freeTierLabel: 'Free',
       rating: 4.1, reviews: 380,  // G2 verified (approximate)
@@ -575,7 +575,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'tabnine.com',
       url: 'https://tabnine.com',
       tagline: 'Private, on-prem code AI',
-      desc: 'Enterprise-grade code completion that can run fully on-premises. Strong privacy controls for regulated industries.',
+      desc: 'Enterprise-grade code completion that runs fully on-premises with privacy controls built for regulated industries. Trained on permissively-licensed code, supports custom model fine-tuning on your private codebase, and handles the compliance requirements that make public AI coding tools a non-starter for certain sectors.',
       price: 'From $12/mo',
       free: true, freeTierLabel: 'Free basic',
       rating: 4.1, reviews: 45,  // G2 verified
@@ -589,7 +589,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'google.com',
       url: 'https://codeassist.google',
       tagline: "Google's AI coding assistant",
-      desc: "Code completions, generation, and debugging in VS Code and JetBrains. Free tier: 180,000 completions/month. Enterprise adds private codebase customisation and Google Cloud integration.",
+      desc: "Google's coding assistant with 180,000 free completions per month — the most generous free tier in the category by a wide margin. Completions, debugging, and codebase chat across VS Code and JetBrains. Enterprise tier adds private codebase fine-tuning and deep Google Cloud integration for teams already running on GCP.",
       price: 'Free / $75/developer/mo Enterprise',
       free: true, freeTier: '180,000 completions/mo', freeTierLabel: 'Free',
       rating: 4.2, reviews: 0,  // SelectHub listed; exact G2 score unconfirmed
@@ -603,7 +603,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'cline.bot',
       url: 'https://cline.bot',
       tagline: 'Free open-source autonomous coding agent',
-      desc: 'VS Code extension with Plan/Act modes, file editing, terminal access, browser use, and MCP integration. Supports any LLM provider — pay only API token costs. 5M+ developers.',
+      desc: 'VS Code extension with Plan/Act modes giving fine-grained control over how autonomously the AI operates. Supports any LLM provider and costs only API tokens with no markup — with file editing, terminal access, browser use, and MCP integration built in. Five million developers and growing fast; the open-source alternative with genuine capability.',
       price: 'Free (pay API tokens only)',
       free: true, freeTierLabel: 'Free',
       rating: 4.6, reviews: 0,  // community estimate; not on G2
@@ -621,7 +621,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'murf.ai',
       url: 'https://murf.ai',
       tagline: 'Professional AI voiceovers',
-      desc: '120+ studio-quality AI voices. Built for explainer videos, e-learning, and product demos.',
+      desc: 'Over 120 studio-quality AI voices with precise control over pitch, speed, emphasis, and pronunciation. Built for explainer videos, e-learning content, and product demos where polished narration matters but booking a voiceover studio isn\'t in the budget. Good enterprise team features and a solid API for production workflows.',
       price: 'From $19/mo',
       free: true, freeTier: '10 min audio/mo', freeTierLabel: 'Free tier available',
       rating: 4.7, reviews: 1407,  // G2 verified
@@ -635,7 +635,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'descript.com',
       url: 'https://descript.com',
       tagline: 'Edit audio by editing text',
-      desc: 'Transcribe audio and edit it like a doc. Remove filler words, overdub your voice, and publish in one tool.',
+      desc: 'The audio editor that finally solves the wrong-word-on-take-twelve problem — transcribe your recording, then edit the audio by editing the text. Delete a sentence from the transcript and the audio disappears. Overdub lets you clone your own voice to fix mistakes without re-recording. The full podcast production and distribution stack in one tool.',
       price: 'From $12/mo',
       free: true, freeTier: '1 watermarked export/mo', freeTierLabel: 'Free tier available',
       rating: 4.6, reviews: 865,  // G2 verified
@@ -649,7 +649,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'elevenlabs.io',
       url: 'https://elevenlabs.io',
       tagline: 'Most realistic AI voice cloning',
-      desc: 'Ultra-realistic text-to-speech and voice cloning. Industry standard for audiobooks, podcasts, and dubbing.',
+      desc: 'The benchmark for AI voice quality — ultra-realistic text-to-speech with voice cloning that takes as little as a minute of source audio. Industry standard for audiobooks, podcast dubbing, and commercial voice applications. Widely used via API in AI agent pipelines and consumer products where voice quality directly affects whether users trust what they\'re hearing.',
       price: 'From $5/mo',
       free: true, freeTierLabel: 'Free tier available',
       rating: 4.5, reviews: 1153,  // G2 verified
@@ -663,7 +663,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'suno.com',
       url: 'https://suno.com',
       tagline: 'Full songs from a text prompt',
-      desc: 'Generate complete songs with vocals, instrumentation, and lyrics from a single text description.',
+      desc: 'Type a description and get a complete song — vocals, instrumentation, lyrics, and genre-appropriate production, all from a single text prompt. The most accessible entry point for AI music generation and the tool that convinced most people this category is genuinely real. Free tier included, and the output quality is consistently surprising even for people who expected to be unimpressed.',
       price: 'Free / $8/mo Pro',
       free: true, freeTierLabel: 'Free',
       rating: 4.5, reviews: 830,  // G2/community verified
@@ -677,7 +677,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'adobe.com',
       url: 'https://podcast.adobe.com',
       tagline: 'Studio audio quality from any mic',
-      desc: 'Removes background noise and enhances speech quality to sound like a studio recording, even on a laptop mic.',
+      desc: 'One tool, one killer feature: removes background noise and enhances speech quality so a recording made on a laptop mic in a noisy café sounds like a studio session. Free to use via browser with no Adobe subscription required. Widely used by podcasters, educators, and remote workers who record in less-than-ideal environments and need results that don\'t embarrass them.',
       price: 'Free (beta)',
       free: true, freeTierLabel: 'Free',
       rating: 4.5, reviews: 680,  // G2/community verified
@@ -691,7 +691,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'udio.com',
       url: 'https://udio.com',
       tagline: 'Studio-quality AI music',
-      desc: 'Generates high-fidelity music across any genre with precise style control. Strong competitor to Suno.',
+      desc: 'Generates high-fidelity music across any genre with more musical nuance and production texture than most competitors. Strong for tracks that need to feel authentically crafted rather than generated — particularly good for genres that benefit from complex arrangement. A serious tool for music directors and creative producers, not just casual experimentation.',
       price: 'Free / $10/mo Standard',
       free: true, freeTier: '1,200 tracks/mo', freeTierLabel: 'Free',
       rating: 4.4, reviews: 210,  // G2 verified (limited reviews — new product)
@@ -705,7 +705,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'aiva.ai',
       url: 'https://aiva.ai',
       tagline: 'AI composition for film & games',
-      desc: 'Compose emotional soundtracks and background music for video, film, and games. Export royalty-free.',
+      desc: 'Composes original emotional soundtracks and background music for video, film, and games with genre and mood controls that go deeper than most AI music tools. All exports are royalty-free, and AIVA has formal recognition from two music copyright societies — giving it a legal standing that most AI music tools still can\'t match.',
       price: 'From $11/mo',
       free: true, freeTier: '3 downloads/mo', freeTierLabel: 'Free tier available',
       rating: 4.3, reviews: 280,  // G2 verified (approximate)
@@ -724,7 +724,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'chatgpt.com',
       url: 'https://chatgpt.com',
       tagline: "The world's most-used AI chat",
-      desc: 'General-purpose AI assistant by OpenAI. Best-in-class for broad knowledge, code, and everyday tasks.',
+      desc: 'The tool that made AI assistants mainstream — and still the most broadly capable for everyday use. Best-in-class for general knowledge, coding, content drafting, data analysis, and image generation via DALL·E 3. Four years of model improvement and a vast plugin and GPT ecosystem give it a feature lead that\'s hard to catch up to.',
       price: 'Free / $20/mo Plus',
       free: true, freeTierLabel: 'Free',
       rating: 4.7, reviews: 5180,  // G2 verified
@@ -738,7 +738,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'perplexity.ai',
       url: 'https://perplexity.ai',
       tagline: 'AI search with real-time web access',
-      desc: 'Answers questions with live web citations. Best for research, fact-checking, and staying current.',
+      desc: 'Search with AI that actually cites its sources. Every answer comes with numbered references you can click through — no more wondering where the statistic came from or whether it was invented. Best for research, fact-checking, and staying current on fast-moving topics where accuracy matters more than creative flair.',
       price: 'Free / $20/mo Pro',
       free: true, freeTierLabel: 'Free',
       rating: 4.5, reviews: 252,  // G2 verified
@@ -752,7 +752,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'claude.ai',
       url: 'https://claude.ai',
       tagline: 'Deep reasoning & long-context chat',
-      desc: 'Anthropic\'s AI assistant — exceptional at nuanced conversation, document analysis, research synthesis, and tasks requiring careful reasoning.',
+      desc: 'Anthropic\'s AI assistant — the one most often cited by professionals who care about depth. Exceptional at long-document analysis, nuanced conversation, research synthesis, and tasks requiring genuine reasoning rather than pattern-matched confidence. Widely used by writers, analysts, lawyers, and engineers who need an assistant that\'s careful, not just fast.',
       price: 'Free / $20/mo Pro',
       free: true, freeTierLabel: 'Free',
       rating: 4.5, reviews: 122,  // G2 verified
@@ -766,7 +766,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'gemini.google.com',
       url: 'https://gemini.google.com',
       tagline: "Google's multimodal AI assistant",
-      desc: 'Deep Google ecosystem integration. Strong at research, coding, and image understanding. Powers Workspace.',
+      desc: 'Google\'s AI assistant with native integration across the apps most people already use every day — Docs, Gmail, Drive, Calendar, and Meet. Strong at research, coding, and multimodal reasoning, and the natural choice for anyone whose work lives inside Google Workspace. Powers the AI layer across Google\'s entire product ecosystem.',
       price: 'Free / $19.99/mo Advanced',
       free: true, freeTierLabel: 'Free',
       rating: 4.4, reviews: 6800,  // G2 verified
@@ -780,7 +780,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'mistral.ai',
       url: 'https://chat.mistral.ai',
       tagline: 'Best open-weight chat model',
-      desc: 'European AI with leading open-weight models. Fast, efficient, and deployable on your own infrastructure.',
+      desc: 'European AI lab producing frontier open-weight models deployable on your own infrastructure with no usage fees and no data leaving your environment. Fast, efficient, and competitive with much larger proprietary models on most benchmarks. The default choice for teams that want serious AI capability without vendor lock-in or compliance headaches.',
       price: 'Free / API usage-based',
       free: true, freeTierLabel: 'Free',
       rating: 4.3, reviews: 86,  // G2 verified (limited)
@@ -794,7 +794,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'you.com',
       url: 'https://you.com',
       tagline: 'AI-powered search + chat',
-      desc: 'Combines web search with AI chat. Customisable app-based search with code, writing, and research modes.',
+      desc: 'Combines live web search with AI chat so answers are grounded in current sources rather than training data from a year ago. Customisable search modes for coding, writing, and research with a clean interface and a generous free tier. Useful when you need something between a Google search and a full Perplexity session.',
       price: 'Free / $15/mo Pro',
       free: true, freeTierLabel: 'Free',
       rating: 4.1, reviews: 310,  // G2 verified (approximate)
@@ -808,7 +808,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'x.ai',
       url: 'https://grok.com',
       tagline: 'Real-time X/Twitter integration',
-      desc: 'xAI\'s assistant with access to real-time posts and trends from X. Unfiltered and up-to-date.',
+      desc: 'xAI\'s assistant with real-time access to posts and trends from X — uniquely useful for understanding what people are actually saying about a topic right now, rather than what was true at training cutoff. More direct and opinionated than most AI assistants, by design. Accessible to X Premium subscribers.',
       price: 'Included with X Premium',
       free: false, freeTierLabel: null,
       rating: 4.1, reviews: 190,  // G2 verified (limited)
@@ -822,7 +822,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'deepseek.com',
       url: 'https://deepseek.com',
       tagline: 'Frontier AI at a fraction of the cost',
-      desc: 'Chinese-developed frontier LLM matching GPT-4o quality. Free chat at deepseek.com. API priced at ~1/10th OpenAI costs — OpenAI-compatible. R1 reasoning model rivals o1.',
+      desc: 'A Chinese-developed frontier model matching GPT-4o quality on most benchmarks — and the R1 reasoning model is a genuine rival to OpenAI\'s o1 for mathematical and logical problem-solving. Free to use at deepseek.com, with an API priced at roughly one-tenth of OpenAI\'s rates and full OpenAI compatibility for painless migration.',
       price: 'Free / API from $0.028/1M tokens',
       free: true, freeTierLabel: 'Free',
       rating: 4.5, reviews: 0,  // not on G2; community estimate
@@ -836,7 +836,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'microsoft.com',
       url: 'https://copilot.microsoft.com',
       tagline: 'AI assistant built into Microsoft 365',
-      desc: 'Free AI chat with web search at copilot.microsoft.com. Paid tiers embed AI into Word, Excel, Outlook, and Teams — summarising emails, drafting docs, and analysing spreadsheets.',
+      desc: 'Free AI chat with live web search in the browser, and paid tiers that embed AI across the entire Microsoft 365 suite — Outlook, Word, Excel, Teams, and PowerPoint. The natural choice for organisations already on Microsoft licensing who want AI capabilities without adding a new vendor relationship to manage.',
       price: 'Free / $30/user/mo (M365)',
       free: true, freeTierLabel: 'Free',
       rating: 4.1, reviews: 0,  // community estimate; not confirmed on G2
@@ -850,7 +850,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'meta.ai',
       url: 'https://meta.ai',
       tagline: 'Free AI in WhatsApp, Instagram & more',
-      desc: "Powered by Meta's Llama models — free AI assistant embedded in WhatsApp, Messenger, Instagram, and Facebook. Also available at meta.ai and as a standalone app.",
+      desc: "Powered by Meta's Llama models and embedded where billions of people already spend time — WhatsApp, Messenger, Instagram, and Facebook. Free with no account required at meta.ai. The lowest-friction AI assistant for everyday tasks and the most widely accessible option globally, whether or not you think about AI tools intentionally.",
       price: 'Free',
       free: true, freeTierLabel: 'Free',
       rating: 4.0, reviews: 0,  // consumer app; no independent G2 reviews
@@ -869,7 +869,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'meshy.ai',
       url: 'https://meshy.ai',
       tagline: 'Fast text & image to 3D',
-      desc: 'Generate textured, game-ready 3D models from text or images in seconds. Export to FBX, OBJ, GLTF, or STL.',
+      desc: 'Generates textured, game-ready 3D models from text or image prompts in seconds, exported clean to FBX, OBJ, GLTF, or STL. The fastest way to get a usable 3D asset without opening Blender — strong for concept-phase production, game prototyping, and any workflow where iteration speed beats perfect topology.',
       price: 'Free / $16/mo Pro',
       free: true, freeTier: '200 credits/mo', freeTierLabel: 'Free',
       rating: 4.8, reviews: 2327,  // G2 verified
@@ -883,7 +883,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'tripo3d.ai',
       url: 'https://tripo3d.ai',
       tagline: 'High-fidelity 3D model generation',
-      desc: 'Generates detailed, textured 3D models from single images or text prompts. Supports PBR materials.',
+      desc: 'Produces detailed, textured 3D models with PBR materials from single images or text prompts, with output quality that\'s increasingly holding up in production contexts rather than just as rough concepts. Rapid generation pipeline makes it practical for high-volume asset creation and early-stage design exploration where speed is the constraint.',
       price: 'Free / $8/mo Basic',
       free: true, freeTier: '100 credits/mo', freeTierLabel: 'Free',
       rating: 4.3, reviews: 420,  // Trustpilot verified (not on G2)
@@ -897,7 +897,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'spline.design',
       url: 'https://spline.design',
       tagline: '3D design with AI generation',
-      desc: 'Browser-based 3D design tool with AI generation. Great for web animations, product mockups, and interactive scenes.',
+      desc: 'Browser-based 3D design with AI generation built in — create objects, apply materials, animate them, and embed them directly into websites without installing software or learning a traditional 3D workflow. The right tool for web animations, interactive product mockups, and live 3D scenes that need to run in a browser, not just a rendering engine.',
       price: 'Free / $9/mo Pro',
       free: true, freeTierLabel: 'Free',
       rating: 4.3, reviews: 380,  // community/ProductHunt (G2 listing limited)
@@ -911,7 +911,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'blockadelabs.com',
       url: 'https://blockadelabs.com',
       tagline: 'AI-generated 360° environments',
-      desc: 'Generate immersive 360° skyboxes and environments for VR/AR, game levels, and virtual sets.',
+      desc: 'Generates immersive 360° skyboxes and full environments for VR/AR experiences, game levels, and virtual set production from a text prompt — faster than building backgrounds from scratch and good enough for environments that aren\'t the focal point. One of the rare AI tools that works directly in the format XR and game developers actually need.',
       price: 'From $12/mo',
       free: true, freeTier: 'Limited exports', freeTierLabel: 'Free tier available',
       rating: 4.2, reviews: 280,  // community estimate (no G2)
@@ -929,7 +929,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'reclaim.ai',
       url: 'https://reclaim.ai',
       tagline: 'Smart calendar blocking',
-      desc: 'Automatically protects time for focus work, habits, and meetings. Syncs with Google Calendar.',
+      desc: 'Automatically protects time for focus work, habits, and recurring tasks by dynamically scheduling them around your existing calendar commitments — and rescheduling intelligently when things change. If you\'ve ever blocked time only to watch it get picked apart by meeting requests, Reclaim is the tool that makes protected time actually hold.',
       price: 'Free / $8/mo Starter',
       free: true, freeTierLabel: 'Free',
       rating: 4.8, reviews: 120,  // G2 verified
@@ -943,7 +943,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'taskade.com',
       url: 'https://taskade.com',
       tagline: 'AI agents for team tasks',
-      desc: 'Project management with built-in AI agents that can research, write, and complete tasks autonomously.',
+      desc: 'Project management with AI agents built in that can research topics, draft documents, and complete tasks autonomously rather than just surfacing reminders. More capable than a to-do app, less bloated than enterprise PM software, and genuinely agentic in a way most productivity tools still aren\'t — useful for teams that want fewer tools doing more.',
       price: 'Free / $8/mo Plus',
       free: true, freeTier: 'Unlimited tasks', freeTierLabel: 'Free',
       rating: 4.7, reviews: 63,  // G2 verified
@@ -957,7 +957,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'notion.so',
       url: 'https://notion.so/product/ai',
       tagline: 'AI built into your workspace',
-      desc: 'Summarise notes, draft documents, and auto-fill databases — all inside Notion. No context switching.',
+      desc: 'All the things you already do in Notion — notes, docs, databases — with AI that summarises, drafts, auto-fills fields, and answers questions about your workspace without leaving the page. Most useful if you\'re already deep in the Notion ecosystem and want AI that understands your specific context rather than starting from scratch every time.',
       price: '$8/mo add-on',
       free: false, freeTierLabel: null,
       rating: 4.6, reviews: 10149,  // G2 verified (Notion overall)
@@ -971,7 +971,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'zapier.com',
       url: 'https://zapier.com/ai',
       tagline: 'AI-powered workflow automation',
-      desc: 'Build automations in plain English. Connect 6,000+ apps and let AI suggest the right workflow steps.',
+      desc: 'Build automations in plain English and Zapier translates them into working workflows across 6,000+ connected apps. AI suggests the right trigger-action combinations, flags logic issues, and handles the mapping so you can describe what you want to happen rather than manually wiring every step. No-code automation that actually works.',
       price: 'From $19.99/mo',
       free: true, freeTier: '100 tasks/mo', freeTierLabel: 'Free tier available',
       rating: 4.5, reviews: 1754,  // G2 verified
@@ -985,7 +985,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'otter.ai',
       url: 'https://otter.ai',
       tagline: 'AI meeting transcription',
-      desc: 'Real-time transcription, speaker identification, and meeting summaries. Integrates with Zoom, Meet, and Teams.',
+      desc: 'Real-time meeting transcription with speaker identification and AI summaries that capture what was decided, not just what was said. Integrates directly with Zoom, Google Meet, and Teams — joins automatically, takes notes, and sends a summary before you\'ve closed the tab. Particularly useful for anyone who ends up in more meetings than they\'d like.',
       price: 'Free / $10/mo Pro',
       free: true, freeTierLabel: 'Free',
       rating: 4.4, reviews: 462,  // G2 verified
@@ -999,7 +999,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'usemotion.com',
       url: 'https://usemotion.com',
       tagline: 'AI calendar & task scheduling',
-      desc: 'Automatically schedules your tasks and meetings into your calendar based on deadlines and priorities.',
+      desc: 'Automatically schedules your to-do list around your existing calendar commitments based on deadlines, duration estimates, and priority — and reschedules dynamically when plans change. If your day currently involves manually replaying Tetris with your calendar every morning, Motion handles that instead.',
       price: 'From $19/mo',
       free: false, freeTierLabel: 'Free trial',
       rating: 4.1, reviews: 155,  // G2 verified
@@ -1013,7 +1013,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'mem.ai',
       url: 'https://mem.ai',
       tagline: 'Self-organising AI notes',
-      desc: 'Notes that automatically surface relevant context as you work. AI search across your entire knowledge base.',
+      desc: 'Notes that surface the right context while you\'re working on something — automatically connecting related ideas, previous decisions, and reference material without requiring any manual organisation on your part. AI search that understands what you mean rather than matching keywords across a sea of documents you\'ve forgotten you wrote.',
       price: 'Free / $8/mo Pro',
       free: true, freeTierLabel: 'Free',
       rating: 4.0, reviews: 48,  // G2 profile unclaimed; community estimate
@@ -1027,7 +1027,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'gamma.app',
       url: 'https://gamma.app',
       tagline: 'AI presentation & deck builder',
-      desc: 'Generate complete presentations, documents, and websites from a text prompt in under 60 seconds. 70M users, $100M ARR. Gamma Generate API available for developers.',
+      desc: 'Generate complete presentations, documents, and websites from a text prompt in under 60 seconds — with real design quality rather than the auto-formatted PowerPoint aesthetic. 70 million users and $100M ARR validates the use case. A Gamma Generate API is also available for developers embedding presentation creation into their own products.',
       price: 'Free / $8/mo Plus',
       free: true, freeTier: '400 credits (~10 decks)', freeTierLabel: 'Free',
       rating: 4.5, reviews: 0,  // community estimate; exact G2 score unconfirmed
@@ -1041,7 +1041,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'fireflies.ai',
       url: 'https://fireflies.ai',
       tagline: 'AI meeting transcription & notes',
-      desc: 'Unlimited meeting transcription in 100+ languages, AI summaries, searchable conversation intelligence, and CRM integrations. Unlimited storage on paid plans.',
+      desc: 'Unlimited meeting transcription in 100+ languages with AI summaries, searchable conversation intelligence, and CRM integrations that push notes where they need to go automatically. Unlimited storage on paid plans and strong search across your full meeting history — useful when you need to find what was said in a meeting from three months ago.',
       price: 'Free / $10/user/mo Pro',
       free: true, freeTier: 'Unlimited transcription (limited AI)', freeTierLabel: 'Free tier available',
       rating: 4.5, reviews: 0,  // on G2; exact count unconfirmed
@@ -1059,7 +1059,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'sproutsocial.com',
       url: 'https://sproutsocial.com',
       tagline: 'Enterprise social management + AI',
-      desc: 'Full-suite social media management with AI Assist for content writing, sentiment analysis, social listening, and best-time publishing recommendations.',
+      desc: 'Full-suite social media management built for teams that need publishing, engagement, analytics, and listening in one place. AI Assist generates captions and full posts, sentiment analysis surfaces what\'s resonating, and competitive benchmarking shows where you stand. The standard choice for marketing teams with real social media operations to run.',
       price: 'From $249/user/mo',
       free: false, freeTierLabel: 'Free trial',
       rating: 4.4, reviews: 5700,  // G2 verified
@@ -1073,7 +1073,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'adcreative.ai',
       url: 'https://adcreative.ai',
       tagline: 'AI ad creative generation at scale',
-      desc: 'Generate static, video, and banner ads optimised for performance using data from billions of ad impressions. Integrates with Meta, Google, and LinkedIn.',
+      desc: 'Generate static, video, and banner ads optimised for actual performance — trained on data from billions of ad impressions rather than just what looks good in isolation. Integrates directly with Meta, Google, and LinkedIn ad accounts. For teams running paid social at volume, faster creative production with predicted performance scores before anything goes live.',
       price: 'From $29/mo',
       free: false, freeTierLabel: 'Free trial',
       rating: 4.3, reviews: 792,  // G2 verified
@@ -1087,7 +1087,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'madgicx.com',
       url: 'https://madgicx.com',
       tagline: 'AI media buyer for Meta & Google ads',
-      desc: 'AI-powered ad management for Meta and Google — automated audience targeting, creative analysis, and bid optimisation. Built for e-commerce and DTC brands.',
+      desc: 'AI-powered Meta and Google ad management that autonomously handles audience targeting, creative analysis, and bid optimisation without requiring manual adjustments to every campaign. Built specifically for e-commerce and DTC brands that need to scale ad spend without proportionally scaling headcount. Strong ROAS-focused reporting.',
       price: 'From $44/mo',
       free: false, freeTierLabel: 'Free trial',
       rating: 4.6, reviews: 196,  // G2 verified
@@ -1101,7 +1101,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'brand24.com',
       url: 'https://brand24.com',
       tagline: 'AI social listening & brand monitoring',
-      desc: 'Real-time monitoring of brand mentions across web, social, news, and podcasts. AI sentiment analysis, competitive benchmarking, and trend detection.',
+      desc: 'Real-time monitoring of brand mentions across the web, social media, news, and podcasts — with AI sentiment analysis, competitive benchmarking, and trend detection. Useful for PR teams and brand managers who need to know what\'s being said before it becomes a story rather than after. Alerts work fast enough to actually act on.',
       price: 'From $79/mo',
       free: false, freeTierLabel: 'Free trial',
       rating: 4.5, reviews: 0,  // on G2/Capterra; exact count unverified
@@ -1115,7 +1115,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'hootsuite.com',
       url: 'https://hootsuite.com',
       tagline: 'Social scheduling + OwlyWriter AI',
-      desc: 'Social media scheduling with OwlyWriter AI built in — generates captions, full posts from URLs, repurposes top-performing content, and suggests trending topics.',
+      desc: 'One of the original social media scheduling platforms, now with OwlyWriter AI generating captions, repurposing top-performing content, suggesting trending topics, and creating posts directly from URLs. Broad platform coverage, enterprise analytics, and enough team workflow features for mid-size social media operations that need everything in one place.',
       price: 'From $99/mo',
       free: false, freeTierLabel: 'Free trial',
       rating: 4.1, reviews: 0,  // on multiple platforms; exact G2 count unverified
@@ -1129,7 +1129,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'trypencil.com',
       url: 'https://trypencil.com',
       tagline: 'AI ads with performance prediction',
-      desc: 'Generate video and static ad creatives then predict their performance using data from $1B+ in tracked ad spend. Integrates with Meta, TikTok, and Google.',
+      desc: 'Generate video and static ad creatives, then get a predicted performance score before you launch — backed by data from over $1 billion in tracked ad spend. Works with Meta, TikTok, and Google. The combination of creation and prediction in one tool is genuinely useful for performance marketers who\'d rather test ideas before spending budget.',
       price: 'From $14/mo',
       free: true, freeTier: '6 free ads on signup', freeTierLabel: 'Free tier available',
       rating: 4.2, reviews: 0,  // community estimate; not on G2
@@ -1143,7 +1143,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'lately.ai',
       url: 'https://lately.ai',
       tagline: 'Repurpose long-form content into social posts',
-      desc: 'AI ingests podcasts, videos, and blog posts and generates dozens of social posts using hooks that have historically performed best for your brand.',
+      desc: 'Ingests existing content — podcasts, videos, blog posts — and generates dozens of on-brand social posts using the hooks and angles that have historically performed best for your specific audience. Better than a generic caption writer because it learns what works for your brand rather than producing the same output as everyone else.',
       price: 'From $119/mo',
       free: false, freeTierLabel: null,
       rating: 4.3, reviews: 0,  // on G2; exact count unverified
@@ -1157,7 +1157,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'albert.ai',
       url: 'https://albert.ai',
       tagline: 'Autonomous AI digital advertising',
-      desc: 'Fully autonomous AI media buyer that plans, allocates, and optimises ad spend across search, social, and programmatic channels without manual intervention.',
+      desc: 'Fully autonomous AI media buyer that plans, allocates, and optimises ad spend across search, social, and programmatic channels without manual intervention — making independent campaign-level decisions rather than just surfacing recommendations. Built for enterprise marketing teams that want AI running campaigns, not just assisting them.',
       price: 'From $2,000/mo',
       free: false, freeTierLabel: null,
       rating: 4.2, reviews: 0,  // enterprise; limited public reviews
@@ -1175,7 +1175,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'portfoliopilot.com',
       url: 'https://portfoliopilot.com',
       tagline: 'AI personal financial advisor',
-      desc: 'Portfolio analysis, investment recommendations, tax optimisation, and retirement planning using hedge fund-inspired AI models. Meaningful free tier with real analysis tools.',
+      desc: 'Portfolio analysis, investment recommendations, tax optimisation, and retirement planning using hedge fund-inspired AI models — with a meaningful free tier that includes real analysis rather than just a teaser. Connects to your existing brokerage accounts and gives you the kind of personalised financial view that used to require a private wealth manager.',
       price: 'Free / From $20/mo',
       free: true, freeTier: 'Portfolio analysis & scoring', freeTierLabel: 'Free',
       rating: 4.4, reviews: 0,  // community estimate; limited review data
@@ -1189,7 +1189,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'seekingalpha.com',
       url: 'https://seekingalpha.com',
       tagline: 'AI quant ratings + investment research',
-      desc: 'Combines crowdsourced analyst articles with an AI Quant Ratings system scoring stocks across value, growth, profitability, momentum, and EPS revisions.',
+      desc: 'Combines crowdsourced analyst articles with a proprietary AI Quant Ratings system that scores every stock across value, growth, profitability, momentum, and EPS revisions simultaneously. A useful combination of quantitative signal and human perspective that neither pure quant tools nor traditional analyst research offer on their own.',
       price: 'Free / $269/yr Premium',
       free: true, freeTier: 'Limited article access', freeTierLabel: 'Free tier available',
       rating: 4.3, reviews: 0,  // not typically on G2; community estimate
@@ -1203,7 +1203,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'simplywall.st',
       url: 'https://simplywall.st',
       tagline: 'Visual AI stock analysis',
-      desc: 'AI-generated Snowflake scores covering valuation, growth, financial health, and dividends across 100,000+ stocks in global markets. Built for long-term investors.',
+      desc: 'AI-generated Snowflake scores visualising valuation, growth, financial health, and dividends across 100,000+ stocks in global markets — designed for long-term investors who want to see a company\'s full picture without reading through every filing. Particularly good at making complex financial analysis legible for people who aren\'t professional analysts.',
       price: 'From $10/mo',
       free: true, freeTier: 'Limited stocks', freeTierLabel: 'Free tier available',
       rating: 4.4, reviews: 0,  // community estimate; G2 rating unconfirmed
@@ -1217,7 +1217,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'magnifi.com',
       url: 'https://magnifi.com',
       tagline: 'AI investment search & copilot',
-      desc: 'Conversational AI for searching 15,000+ stocks, ETFs, and mutual funds. Portfolio risk analysis, managed portfolios, and commission-free trades.',
+      desc: 'Conversational AI for searching 15,000+ stocks, ETFs, and mutual funds by describing what you\'re looking for rather than knowing the ticker. Portfolio risk analysis, managed portfolios, and commission-free trades in one interface — useful for investors who want to research and act without switching between multiple tools.',
       price: 'Free / $8.25/mo Premium',
       free: true, freeTier: 'Limited queries', freeTierLabel: 'Free tier available',
       rating: 4.2, reviews: 0,  // community estimate; limited review data
@@ -1231,7 +1231,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'trendspider.com',
       url: 'https://trendspider.com',
       tagline: 'AI charting & technical analysis',
-      desc: 'Automated trendline detection (up to 2,000 per chart), multi-timeframe analysis, pattern recognition, backtesting, and Sidekick — an AI conversational analyst.',
+      desc: 'Automated trendline detection across up to 2,000 patterns per chart, multi-timeframe analysis, pattern recognition, and backtesting — plus Sidekick, a conversational AI analyst you can ask about any chart or strategy in plain English. Built for technical traders who want institutional-grade charting tools without institutional prices.',
       price: 'From $59/mo',
       free: false, freeTierLabel: 'Free trial',
       rating: 4.4, reviews: 0,  // community estimate; G2 rating unconfirmed
@@ -1245,7 +1245,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'composer.trade',
       url: 'https://composer.trade',
       tagline: 'No-code AI algorithmic trading',
-      desc: 'Build, backtest, and automate trading strategies in plain English. AI generates back-tested strategies in under 60 seconds. Supports taxable and IRA accounts.',
+      desc: 'Build, backtest, and automate algorithmic trading strategies by describing them in plain English — no coding required. AI generates back-tested strategies in under 60 seconds, and you can automate execution across taxable and IRA accounts. The fastest path to running a systematic strategy for traders who know what they want but can\'t code it.',
       price: '$384/yr (~$32/mo)',
       free: false, freeTierLabel: 'Free trial',
       rating: 4.3, reviews: 0,  // community estimate; limited review data
@@ -1259,7 +1259,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'alpha-sense.com',
       url: 'https://alpha-sense.com',
       tagline: 'Institutional AI market intelligence',
-      desc: 'Searches earnings calls, SEC filings, broker research, and news using semantic AI. Smart Summaries and LLM-ready API. Used by investment banks and Fortune 500 strategy teams.',
+      desc: 'Searches earnings calls, SEC filings, broker research, and news simultaneously using semantic AI that understands context, not just keywords. Smart Summaries surface the signal from hundreds of pages of filings in seconds. Used by investment banks and Fortune 500 strategy teams who need to move faster than manual research allows.',
       price: 'From $10K/seat/yr',
       free: false, freeTierLabel: null,
       rating: 4.5, reviews: 0,  // enterprise; limited public G2 data
@@ -1273,7 +1273,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'kensho.com',
       url: 'https://kensho.com',
       tagline: "S&P Global's AI financial analytics",
-      desc: "S&P Global's enterprise AI for financial institutions — earnings call analysis, document transcription, entity extraction, and LLM-ready financial data APIs for AI workflows.",
+      desc: "S&P Global's enterprise AI platform for financial institutions — earnings call analysis, document transcription, entity extraction, and LLM-ready financial data APIs built for teams constructing AI workflows at scale. The infrastructure layer that powers AI applications across some of the largest financial organisations in the world.",
       price: 'Custom (enterprise)',
       free: false, freeTierLabel: null,
       rating: 4.3, reviews: 0,  // enterprise; no public G2 reviews
@@ -1291,7 +1291,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'quickbooks.intuit.com',
       url: 'https://quickbooks.intuit.com',
       tagline: 'AI agents built into QuickBooks',
-      desc: 'AI agents across accounting, payroll, payments, and customer management built directly into QuickBooks Online. Automates invoicing, estimates, bills, and bookkeeping tasks.',
+      desc: 'AI agents built directly into QuickBooks Online that automate invoicing, estimates, bills, and bookkeeping tasks without requiring a separate tool or workflow. Covers accounting, payroll, payments, and customer management — and because it lives inside QBO, it understands your actual financial data rather than working from exports.',
       price: 'Included in QBO ($30–$200/mo)',
       free: false, freeTierLabel: 'Free trial',
       rating: 4.3, reviews: 0,  // QBO itself well-reviewed; AI-specific rating not separated
@@ -1305,7 +1305,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'dext.com',
       url: 'https://dext.com',
       tagline: 'AI receipt & invoice data capture',
-      desc: 'Extracts data from receipts, invoices, and bank statements with 99.9% accuracy. Integrates with QuickBooks, Xero, and Sage. Used by 12,000+ accounting firms.',
+      desc: 'Extracts data from receipts, invoices, and bank statements with 99.9% claimed accuracy and posts it directly to QuickBooks, Xero, or Sage. Eliminates manual data entry for the routine document processing that accounting firms spend enormous time on — used by 12,000+ practices globally as a core part of their workflow.',
       price: 'From $34/mo',
       free: false, freeTierLabel: 'Free trial',
       rating: 4.6, reviews: 0,  // G2 4.6 confirmed; exact count unverified
@@ -1319,7 +1319,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'pilot.com',
       url: 'https://pilot.com',
       tagline: 'AI bookkeeping for startups',
-      desc: 'AI categorises transactions, reconciles accounts, and closes books monthly. Pilot AI Accountant (2026) enables fully autonomous bookkeeping with human CPA oversight.',
+      desc: 'AI that categorises transactions, reconciles accounts, and closes books monthly — with human CPA review built into the model rather than as an optional add-on. The 2026 Pilot AI Accountant moves further toward fully autonomous bookkeeping, making it a genuine outsourced-accounting alternative for funded startups.',
       price: 'From $499/mo',
       free: false, freeTierLabel: null,
       rating: 4.3, reviews: 0,  // on G2/Capterra; exact rating unconfirmed
@@ -1333,7 +1333,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'vic.ai',
       url: 'https://vic.ai',
       tagline: 'Autonomous AI accounts payable',
-      desc: 'AI-first AP automation with 97–99% invoice processing accuracy and autonomous payment capabilities. 535M+ invoices processed. Integrates with SAP, Oracle, and Dynamics.',
+      desc: 'AI-first AP automation with 97–99% invoice processing accuracy and the ability to make autonomous payment decisions — not just recommendations. 535 million invoices processed. Integrates with SAP, Oracle, and Dynamics for enterprise deployments where accuracy and audit trail matter as much as throughput speed.',
       price: 'Custom (enterprise)',
       free: false, freeTierLabel: null,
       rating: 4.4, reviews: 0,  // SaaSWorthy 88/100; G2 star rating unconfirmed
@@ -1347,7 +1347,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'mindbridge.ai',
       url: 'https://mindbridge.ai',
       tagline: 'AI audit analytics & fraud detection',
-      desc: 'Analyses 100% of general ledger transactions to detect anomalies, potential fraud, and outliers. Used by audit firms and internal audit teams globally.',
+      desc: 'Analyses 100% of general ledger transactions to detect anomalies, potential fraud, and accounting outliers — not just a statistical sample. Built for audit firms and internal audit teams that need full-population coverage rather than the sample-based approach that misses what sits between the tested items.',
       price: 'Custom (enterprise)',
       free: false, freeTierLabel: null,
       rating: 4.3, reviews: 0,  // on G2/Capterra; exact rating unconfirmed
@@ -1361,7 +1361,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'autoentry.com',
       url: 'https://autoentry.com',
       tagline: 'AI data capture for accountants',
-      desc: 'AI + OCR capture for receipts, invoices, and bank statements. Auto-posts to QuickBooks, Xero, Sage, and FreeAgent. Lightweight alternative to Dext for smaller practices.',
+      desc: 'AI and OCR data capture for receipts, invoices, and bank statements, auto-posting to QuickBooks, Xero, Sage, and FreeAgent. A lighter-weight, more affordable alternative to Dext for smaller practices and sole practitioners who need solid data capture without an enterprise pricing model attached.',
       price: 'From $24/mo',
       free: false, freeTierLabel: null,
       rating: 4.2, reviews: 0,  // community estimate; not independently verified
@@ -1379,7 +1379,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'thomsonreuters.com',
       url: 'https://legal.thomsonreuters.com',
       tagline: 'AI legal research by Thomson Reuters',
-      desc: 'AI legal assistant with case law research, document review, and guided workflows. Integrated with Westlaw Precision. Reached 1 million users in February 2026.',
+      desc: 'Thomson Reuters\' AI legal assistant with case law research, document review, and guided workflows backed by the full Westlaw Precision database. Reached one million users in February 2026 — the clearest validation that AI legal research tools have moved from interesting to essential for serious legal work.',
       price: 'From $225/user/mo',
       free: false, freeTierLabel: null,
       rating: 4.5, reviews: 0,  // not publicly on G2; community estimate
@@ -1393,7 +1393,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'ironcladapp.com',
       url: 'https://ironcladapp.com',
       tagline: 'AI contract lifecycle management',
-      desc: "End-to-end contract management — AI drafting, workflow automation, repository, e-signature, and analytics. Used by Salesforce, L'Oréal, and Dropbox legal teams.",
+      desc: "End-to-end contract lifecycle management — AI drafting, workflow automation, repository, e-signature, and analytics in a single platform. Used by Salesforce, L'Oréal, and Dropbox legal teams. The tool for in-house legal departments that need to handle high contract volume without growing headcount to match.",
       price: 'From ~$15K/yr',
       free: false, freeTierLabel: null,
       rating: 4.5, reviews: 0,  // G2 4.5 confirmed; exact count unverified
@@ -1407,7 +1407,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'clio.com',
       url: 'https://clio.com',
       tagline: 'AI-powered law firm management',
-      desc: 'Practice management platform for small to mid-size law firms. AI add-on handles natural language queries, time entry, document management, and billing automation.',
+      desc: 'Practice management platform for small to mid-size law firms with an AI add-on that handles natural language queries, time entry, document management, and billing automation. The most complete software stack for running a law practice — and the AI layer makes the time-consuming administrative work substantially faster to get through.',
       price: 'From $39/user/mo',
       free: false, freeTierLabel: 'Free trial',
       rating: 4.5, reviews: 0,  // well-reviewed on G2/Capterra; exact count unconfirmed
@@ -1421,7 +1421,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'harvey.ai',
       url: 'https://harvey.ai',
       tagline: 'Enterprise legal AI for top law firms',
-      desc: 'Contract analysis, due diligence, litigation support, and regulatory compliance. Used by AmLaw 100 firms globally. Partnership with LexisNexis. Valued at $11B (2026).',
+      desc: 'Contract analysis, due diligence, litigation support, and regulatory compliance at AmLaw 100 calibre. Used by top law firms globally, partnered with LexisNexis, and valued at $11 billion in 2026 — the enterprise legal AI that\'s becoming the infrastructure layer underneath the legal industry\'s AI transformation.',
       price: 'From ~$1,200/user/mo',
       free: false, freeTierLabel: null,
       rating: 4.5, reviews: 0,  // industry acclaimed; no public G2 reviews
@@ -1435,7 +1435,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'spellbook.legal',
       url: 'https://spellbook.legal',
       tagline: 'AI contract drafting in Microsoft Word',
-      desc: 'Suggests clauses, redlines, flags missing provisions, and drafts contract language directly inside Microsoft Word. Built for transactional lawyers and in-house counsel.',
+      desc: 'Suggests contract clauses, redlines risky language, flags missing provisions, and drafts language directly inside Microsoft Word — where transactional lawyers actually work, rather than in a separate platform. Built specifically for the in-house counsel and transactional lawyer workflow, not as general-purpose AI bolted onto legal.',
       price: 'From ~$49/user/mo',
       free: false, freeTierLabel: null,
       rating: 4.4, reviews: 0,  // on G2/TrustRadius; exact rating unconfirmed
@@ -1449,7 +1449,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'luminance.com',
       url: 'https://luminance.com',
       tagline: 'Legal-grade AI document review',
-      desc: 'AI built specifically for legal by AI scientists and lawyers — contract review, due diligence, and CLM. Used by top law firms and corporate legal departments.',
+      desc: 'Built specifically for legal by a team of AI scientists and practising lawyers — contract review, due diligence, and CLM with an AI that understands legal concepts rather than treating documents as generic text. Used by top law firms and corporate legal departments where the stakes are high enough that general-purpose AI isn\'t a sufficient substitute.',
       price: 'Custom (enterprise)',
       free: false, freeTierLabel: null,
       rating: 4.3, reviews: 0,  // Gartner Peer Insights listed; exact score unconfirmed
@@ -1463,7 +1463,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'donotpay.com',
       url: 'https://donotpay.com',
       tagline: 'AI for everyday consumer legal tasks',
-      desc: 'Dispute parking tickets, cancel subscriptions, draft legal letters, and navigate small claims — no lawyer required. Consumer-focused subscription service.',
+      desc: 'Dispute parking tickets, cancel difficult subscriptions, draft legal letters, and navigate small claims without hiring a lawyer. Consumer-focused and affordable — useful for the everyday legal friction that most people give up on because the cost of professional advice exceeds the value of the outcome they\'re trying to reach.',
       price: '$36/2 months',
       free: false, freeTierLabel: null,
       rating: 3.8, reviews: 0,  // community estimate
@@ -1481,7 +1481,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'fetcher.ai',
       url: 'https://fetcher.ai',
       tagline: 'AI candidate sourcing automation',
-      desc: 'Learns your ideal candidate profile, searches professional networks, and delivers pre-sourced candidates with automated outreach. Integrates with Greenhouse and Lever.',
+      desc: 'Learns your ideal candidate profile, searches professional networks automatically, and delivers pre-sourced candidates with personalised outreach already queued. Integrates with Greenhouse and Lever so sourced candidates flow directly into your ATS. Useful for teams that spend too much time sourcing and not enough time actually talking to candidates.',
       price: 'From $379/mo',
       free: false, freeTierLabel: null,
       rating: 4.6, reviews: 0,  // G2 4.6 confirmed; exact count unverified
@@ -1495,7 +1495,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'phenom.com',
       url: 'https://phenom.com',
       tagline: 'End-to-end AI talent experience platform',
-      desc: 'TalentGPT-powered platform covering candidate experience, recruiter productivity, employee internal mobility, and workforce planning. Used by global enterprises.',
+      desc: 'TalentGPT-powered platform covering the full talent lifecycle — candidate experience, recruiter productivity, employee internal mobility, and workforce planning — in a single system. Used by global enterprises that need AI embedded across HR rather than bolted onto individual point solutions.',
       price: 'From ~$10K/mo',
       free: false, freeTierLabel: null,
       rating: 4.3, reviews: 395,  // G2 verified (4.3–4.4 range)
@@ -1509,7 +1509,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'paradox.ai',
       url: 'https://paradox.ai',
       tagline: 'Conversational AI recruiting assistant',
-      desc: "Olivia — Paradox's AI — automates candidate screening, interview scheduling, FAQ handling, and onboarding via chat and SMS. Built for 24/7 high-volume hiring.",
+      desc: "Olivia — Paradox's conversational AI — automates candidate screening, interview scheduling, FAQ handling, and onboarding via chat and SMS. Built for 24/7 high-volume hiring environments where human recruiters can't be available at every hour a candidate wants to engage. Particularly effective for hourly and retail hiring at scale.",
       price: 'From ~$1,000/mo',
       free: false, freeTierLabel: null,
       rating: 4.4, reviews: 0,  // Capterra/GetApp listed; exact score unconfirmed
@@ -1523,7 +1523,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'eightfold.ai',
       url: 'https://eightfold.ai',
       tagline: 'AI talent intelligence platform',
-      desc: 'Goes beyond keyword matching — analyses full career histories and infers skills to predict candidate potential. Covers talent acquisition, internal mobility, and workforce planning.',
+      desc: 'Goes beyond keyword matching by analysing full career histories and inferring skills to predict candidate potential — not just whether someone has the right words on their CV. Covers talent acquisition, internal mobility, and workforce planning, with an AI that gets more useful the more it understands your organisation\'s actual skill needs.',
       price: 'From ~$650/mo',
       free: false, freeTierLabel: null,
       rating: 4.1, reviews: 0,  // G2 4.1, Capterra 4.1; exact count unconfirmed
@@ -1537,7 +1537,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'hirevue.com',
       url: 'https://hirevue.com',
       tagline: 'AI video interviewing & assessments',
-      desc: 'One-way video interviews, on-demand scheduling, game-based cognitive assessments, and optional AI candidate scoring. Used for high-volume campus and hourly recruiting.',
+      desc: 'One-way video interviews, on-demand scheduling, game-based cognitive assessments, and optional AI candidate scoring — all in one platform. Used for high-volume campus and hourly recruiting where reviewing every application live simply isn\'t feasible. Lets candidates complete interviews on their own time, which meaningfully increases completion rates.',
       price: 'From $35K/yr',
       free: false, freeTierLabel: null,
       rating: 4.1, reviews: 0,  // G2 4.1 confirmed; exact count unconfirmed
@@ -1551,7 +1551,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'textio.com',
       url: 'https://textio.com',
       tagline: 'AI writing for HR & job descriptions',
-      desc: 'Predicts job description performance and candidate diversity impact. Also covers manager feedback and performance review writing. Jobs scoring 90+ fill 25% faster.',
+      desc: 'Predicts job description performance and candidate diversity impact before you post — and rewrites the language to improve both. Also covers manager feedback and performance review writing. Job descriptions scoring 90+ on Textio\'s scale fill 25% faster, which adds up quickly across an organisation with regular open roles.',
       price: 'From $15K/yr',
       free: false, freeTierLabel: null,
       rating: 4.2, reviews: 0,  // listed on G2; exact rating unconfirmed
@@ -1565,7 +1565,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'workday.com',
       url: 'https://workday.com',
       tagline: 'AI-embedded enterprise HCM suite',
-      desc: 'Skills-based talent matching, AI workforce planning, Workday Illuminate AI agents, and financial anomaly detection — all built into the Workday HCM platform.',
+      desc: 'Skills-based talent matching, AI workforce planning, Workday Illuminate AI agents, and financial anomaly detection — all built into the Workday HCM platform rather than requiring separate integrations. The AI layer for organisations that are already running Workday and want intelligence embedded in the system their HR teams use every day.',
       price: 'Custom (enterprise)',
       free: false, freeTierLabel: null,
       rating: 4.2, reviews: 0,  // large enterprise platform; AI-specific rating unconfirmed
@@ -1579,7 +1579,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'beamery.com',
       url: 'https://beamery.com',
       tagline: 'AI talent CRM & workforce planning',
-      desc: 'TalentGPT-powered candidate CRM, skills intelligence, internal mobility, and workforce planning. Focused on proactive talent pipeline building for global enterprises.',
+      desc: 'TalentGPT-powered candidate CRM, skills intelligence, internal mobility, and workforce planning built around proactive pipeline building rather than reactive hiring. Focused on global enterprises that want to know who their next hire should be before the role opens, rather than scrambling to find candidates after.',
       price: 'Custom (enterprise)',
       free: false, freeTierLabel: null,
       rating: 4.2, reviews: 0,  // Gartner/Capterra listed; exact score unconfirmed
@@ -1597,7 +1597,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'togal.ai',
       url: 'https://togal.ai',
       tagline: 'AI construction takeoff & estimating',
-      desc: 'Automatically detects, measures, and labels spaces and features on architectural plans in seconds. 76% faster than competing takeoff tools in independent testing (2025).',
+      desc: 'Automatically detects, measures, and labels spaces and features on architectural plans in seconds rather than hours. Independent testing in 2025 found it 76% faster than competing takeoff tools — which, on a complex commercial project, translates to days of estimator time saved before a single bid goes out.',
       price: '$299/user/mo',
       free: false, freeTierLabel: null,
       rating: 4.8, reviews: 44,  // G2 verified
@@ -1611,7 +1611,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'procore.com',
       url: 'https://procore.com',
       tagline: 'Construction management with AI',
-      desc: 'Industry-leading construction platform with Procore Assist AI — conversational AI for specs, RFIs, and submittals. Includes Agent Builder for custom automation workflows.',
+      desc: 'The industry-leading construction management platform, now with Procore Assist AI for conversational help with specs, RFIs, and submittals. Agent Builder lets teams create custom automation workflows on top of the platform. The tool most large contractors are already on — AI adds intelligence to the system they already run their projects through.',
       price: 'From $4.5K/yr',
       free: false, freeTierLabel: null,
       rating: 4.5, reviews: 0,  // Capterra 4.5 with large review count
@@ -1625,7 +1625,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'openspace.ai',
       url: 'https://openspace.ai',
       tagline: '360° AI jobsite documentation',
-      desc: 'Captures 360° site photos with AI auto-location against floor plans. Tracks progress against BIM models and integrates with Procore and Autodesk Construction Cloud.',
+      desc: 'Captures 360° site photos and automatically locates them against floor plans — no manual tagging required. Tracks visual progress against BIM models and integrates with Procore and Autodesk Construction Cloud. Gives project managers a searchable, navigable visual record of every corner of the site without a dedicated documentation team.',
       price: 'From ~$10K/project',
       free: false, freeTierLabel: null,
       rating: 4.4, reviews: 0,  // G2/Capterra listed; exact score unconfirmed
@@ -1639,7 +1639,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'buildots.com',
       url: 'https://buildots.com',
       tagline: 'AI site monitoring & delay prediction',
-      desc: '360° footage from site walks compared against BIM to predict schedule delays up to 3 weeks early. Reduces delays by up to 50% on complex commercial projects.',
+      desc: 'Compares 360° footage from regular site walks against BIM to predict schedule delays up to three weeks before they happen — enough time to actually do something about them. Reduces delays by up to 50% on complex commercial projects where early warning is the difference between a schedule correction and a claim.',
       price: 'Custom (enterprise)',
       free: false, freeTierLabel: null,
       rating: 4.4, reviews: 0,  // enterprise; limited public reviews
@@ -1653,7 +1653,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'alicetechnologies.com',
       url: 'https://alicetechnologies.com',
       tagline: 'AI construction scheduling simulation',
-      desc: 'Generates and compares thousands of scheduling scenarios to optimise construction sequences. Average 17% reduction in construction duration and 14% in labour costs.',
+      desc: 'Generates and compares thousands of scheduling scenarios to find the optimal construction sequence — something no human planner can do manually at scale. Delivers an average 17% reduction in construction duration and 14% in labour costs on projects where it\'s been deployed. Useful for any project complex enough that the schedule is a genuine source of risk.',
       price: 'Custom',
       free: false, freeTierLabel: null,
       rating: 4.3, reviews: 0,  // community estimate; limited public data
@@ -1667,7 +1667,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'reconstructinc.com',
       url: 'https://reconstructinc.com',
       tagline: 'AI reality capture & progress monitoring',
-      desc: 'Uses drones, 360° cameras, and smartphones to generate 3D models and track progress against BIM. Schedule comparison, forecasting, and visual change detection.',
+      desc: 'Uses drones, 360° cameras, and smartphones to generate 3D models and track construction progress against BIM — accessible to site teams without specialist equipment. Schedule comparison, forecasting, and visual change detection give project managers a continuous, objective view of where the project actually stands versus where it\'s supposed to be.',
       price: 'From ~$500/site/mo',
       free: false, freeTierLabel: null,
       rating: 4.2, reviews: 0,  // SaaSWorthy listed; exact score unconfirmed
@@ -1681,7 +1681,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'versatile.ai',
       url: 'https://versatile.ai',
       tagline: 'AI crane analytics for construction sites',
-      desc: 'Sensors mounted on tower cranes track every lift — count, location, duration, and cycle time — revealing productivity patterns, bottlenecks, and safety insights.',
+      desc: 'Sensors mounted on tower cranes track every lift — count, location, duration, and cycle time — revealing productivity patterns, bottlenecks, and safety insights that are invisible without instrumentation. Most construction sites have no idea how their cranes are actually being used; Versatile makes that data measurable and actionable.',
       price: 'Custom',
       free: false, freeTierLabel: null,
       rating: 4.2, reviews: 0,  // community estimate; niche product
@@ -1698,7 +1698,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'julius.ai',
       url: 'https://julius.ai',
       tagline: 'Chat with your data',
-      desc: 'Upload a CSV, Excel file, or connect a database and ask questions in plain English. Generates charts, runs statistical analysis, and writes Python — no code required.',
+      desc: 'Upload a CSV, Excel file, or connect a database and ask questions in plain English. Generates charts, runs statistical analysis, and writes Python to do the heavy lifting — no SQL or data science background required. The fastest way to get actual answers out of a dataset without needing someone who knows how to query it.',
       price: 'Free / From $20/mo',
       free: true, freeTier: '10 messages/day', freeTierLabel: 'Free',
       rating: 4.6, reviews: 180,  // community estimate
@@ -1712,7 +1712,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'tableau.com',
       url: 'https://tableau.com',
       tagline: 'Leading BI visualisation platform',
-      desc: 'Industry-standard dashboards and data visualisation with Einstein AI for natural-language queries and automated insights. Deep Salesforce and enterprise integrations.',
+      desc: 'Industry-standard dashboards and data visualisation, now with Einstein AI for natural-language queries and automated insights that surface what matters without requiring someone to know what to look for. Deep Salesforce and enterprise integrations make it the default choice for organisations where the data already lives in Salesforce products.',
       price: 'From $75/mo',
       free: false, freeTierLabel: null,
       rating: 4.4, reviews: 2140,  // G2 April 2026
@@ -1726,7 +1726,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'powerbi.microsoft.com',
       url: 'https://powerbi.microsoft.com',
       tagline: 'BI with Copilot AI assistance',
-      desc: "Microsoft's BI suite with Copilot for natural-language report building, DAX formula generation, and automated narrative summaries. Tight Microsoft 365 integration.",
+      desc: "Microsoft's BI suite with Copilot for natural-language report building, DAX formula generation, and automated narrative summaries that explain what the numbers mean. The natural choice for organisations already on Microsoft 365 — Copilot understands the data sitting in Excel and SharePoint that your team is already working with.",
       price: 'Free / From $10/mo',
       free: true, freeTier: 'Desktop app (local only)', freeTierLabel: 'Free tier available',
       rating: 4.5, reviews: 1890,  // G2 April 2026
@@ -1740,7 +1740,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'hex.tech',
       url: 'https://hex.tech',
       tagline: 'AI-powered collaborative data notebooks',
-      desc: 'Collaborative data workspace combining SQL, Python, and no-code cells with Magic AI for query generation, debugging, and chart building. Great for data teams.',
+      desc: 'Collaborative data workspace combining SQL, Python, and no-code cells with Magic AI for query generation, debugging, and chart building. Data teams can build, share, and iterate on analyses together in a format that\'s readable by non-engineers — filling the gap between raw notebooks and polished dashboards.',
       price: 'Free / From $24/mo',
       free: true, freeTier: 'Personal workspace', freeTierLabel: 'Free tier available',
       rating: 4.6, reviews: 210,  // G2 April 2026
@@ -1754,7 +1754,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'polymersearch.com',
       url: 'https://polymersearch.com',
       tagline: 'No-code AI BI from spreadsheets',
-      desc: 'Drop in a spreadsheet or CSV and instantly get an interactive dashboard with AI-generated insights, charts, and filters. No SQL or data science background needed.',
+      desc: 'Drop in a spreadsheet or CSV and instantly get an interactive dashboard with AI-generated insights, charts, and filters. No SQL, no data science background, no setup — just the answers that were buried in your data. The lowest-friction way to make a dataset explorable and shareable for a non-technical audience.',
       price: 'Free / From $19/mo',
       free: true, freeTier: '1 dataset', freeTierLabel: 'Free tier available',
       rating: 4.3, reviews: 145,  // community estimate
@@ -1768,7 +1768,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'obviously.ai',
       url: 'https://obviously.ai',
       tagline: 'Predictive ML without code',
-      desc: 'Upload data, pick what you want to predict, and get a trained ML model in minutes. Handles churn, sales forecasting, and lead scoring — no data science degree required.',
+      desc: 'Upload your data, describe what you want to predict, and get a trained ML model in minutes — no data science degree, no Python required. Handles churn prediction, sales forecasting, and lead scoring out of the box. The fastest way for a business analyst to build and deploy a predictive model without touching code.',
       price: 'From $75/mo',
       free: false, freeTierLabel: null,
       rating: 4.4, reviews: 120,  // G2 April 2026
@@ -1782,7 +1782,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'rows.com',
       url: 'https://rows.com',
       tagline: 'AI spreadsheet with live data connectors',
-      desc: 'Spreadsheet with built-in live integrations for Stripe, HubSpot, SQL databases, and more. AI Analyst summarises and explains your data in natural language.',
+      desc: 'A spreadsheet with live integrations baked in — pull real-time data from Stripe, HubSpot, SQL databases, and more without exporting anything. AI Analyst then summarises and explains what the numbers mean in plain language, so you spend less time building the spreadsheet and more time acting on what\'s in it.',
       price: 'Free / From $19/mo',
       free: true, freeTier: 'Up to 3 sheets', freeTierLabel: 'Free tier available',
       rating: 4.4, reviews: 230,  // G2 April 2026
@@ -1799,7 +1799,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'khanacademy.org',
       url: 'https://khanacademy.org/khan-labs',
       tagline: 'AI tutor from Khan Academy',
-      desc: 'Socratic AI tutor that asks guiding questions rather than giving answers. Covers maths, science, humanities, and coding — with guardrails designed for learners of all ages.',
+      desc: 'Socratic AI tutor that asks guiding questions rather than handing over answers — because the research on learning strongly suggests that\'s how retention actually works. Covers maths, science, humanities, and coding with guardrails designed for learners of all ages. Backed by Khan Academy\'s deep expertise in what makes learning stick.',
       price: 'Free / $44/yr',
       free: true, freeTier: 'Limited credits', freeTierLabel: 'Free tier available',
       rating: 4.6, reviews: 240,  // community estimate
@@ -1813,7 +1813,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'duolingo.com',
       url: 'https://duolingo.com',
       tagline: 'AI-powered language learning',
-      desc: "The world's most-used language app, now with AI conversation practice, personalised lesson paths, and an AI tutor for immersive speaking drills across 40+ languages.",
+      desc: "The world's most-used language learning app — now with AI conversation practice, personalised lesson paths, and an AI tutor for immersive speaking drills across 40+ languages. The gamification works better than most people expect, and the free tier is genuinely useful rather than a perpetual paywall tease.",
       price: 'Free / From $7/mo',
       free: true, freeTierLabel: 'Free',
       rating: 4.7, reviews: 190,  // G2 April 2026
@@ -1827,7 +1827,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'quizlet.com',
       url: 'https://quizlet.com',
       tagline: 'AI flashcards and study tools',
-      desc: 'Generate flashcard sets from any text, get AI explanations of wrong answers, and use Q-Chat — an AI tutor that quizzes you conversationally until you know the material.',
+      desc: 'Generate flashcard sets from any text, get AI explanations of wrong answers that actually explain the concept rather than just restating the answer, and use Q-Chat to be quizzed conversationally until the material sticks. The best-known study tool in the world, now genuinely improved by AI rather than just having AI bolted on.',
       price: 'Free / From $8/mo',
       free: true, freeTierLabel: 'Free',
       rating: 4.5, reviews: 190,  // G2 April 2026
@@ -1841,7 +1841,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'synthesis.com',
       url: 'https://synthesis.com',
       tagline: 'Adaptive AI maths tutor',
-      desc: 'Originally built for SpaceX employees\' kids, now public. Adaptive maths curriculum where AI identifies gaps and accelerates progress through game-based problem solving.',
+      desc: 'Originally built for SpaceX employees\' kids — now public and available to everyone. Adaptive maths curriculum where AI identifies exactly where the gaps are and accelerates progress through game-based problem solving rather than repetition. Consistently surprises parents by how quickly kids progress when the curriculum actually adapts to them.',
       price: 'From $22/mo',
       free: false, freeTierLabel: null,
       rating: 4.6, reviews: 310,  // community estimate
@@ -1855,7 +1855,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'coursera.org',
       url: 'https://coursera.org',
       tagline: 'University courses with AI coaching',
-      desc: 'Access courses from Stanford, Google, and 300+ institutions. Coursera Coach uses AI to answer questions mid-lesson, suggest next steps, and summarise course material.',
+      desc: 'Access courses from Stanford, Google, and 300+ institutions — most auditable for free. Coursera Coach uses AI to answer questions mid-lesson, suggest what to study next, and summarise course material so you can move faster without missing the important parts. The standard route for self-directed professional development.',
       price: 'Free (audit) / From $49/mo',
       free: true, freeTier: 'Audit most courses', freeTierLabel: 'Free tier available',
       rating: 4.5, reviews: 920,  // G2 April 2026
@@ -1869,7 +1869,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'elicit.com',
       url: 'https://elicit.com',
       tagline: 'AI research assistant for academics',
-      desc: 'Search and summarise academic papers, extract key findings into structured tables, and trace claims back to sources. Trusted by researchers at leading universities.',
+      desc: 'Search and summarise academic papers, extract key findings into structured tables, and trace every claim back to its source. Trusted by researchers at leading universities because it actually cites what it\'s telling you rather than hallucinating plausible-sounding references. The honest way to do an AI-assisted literature review.',
       price: 'Free / From $12/mo',
       free: true, freeTier: '5 credits/day', freeTierLabel: 'Free tier available',
       rating: 4.5, reviews: 380,  // community estimate
@@ -1883,7 +1883,7 @@ export const TOOLS: Record<string, Tool[]> = {
       logoDomain: 'mindsmith.ai',
       url: 'https://mindsmith.ai',
       tagline: 'AI rapid e-learning course builder',
-      desc: 'Create interactive training modules in minutes — AI generates lesson structure, writes content, and builds quizzes from a brief or uploaded document. SCORM export for any LMS.',
+      desc: 'Create interactive training modules in minutes — AI generates the lesson structure, writes the content, and builds the quizzes from a brief or an uploaded document. SCORM export means it works with any LMS. The difference between having training materials and spending a month building them, for organisations without a dedicated L&D team.',
       price: 'Free / From $29/mo',
       free: true, freeTier: '3 lessons/mo', freeTierLabel: 'Free tier available',
       rating: 4.4, reviews: 140,  // community estimate

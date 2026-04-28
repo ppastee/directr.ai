@@ -159,31 +159,6 @@ export default function ToolDetailPage({ tool, categoryId, cat }: Props) {
         )}
       </div>
 
-      {/* At a glance */}
-      <div className="tool-detail-section">
-        <h2 className="tool-detail-section-title">At a glance</h2>
-        <div className="feature-chip-grid">
-          <div className={`feature-chip ${tool.apiAccess ? 'feature-yes' : 'feature-no'}`}>
-            <span className="feature-chip-icon">{tool.apiAccess ? '✓' : '✗'}</span>
-            API Access
-          </div>
-          <div className={`feature-chip ${!tool.watermark ? 'feature-yes' : 'feature-no'}`}>
-            <span className="feature-chip-icon">{tool.watermark ? '✗' : '✓'}</span>
-            {tool.watermark ? 'Adds watermark' : 'No watermark'}
-          </div>
-          {tool.outputRes && (
-            <div className="feature-chip feature-neutral">
-              <span className="feature-chip-icon">📐</span>
-              Up to {tool.outputRes}
-            </div>
-          )}
-          <div className={`feature-chip ${tool.free ? 'feature-yes' : 'feature-no'}`}>
-            <span className="feature-chip-icon">{tool.free ? '✓' : '✗'}</span>
-            {tool.freeTierLabel ?? 'No free tier'}
-          </div>
-        </div>
-      </div>
-
       {/* Comparison */}
       {comparators.length > 0 && (
         <div className="tool-detail-section">
