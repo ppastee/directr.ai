@@ -21,7 +21,8 @@ export default function Nav({ onHome, showSearch, onSearch, onCategory, currentQ
     <>
       <nav className="nav">
         <div className="nav-logo" onClick={onHome}>
-          Directr
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/favicon.png" alt="Directr" height={32} style={{ display: 'block', objectFit: 'contain' }} />
         </div>
 
         <div className="nav-center">
