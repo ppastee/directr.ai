@@ -114,7 +114,7 @@ export default function CategoryPage({ cat, onHome, highlightedToolId }: Categor
               >
                 <ToolCard
                   tool={t} rank={i + 1} highlighted={t.id === activeHighlight}
-                  onCardClick={() => router.push(`/tool/${nameToSlug(t.name)}`)}
+                  onCardClick={() => router.push(`/category/${cat.slug}/${nameToSlug(t.name)}`)}
                 />
               </div>
             ))}

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
-export const metadata: Metadata = { title: 'Dashboard — Directr.ai' }
+export const metadata: Metadata = { title: 'Dashboard — Directr' }
 
 export default function DashboardPage() {
   return (
@@ -9,9 +9,9 @@ export default function DashboardPage() {
       <body className="theme-signal" style={{ margin: 0, minHeight: '100vh', background: 'var(--bg)', color: 'var(--fg)', fontFamily: 'var(--body-font, system-ui, sans-serif)' }}>
         <div style={{ maxWidth: 900, margin: '0 auto', padding: '3rem 1.5rem' }}>
           <div style={{ marginBottom: '2.5rem' }}>
-            <Link href="/" style={{ fontSize: '0.82rem', color: 'var(--fg3)', textDecoration: 'none' }}>← Back to Directr.ai</Link>
+            <Link href="/" style={{ fontSize: '0.82rem', color: 'var(--fg3)', textDecoration: 'none' }}>← Back to Directr</Link>
             <h1 style={{ margin: '1rem 0 0.25rem', fontSize: '1.75rem', fontFamily: 'var(--heading-font)', fontWeight: 700 }}>Dashboard</h1>
-            <p style={{ color: 'var(--fg3)', fontSize: '0.9rem', margin: 0 }}>Internal analytics for Directr.ai</p>
+            <p style={{ color: 'var(--fg3)', fontSize: '0.9rem', margin: 0 }}>Internal analytics for Directr</p>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1rem' }}>

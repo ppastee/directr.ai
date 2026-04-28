@@ -17,7 +17,7 @@
 
 ## Project Overview
 
-**Directr.ai** — a search marketplace for AI tools. Users search by intent ("animate a logo"), browse categories, filter by pricing/features/rating, and sort results. Moving away from heavy comparison — pure discovery focus.
+**Directr** — a search marketplace for AI tools. Users search by intent ("animate a logo"), browse categories, filter by pricing/features/rating, and sort results. Moving away from heavy comparison — pure discovery focus.
 
 **Stack:** Next.js 16 (App Router, Turbopack) · TypeScript · CSS variables (no Tailwind — theming is via CSS custom properties) · Google Fonts via CSS `@import`
 
