@@ -13,12 +13,12 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const tools = TOOLS[id] ?? []
   const topTools = tools.slice(0, 3).map((t) => t.name).join(', ')
   return {
-    title: `Best ${cat.name} AI Tools 2026 — Directr.ai`,
-    description: `Compare ${cat.count} AI tools for ${cat.name.toLowerCase()}. Top picks: ${topTools}. Unbiased ratings, pricing and reviews updated April 2026.`,
+    title: `Best ${cat.name} Tools 2026 — Directr`,
+    description: `Compare ${cat.count} tools for ${cat.name.toLowerCase()}. Top picks: ${topTools}. Unbiased ratings, pricing and reviews updated April 2026.`,
     openGraph: {
-      title: `Best ${cat.name} AI Tools 2026`,
-      description: `Compare ${cat.count} tools · Updated April 2026 · Directr.ai`,
-      url: `https://directr.ai/category/${id}`,
+      title: `Best ${cat.name} Tools 2026`,
+      description: `Compare ${cat.count} tools · Updated April 2026 · Directr`,
+      url: `https://directr.com.au/category/${id}`,
     },
   }
 }

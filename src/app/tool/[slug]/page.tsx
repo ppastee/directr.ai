@@ -13,12 +13,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { tool, categoryId } = result
   const cat = CATEGORIES.find((c) => c.id === categoryId)
   return {
-    title: `${tool.name} Review & Alternatives 2026 — Directr.ai`,
+    title: `${tool.name} Review & Alternatives 2026 — Directr`,
     description: `${tool.tagline}. ${tool.desc} Compare pricing, features, and alternatives.`,
     openGraph: {
       title: `${tool.name} — ${tool.tagline}`,
       description: `${tool.price} · ${tool.rating}★ · Compare with ${cat?.name ?? ''} alternatives`,
-      url: `https://directr.ai/tool/${slug}`,
+      url: `https://directr.com.au/tool/${slug}`,
     },
   }
 }

@@ -110,7 +110,7 @@ export default function HomePage({ onCategory, onSearch }: HomePageProps) {
 
       {/* Hero */}
       <div className="hero">
-        <div className="hero-eyebrow">The AI Tools Search Engine</div>
+        <div className="hero-eyebrow">The Tool Search Engine</div>
 
         <h1 className="hero-title">
           &ldquo;you can go any <em>direction</em>{' '}you choose&rdquo;
@@ -122,7 +122,7 @@ export default function HomePage({ onCategory, onSearch }: HomePageProps) {
           onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openSearch() }}
           tabIndex={0}
           role="searchbox"
-          aria-label="Search AI tools"
+          aria-label="Search tools"
           style={{ cursor: 'text' }}
         >
           <div className="search-typewriter">
@@ -189,7 +189,7 @@ export default function HomePage({ onCategory, onSearch }: HomePageProps) {
       </div>
 
       <div className="footer">
-        © 2026 Directr.ai · Data updated weekly · We earn referral fees from some links
+        © 2026 Directr · Data updated weekly · We earn referral fees from some links
       </div>
     </div>
   )

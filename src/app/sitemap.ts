@@ -1,6 +1,6 @@
 import { CATEGORIES, getAllToolSlugs } from '@/data/tools'
 
-const BASE = 'https://directr.ai'
+const BASE = 'https://directr.com.au'
 
 export default function sitemap() {
   const categoryUrls = CATEGORIES.map((c) => ({

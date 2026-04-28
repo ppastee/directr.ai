@@ -21,7 +21,7 @@ export default function Nav({ onHome, showSearch, onSearch, onCategory, currentQ
     <>
       <nav className="nav">
         <div className="nav-logo" onClick={onHome}>
-          directr<span className="nav-logo-accent">.ai</span>
+          Directr
         </div>
 
         <div className="nav-center">
@@ -31,7 +31,7 @@ export default function Nav({ onHome, showSearch, onSearch, onCategory, currentQ
                 <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
               </svg>
               <span className="nav-search-placeholder">
-                {currentQuery || 'Search AI tools…'}
+                {currentQuery || 'Search tools…'}
               </span>
             </div>
           )}
