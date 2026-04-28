@@ -1,79 +1,35 @@
 'use client'
 
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 
-export default function ScrollBar() {
-  const [progress, setProgress] = useState(0)
-  const [scrollable, setScrollable] = useState(false)
-  const [dragging, setDragging] = useState(false)
-  const trackRef = useRef<HTMLDivElement>(null)
+export default function MoreToolsButton() {
+  const [visible, setVisible] = useState(false)
 
-  const getScrollable = () => {
+  const update = useCallback(() => {
     const el = document.documentElement
-    return el.scrollHeight - el.clientHeight
-  }
-
-  const updateProgress = useCallback(() => {
-    const max = getScrollable()
-    setScrollable(max > 80)
-    if (max > 0) setProgress(document.documentElement.scrollTop / max)
+    const distFromBottom = el.scrollHeight - el.clientHeight - el.scrollTop
+    setVisible(distFromBottom > 120)
   }, [])
 
   useEffect(() => {
-    updateProgress()
-    window.addEventListener('scroll', updateProgress, { passive: true })
-    window.addEventListener('resize', updateProgress, { passive: true })
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update, { passive: true })
     return () => {
-      window.removeEventListener('scroll', updateProgress)
-      window.removeEventListener('resize', updateProgress)
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
     }
-  }, [updateProgress])
+  }, [update])
 
-  const scrollToFraction = useCallback((fraction: number) => {
-    const max = getScrollable()
-    window.scrollTo({ top: Math.max(0, Math.min(1, fraction)) * max, behavior: 'instant' })
-  }, [])
-
-  const fractionFromEvent = useCallback((e: MouseEvent | React.MouseEvent) => {
-    const track = trackRef.current
-    if (!track) return 0
-    const rect = track.getBoundingClientRect()
-    return (e.clientY - rect.top) / rect.height
-  }, [])
-
-  const onTrackClick = (e: React.MouseEvent) => {
-    if (dragging) return
-    scrollToFraction(fractionFromEvent(e))
+  const scrollToBottom = () => {
+    window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })
   }
 
-  const onThumbDown = (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setDragging(true)
-
-    const onMove = (ev: MouseEvent) => scrollToFraction(fractionFromEvent(ev))
-    const onUp = () => {
-      setDragging(false)
-      window.removeEventListener('mousemove', onMove)
-      window.removeEventListener('mouseup', onUp)
-    }
-    window.addEventListener('mousemove', onMove)
-    window.addEventListener('mouseup', onUp)
-  }
-
-  if (!scrollable) return null
+  if (!visible) return null
 
   return (
-    <div
-      ref={trackRef}
-      className={`scroll-track${dragging ? ' scroll-track--dragging' : ''}`}
-      onClick={onTrackClick}
-    >
-      <div
-        className="scroll-thumb"
-        style={{ top: `${progress * 100}%` }}
-        onMouseDown={onThumbDown}
-      />
-    </div>
+    <button className="more-tools-btn" onClick={scrollToBottom}>
+      More tools ↓
+    </button>
   )
 }

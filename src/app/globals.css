@@ -810,35 +810,33 @@ body.theme-studio {
   text-align: center; color: var(--fg3); font-size: 0.8rem; margin-top: 2rem;
 }
 
-/* ── SCROLL BAR ── */
-.scroll-track {
-  display: none;
+/* ── MORE TOOLS BUTTON ── */
+.more-tools-btn {
   position: fixed;
-  left: 16px;
-  top: 12%;
-  height: 76%;
-  width: 3px;
-  background: var(--border);
-  border-radius: 3px;
-  z-index: 50;
-  cursor: pointer;
-}
-.scroll-track--dragging { cursor: grabbing; }
-.scroll-thumb {
-  position: absolute;
+  bottom: 28px;
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: 7px;
-  height: 36px;
-  background: var(--accent);
-  border-radius: 4px;
-  cursor: grab;
-  opacity: 0.55;
-  transition: opacity 0.15s, height 0.15s;
+  transform: translateX(-50%);
+  z-index: 50;
+  padding: 0.55rem 1.25rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--fg);
+  font-family: var(--body-font);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+  transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+  white-space: nowrap;
 }
-.scroll-thumb:hover,
-.scroll-track--dragging .scroll-thumb { opacity: 1; height: 42px; cursor: grabbing; }
-@media (min-width: 900px) { .scroll-track { display: block; } }
+.more-tools-btn:hover {
+  box-shadow: 0 6px 28px rgba(0,0,0,0.15);
+  transform: translateX(-50%) translateY(-2px);
+}
 
 /* ── PAGE TRANSITION ── */
 .page { animation: fadeIn 0.25s ease; position: relative; z-index: 2; }
