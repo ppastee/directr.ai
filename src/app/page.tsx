@@ -1,82 +1,46 @@
-'use client'
+import type { Metadata } from 'next'
+import HomeClient from './HomeClient'
 
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { Category } from '@/data/tools'
-import Nav from '@/components/Nav'
-import HomePage from '@/components/HomePage'
-import SearchResultsPage from '@/components/SearchResultsPage'
-import AnimatedBg from '@/components/AnimatedBg'
+const BASE = 'https://directr.com.au'
 
-type Page = 'home' | 'search'
+export const metadata: Metadata = {
+  title: { absolute: 'Directr — Find the Best AI Tools (2026 Directory)' },
+  description: 'Search and compare 60+ AI tools across video, images, writing, coding, audio and more. Unbiased rankings, real reviews, and up-to-date pricing — updated weekly.',
+  alternates: { canonical: BASE },
+  openGraph: {
+    title: 'Directr — Find the Best AI Tools',
+    description: 'Search and compare 60+ AI tools across 16 categories. Updated weekly.',
+    url: BASE,
+  },
+}
 
-export default function App() {
-  const router = useRouter()
-  const [page, setPage] = useState<Page>('home')
-  const [searchQuery, setSearchQuery] = useState('')
-  const [heroScrolled, setHeroScrolled] = useState(false)
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Directr',
+  url: BASE,
+  description: 'AI tools search engine and directory',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: { '@type': 'EntryPoint', urlTemplate: `${BASE}/?q={search_term_string}` },
+    'query-input': 'required name=search_term_string',
+  },
+}
 
-  useEffect(() => {
-    document.body.className = 'theme-signal'
-  }, [])
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Directr',
+  url: BASE,
+  logo: `${BASE}/logo-icon.png`,
+}
 
-  // Handle ?q= param when arriving from a category-page search
-  useEffect(() => {
-    const q = new URLSearchParams(window.location.search).get('q')
-    if (q) {
-      setSearchQuery(q)
-      setPage('search')
-      window.history.replaceState({}, '', '/')
-    }
-  }, [])
-
-  useEffect(() => {
-    if (page !== 'home') { setHeroScrolled(false); return }
-    const onScroll = () => setHeroScrolled(window.scrollY > 480)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    onScroll()
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [page])
-
-  function handleCategory(cat: Category, toolId?: number) {
-    router.push(`/category/${cat.slug}${toolId ? `?highlight=${toolId}` : ''}`)
-  }
-
-  function handleHome() {
-    setPage('home')
-    setSearchQuery('')
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
-  function handleSearch(query: string) {
-    setSearchQuery(query)
-    setPage('search')
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
+export default function Page() {
   return (
     <>
-      <AnimatedBg />
-      <div style={{ position: 'relative', zIndex: 1 }}>
-        <Nav
-          onHome={handleHome}
-          showSearch={page !== 'home' || heroScrolled}
-          onSearch={handleSearch}
-          onCategory={handleCategory}
-          currentQuery={page === 'search' ? searchQuery : ''}
-        />
-        {page === 'home' && (
-          <HomePage onCategory={handleCategory} onSearch={handleSearch} />
-        )}
-        {page === 'search' && (
-          <SearchResultsPage
-            query={searchQuery}
-            onHome={handleHome}
-            onCategory={handleCategory}
-            onNewSearch={handleSearch}
-          />
-        )}
-      </div>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
+      <HomeClient />
     </>
   )
 }

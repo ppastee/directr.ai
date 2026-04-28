@@ -416,6 +416,7 @@ body.theme-studio {
 .breadcrumb-link:hover { color: var(--accent); }
 .cat-page-title { font-family: var(--heading-font); font-size: 2rem; margin-bottom: 0.5rem; }
 .cat-page-sub { font-size: 0.9rem; color: var(--fg2); }
+.cat-page-intro { font-size: 0.95rem; color: var(--fg2); line-height: 1.6; margin-top: 0.6rem; max-width: 620px; }
 
 .sort-bar { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; }
 .sort-label { font-size: 0.8rem; color: var(--fg3); }

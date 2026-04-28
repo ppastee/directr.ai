@@ -14,6 +14,25 @@ function monthlyPrice(price: string): number {
 
 const SORT_OPTIONS = ['best-match', 'highest-rated', 'lowest-price', 'most-reviews', 'newest']
 
+const CAT_INTROS: Record<string, string> = {
+  animation:    'AI animation and video tools let you generate professional videos, talking avatars, and motion graphics in minutes — no studio or editing skills required.',
+  image:        'AI image generation tools turn text prompts into photorealistic images, product visuals, and illustrations in seconds.',
+  writing:      'AI writing and copywriting tools help you produce blog posts, ad copy, emails, and long-form content faster with fewer rewrites.',
+  coding:       'AI coding assistants autocomplete, debug, and generate production-ready code across every language and framework.',
+  audio:        'AI audio tools create original music, clone voices, transcribe speech, and remove background noise with professional results.',
+  chat:         'AI chat and research assistants answer complex questions, summarise long documents, and help you reason through problems at speed.',
+  '3d':         'AI 3D and design tools generate models, textures, and scene assets that once took days — in hours.',
+  productivity: 'AI productivity tools automate repetitive tasks, manage your inbox, summarise meetings, and help you reclaim hours every week.',
+  marketing:    'AI marketing tools create campaigns, generate ad creatives, analyse performance, and personalise content at scale.',
+  finance:      'AI finance tools automate bookkeeping, model scenarios, forecast revenue, and surface insights from complex financial data.',
+  accounting:   'AI accounting tools streamline reconciliation, automate tax prep, and generate financial reports in a fraction of the time.',
+  legal:        'AI legal tools review contracts, flag risks, draft standard documents, and summarise case law in minutes.',
+  hr:           'AI HR and recruiting tools screen candidates, draft job descriptions, automate onboarding, and reduce time-to-hire.',
+  construction: 'AI construction tools streamline project planning, cost estimation, site monitoring, and compliance reporting.',
+  data:         'AI data and analytics tools help you query datasets, build dashboards, and generate reports without writing SQL.',
+  education:    'AI education and training tools personalise learning paths, generate course content, and provide instant feedback to learners.',
+}
+
 function sortLabel(s: string) {
   return s.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ')
 }
@@ -69,6 +88,9 @@ export default function CategoryPage({ cat, onHome, highlightedToolId }: Categor
             <p className="cat-page-sub">
               Comparing {sorted.length} tools · Prices updated April 2026
             </p>
+            {CAT_INTROS[cat.id] && (
+              <p className="cat-page-intro">{CAT_INTROS[cat.id]}</p>
+            )}
           </div>
 
           <div className="sort-bar">
