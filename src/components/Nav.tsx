@@ -22,7 +22,7 @@ export default function Nav({ onHome, showSearch, onSearch, onCategory, currentQ
       <nav className="nav">
         <div className="nav-logo" onClick={onHome} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo-icon.png" alt="" height={40} style={{ display: 'block', objectFit: 'contain' }} />
+          <img src="/logo-icon.png" alt="" height={22} style={{ display: 'block', objectFit: 'contain' }} />
           <span style={{ fontSize: '1.25rem', fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--fg)' }}>Directr</span>
         </div>
 
