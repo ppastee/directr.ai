@@ -95,15 +95,26 @@ export default function CategoryPage({ cat, onHome, highlightedToolId }: Categor
 
           <div className="sort-bar">
             <span className="sort-label">Sort by:</span>
-            {SORT_OPTIONS.map((s) => (
-              <button
-                key={s}
-                className={`sort-pill ${sort === s ? 'active' : ''}`}
-                onClick={() => setSort(s)}
-              >
-                {sortLabel(s)}
-              </button>
-            ))}
+            <div className="sort-pills">
+              {SORT_OPTIONS.map((s) => (
+                <button
+                  key={s}
+                  className={`sort-pill ${sort === s ? 'active' : ''}`}
+                  onClick={() => setSort(s)}
+                >
+                  {sortLabel(s)}
+                </button>
+              ))}
+            </div>
+            <select
+              className="sort-select"
+              value={sort}
+              onChange={(e) => setSort(e.target.value)}
+            >
+              {SORT_OPTIONS.map((s) => (
+                <option key={s} value={s}>{sortLabel(s)}</option>
+              ))}
+            </select>
           </div>
 
           <div className="tool-grid">
