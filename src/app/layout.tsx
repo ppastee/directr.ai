@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/react'
+import ScrollBar from '@/components/ScrollBar'
 import './globals.css'
 
 const BASE = 'https://directr.com.au'
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="theme-signal">{children}<Analytics /></body>
+      <body className="theme-signal"><ScrollBar />{children}<Analytics /></body>
     </html>
   )
 }

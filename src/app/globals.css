@@ -810,6 +810,36 @@ body.theme-studio {
   text-align: center; color: var(--fg3); font-size: 0.8rem; margin-top: 2rem;
 }
 
+/* ── SCROLL BAR ── */
+.scroll-track {
+  display: none;
+  position: fixed;
+  left: 16px;
+  top: 12%;
+  height: 76%;
+  width: 3px;
+  background: var(--border);
+  border-radius: 3px;
+  z-index: 50;
+  cursor: pointer;
+}
+.scroll-track--dragging { cursor: grabbing; }
+.scroll-thumb {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 7px;
+  height: 36px;
+  background: var(--accent);
+  border-radius: 4px;
+  cursor: grab;
+  opacity: 0.55;
+  transition: opacity 0.15s, height 0.15s;
+}
+.scroll-thumb:hover,
+.scroll-track--dragging .scroll-thumb { opacity: 1; height: 42px; cursor: grabbing; }
+@media (min-width: 900px) { .scroll-track { display: block; } }
+
 /* ── PAGE TRANSITION ── */
 .page { animation: fadeIn 0.25s ease; position: relative; z-index: 2; }
 @keyframes fadeIn {
