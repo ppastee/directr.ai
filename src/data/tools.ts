@@ -2,6 +2,7 @@ export type Theme = 'signal' | 'terminal' | 'studio'
 
 export interface Category {
   id: string
+  slug: string
   icon: string
   name: string
   count: number  // computed from TOOLS below — never hardcode this
@@ -1915,6 +1916,7 @@ const RAW_CATEGORIES = [
 
 export const CATEGORIES: Category[] = RAW_CATEGORIES.map((c) => ({
   ...c,
+  slug: `best-${nameToSlug(c.name)}-ai-tools`,
   count: (TOOLS[c.id] ?? []).length,
 }))
 

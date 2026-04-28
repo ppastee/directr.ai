@@ -21,7 +21,7 @@ export default function ToolRoute({ tool, categoryId }: Props) {
   }, [])
 
   function handleCategory(c: Category, toolId?: number) {
-    router.push(`/category/${c.id}${toolId ? `?highlight=${toolId}` : ''}`)
+    router.push(`/category/${c.slug}${toolId ? `?highlight=${toolId}` : ''}`)
   }
 
   return (

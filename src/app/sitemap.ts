@@ -4,7 +4,7 @@ const BASE = 'https://directr.com.au'
 
 export default function sitemap() {
   const categoryUrls = CATEGORIES.map((c) => ({
-    url: `${BASE}/category/${c.id}`,
+    url: `${BASE}/category/${c.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.8,

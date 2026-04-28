@@ -39,7 +39,7 @@ export default function App() {
   }, [page])
 
   function handleCategory(cat: Category, toolId?: number) {
-    router.push(`/category/${cat.id}${toolId ? `?highlight=${toolId}` : ''}`)
+    router.push(`/category/${cat.slug}${toolId ? `?highlight=${toolId}` : ''}`)
   }
 
   function handleHome() {

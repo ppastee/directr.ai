@@ -91,7 +91,7 @@ export default function ToolDetailPage({ tool, categoryId, cat }: Props) {
       <div className="tool-detail-breadcrumb">
         <Link href="/" className="breadcrumb-link">Home</Link>
         {' / '}
-        <Link href={`/category/${categoryId}`} className="breadcrumb-link">{cat.name}</Link>
+        <Link href={`/category/${cat.slug}`} className="breadcrumb-link">{cat.name}</Link>
         {' / '}
         <span style={{ color: 'var(--fg)' }}>{tool.name}</span>
       </div>
@@ -122,7 +122,7 @@ export default function ToolDetailPage({ tool, categoryId, cat }: Props) {
           </div>
         </div>
         <div className="tool-detail-actions">
-          <Link href={`/category/${categoryId}`} className="tool-detail-back">
+          <Link href={`/category/${cat.slug}`} className="tool-detail-back">
             ← All {cat.name}
           </Link>
           <a href={tool.url} target="_blank" rel="noopener noreferrer" className="tool-detail-visit">
