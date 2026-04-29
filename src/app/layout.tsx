@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     default: 'Directr — AI Tools Directory & Search Engine',
     template: '%s | Directr',
   },
-  description: 'Find, compare and discover the best AI tools for any task. Search 60+ tools across video, images, writing, coding, audio and more — unbiased rankings updated weekly.',
+  description: 'Find, compare and discover the best AI tools for any task. Search 120+ tools across video, images, writing, coding, audio and more — unbiased rankings updated weekly.',
   openGraph: {
     siteName: 'Directr',
     type: 'website',

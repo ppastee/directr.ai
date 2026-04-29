@@ -5,11 +5,11 @@ const BASE = 'https://directr.com.au'
 
 export const metadata: Metadata = {
   title: { absolute: 'Directr — Find the Best AI Tools (2026 Directory)' },
-  description: 'Search and compare 60+ AI tools across video, images, writing, coding, audio and more. Unbiased rankings, real reviews, and up-to-date pricing — updated weekly.',
+  description: 'Search and compare 120+ AI tools across video, images, writing, coding, audio and more. Unbiased rankings, real reviews, and up-to-date pricing — updated weekly.',
   alternates: { canonical: BASE },
   openGraph: {
     title: 'Directr — Find the Best AI Tools',
-    description: 'Search and compare 60+ AI tools across 16 categories. Updated weekly.',
+    description: 'Search and compare 120+ AI tools across 16 categories. Updated weekly.',
     url: BASE,
   },
 }
