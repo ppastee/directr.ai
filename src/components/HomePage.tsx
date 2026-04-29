@@ -110,7 +110,7 @@ export default function HomePage({ onCategory, onSearch }: HomePageProps) {
 
       {/* Hero */}
       <div className="hero">
-        <div className="hero-eyebrow">The Tool Search Engine</div>
+        <div className="hero-eyebrow">The AI Tools Search Engine</div>
 
         <h1 className="hero-title">
           &ldquo;you can go any <em>direction</em>{' '}you choose&rdquo;
