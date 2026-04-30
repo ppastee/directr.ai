@@ -129,7 +129,7 @@ export default function HomePage({ onCategory, onWizard }: HomePageProps) {
             {typewriterText || <span style={{ opacity: 0 }}>_</span>}
             <span className="search-cursor" />
           </div>
-          <button className="search-btn" tabIndex={-1}>Find my match</button>
+          <div className="search-btn" aria-hidden="true">Find my match</div>
         </div>
         <p className="search-hint">Describe what you want to do — we'll ask a few questions and recommend the best tool</p>
 
