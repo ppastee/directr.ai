@@ -28,7 +28,7 @@ function Inner({ cat }: { cat: Category }) {
         <Nav
           onHome={() => router.push('/')}
           showSearch={true}
-          onSearch={(q) => router.push(`/?q=${encodeURIComponent(q)}`)}
+          onWizard={(q) => router.push(`/?q=${encodeURIComponent(q)}`)}
           onCategory={handleCategory}
         />
         <CategoryPage

@@ -5,16 +5,14 @@ import { useRouter } from 'next/navigation'
 import { Category } from '@/data/tools'
 import Nav from '@/components/Nav'
 import HomePage from '@/components/HomePage'
-import SearchResultsPage from '@/components/SearchResultsPage'
+import WizardModal from '@/components/WizardModal'
 import AnimatedBg from '@/components/AnimatedBg'
-
-type Page = 'home' | 'search'
 
 export default function HomeClient() {
   const router = useRouter()
-  const [page, setPage] = useState<Page>('home')
-  const [searchQuery, setSearchQuery] = useState('')
   const [heroScrolled, setHeroScrolled] = useState(false)
+  const [wizardOpen, setWizardOpen] = useState(false)
+  const [wizardQuery, setWizardQuery] = useState('')
 
   useEffect(() => {
     document.body.className = 'theme-signal'
@@ -23,34 +21,32 @@ export default function HomeClient() {
   useEffect(() => {
     const q = new URLSearchParams(window.location.search).get('q')
     if (q) {
-      setSearchQuery(q)
-      setPage('search')
+      setWizardQuery(q)
+      setWizardOpen(true)
       window.history.replaceState({}, '', '/')
     }
   }, [])
 
   useEffect(() => {
-    if (page !== 'home') { setHeroScrolled(false); return }
     const onScroll = () => setHeroScrolled(window.scrollY > 480)
     window.addEventListener('scroll', onScroll, { passive: true })
     onScroll()
     return () => window.removeEventListener('scroll', onScroll)
-  }, [page])
+  }, [])
 
   function handleCategory(cat: Category, toolId?: number) {
     router.push(`/category/${cat.slug}${toolId ? `?highlight=${toolId}` : ''}`)
   }
 
   function handleHome() {
-    setPage('home')
-    setSearchQuery('')
+    setWizardOpen(false)
+    setWizardQuery('')
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  function handleSearch(query: string) {
-    setSearchQuery(query)
-    setPage('search')
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+  function handleWizard(query: string) {
+    setWizardQuery(query)
+    setWizardOpen(true)
   }
 
   return (
@@ -59,23 +55,20 @@ export default function HomeClient() {
       <div style={{ position: 'relative', zIndex: 1 }}>
         <Nav
           onHome={handleHome}
-          showSearch={page !== 'home' || heroScrolled}
-          onSearch={handleSearch}
+          showSearch={heroScrolled}
+          onWizard={handleWizard}
           onCategory={handleCategory}
-          currentQuery={page === 'search' ? searchQuery : ''}
+          currentQuery={wizardOpen ? wizardQuery : ''}
         />
-        {page === 'home' && (
-          <HomePage onCategory={handleCategory} onSearch={handleSearch} />
-        )}
-        {page === 'search' && (
-          <SearchResultsPage
-            query={searchQuery}
-            onHome={handleHome}
-            onCategory={handleCategory}
-            onNewSearch={handleSearch}
-          />
-        )}
+        <HomePage onCategory={handleCategory} onWizard={handleWizard} />
       </div>
+      {wizardOpen && (
+        <WizardModal
+          query={wizardQuery}
+          onClose={() => setWizardOpen(false)}
+          onCategory={handleCategory}
+        />
+      )}
     </>
   )
 }

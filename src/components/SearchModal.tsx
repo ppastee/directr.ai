@@ -52,11 +52,11 @@ const SUGGESTIONS = [
 interface SearchModalProps {
   onClose: () => void
   onCategory: (cat: Category, toolId?: number) => void
-  onSearch: (query: string) => void
+  onWizard: (query: string) => void
   initialValue?: string
 }
 
-export default function SearchModal({ onClose, onCategory, onSearch, initialValue = '' }: SearchModalProps) {
+export default function SearchModal({ onClose, onCategory, onWizard, initialValue = '' }: SearchModalProps) {
   const [value, setValue] = useState(initialValue)
   const inputRef = useRef<HTMLInputElement>(null)
   const typewriterText = useTypewriter(TYPEWRITER_PHRASES)
@@ -87,7 +87,7 @@ export default function SearchModal({ onClose, onCategory, onSearch, initialValu
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter' && value.trim()) {
-      onSearch(value.trim())
+      onWizard(value.trim())
       onClose()
     }
   }
@@ -131,7 +131,7 @@ export default function SearchModal({ onClose, onCategory, onSearch, initialValu
         {hasResults ? (
           <div className="search-modal-results">
             <div className="search-modal-section-label">
-              Best matches · <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>press Enter to see all</span>
+              Best matches · <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>press Enter for recommendations</span>
             </div>
             {results.map(({ tool, catId, catName }) => (
               <div key={tool.id} className="search-result" onClick={() => handleSelect(catId, tool.id)}>
