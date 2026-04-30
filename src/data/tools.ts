@@ -43,7 +43,7 @@ export const TOOLS: Record<string, Tool[]> = {
       name: 'Synthesia',
       emoji: '🎭',
       logoDomain: 'synthesia.io',
-      url: 'https://synthesia.io',
+      url: 'https://www.synthesia.io/?via=directr',
       tagline: 'AI presenter videos in minutes',
       desc: 'Photorealistic AI presenters rendered in your browser — choose from 230+ avatars, clone your own, and produce in 140+ languages without a camera or crew. The enterprise standard for replacing costly video production with scalable content that consistently looks better than most corporate shoots, with LMS integrations for automated delivery pipelines.',
       price: 'From $29/mo',
