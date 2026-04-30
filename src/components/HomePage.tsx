@@ -129,8 +129,9 @@ export default function HomePage({ onCategory, onWizard }: HomePageProps) {
             {typewriterText || <span style={{ opacity: 0 }}>_</span>}
             <span className="search-cursor" />
           </div>
-          <button className="search-btn" tabIndex={-1}>Search</button>
+          <button className="search-btn" tabIndex={-1}>Find my match</button>
         </div>
+        <p className="search-hint">Describe what you want to do — we'll ask a few questions and recommend the best tool</p>
 
         <div className="hero-pills">
           {PILLS.map((p, i) => (

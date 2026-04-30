@@ -53,23 +53,30 @@ export default function WizardModal({ query, onClose, onCategory }: WizardModalP
   const isClose = runnerUps.length > 0 && runnerUps[0].adjustedScore / bestPick?.adjustedScore >= 0.78
 
   return (
-    <div className="search-overlay" onClick={onClose}>
-      <div className="wizard-modal" onClick={e => e.stopPropagation()}>
-
-        {/* Header */}
-        <div className="wizard-header">
-          <div className="wizard-query-chip">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-            </svg>
-            <span className="wizard-query-text">{query}</span>
-          </div>
-          <button className="search-modal-esc search-modal-close" onClick={onClose} aria-label="Close">esc</button>
+    <div className="wizard-full">
+      {/* Top bar */}
+      <div className="wizard-topbar">
+        <button className="wizard-topbar-back" onClick={onClose} aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+          </svg>
+          Back
+        </button>
+        <div className="wizard-topbar-chip">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <span className="wizard-topbar-query">{query}</span>
         </div>
+        <button className="search-modal-esc search-modal-close" onClick={onClose} style={{ flexShrink: 0 }} aria-label="Close">esc</button>
+      </div>
+
+      {/* Content */}
+      <div className="wizard-full-body">
 
         {/* Question step */}
         {!isResults && currentQ && (
-          <div className="wizard-body" key={step}>
+          <div className="wizard-step" key={step}>
             <div className="wizard-step-label">Question {step + 1} of {questions.length}</div>
             <h2 className="wizard-question">{currentQ.text}</h2>
             <div className="wizard-options">
@@ -86,10 +93,7 @@ export default function WizardModal({ query, onClose, onCategory }: WizardModalP
             <div className="wizard-footer">
               <div className="wizard-progress">
                 {questions.map((_, i) => (
-                  <div
-                    key={i}
-                    className={`wizard-dot${i === step ? ' active' : i < step ? ' done' : ''}`}
-                  />
+                  <div key={i} className={`wizard-dot${i === step ? ' active' : i < step ? ' done' : ''}`} />
                 ))}
               </div>
               {step > 0 && (
@@ -101,8 +105,8 @@ export default function WizardModal({ query, onClose, onCategory }: WizardModalP
 
         {/* No results */}
         {isResults && results.length === 0 && (
-          <div className="wizard-body" key="empty">
-            <p className="wizard-question" style={{ fontSize: '1.2rem' }}>Nothing matched that search.</p>
+          <div className="wizard-step" key="empty">
+            <p className="wizard-question" style={{ fontSize: '1.3rem' }}>Nothing matched that search.</p>
             <p style={{ color: 'var(--fg2)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
               Try a different search term or browse by category.
             </p>
@@ -112,7 +116,7 @@ export default function WizardModal({ query, onClose, onCategory }: WizardModalP
 
         {/* Results */}
         {isResults && results.length > 0 && (
-          <div className="wizard-results" key="results">
+          <div className="wizard-step" key="results">
 
             <div className="wizard-result-label">Best pick</div>
 
@@ -140,7 +144,7 @@ export default function WizardModal({ query, onClose, onCategory }: WizardModalP
 
             {runnerUps.length > 0 && (
               <>
-                <div className="wizard-result-label" style={{ marginTop: '1.4rem' }}>
+                <div className="wizard-result-label" style={{ marginTop: '2rem' }}>
                   {isClose ? 'Also a strong fit' : 'Worth a look'}
                 </div>
                 {runnerUps.map(r => (

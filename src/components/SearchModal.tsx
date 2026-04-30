@@ -130,9 +130,7 @@ export default function SearchModal({ onClose, onCategory, onWizard, initialValu
         {/* Results */}
         {hasResults ? (
           <div className="search-modal-results">
-            <div className="search-modal-section-label">
-              Best matches · <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>press Enter for recommendations</span>
-            </div>
+            <div className="search-modal-section-label">Quick results</div>
             {results.map(({ tool, catId, catName }) => (
               <div key={tool.id} className="search-result" onClick={() => handleSelect(catId, tool.id)}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -149,10 +147,20 @@ export default function SearchModal({ onClose, onCategory, onWizard, initialValu
                 <div className="search-result-cat">{catName}</div>
               </div>
             ))}
+            <button
+              className="search-modal-wizard-cta"
+              onClick={() => { onWizard(value.trim()); onClose() }}
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              Find my best match
+              <span className="search-modal-wizard-cta-hint">answer 3 quick questions</span>
+            </button>
           </div>
         ) : (
           <div className="search-modal-suggestions">
-            <div className="search-modal-section-label">Try searching</div>
+            <div className="search-modal-section-label">Try searching for</div>
             {SUGGESTIONS.map((s) => (
               <div key={s} className="search-modal-suggestion" onClick={() => setValue(s)}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, opacity: 0.45 }}>
