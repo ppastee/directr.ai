@@ -100,49 +100,107 @@ const icons: Record<string, (props: IconProps) => React.ReactElement> = {
 
   // ── Unused / future categories ───────────────────────────────────────────
   finance: ({ size = 28, className }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/>
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+      {/* Axes */}
+      <rect x="3" y="3" width="1.5" height="16" rx="0.75" fill="#15803d"/>
+      <rect x="3" y="18" width="18" height="1.5" rx="0.75" fill="#15803d"/>
+      {/* Ascending bars */}
+      <rect x="5.5" y="13" width="3" height="6" rx="1" fill="#22c55e"/>
+      <rect x="10.25" y="9" width="3" height="10" rx="1" fill="#22c55e"/>
+      <rect x="15" y="5" width="3" height="14" rx="1" fill="#22c55e"/>
+      {/* Trend line */}
+      <path d="M7 14L11.75 10L16.5 6" stroke="#86efac" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   ),
+
   accounting: ({ size = 28, className }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <rect width="16" height="20" x="4" y="2" rx="2"/>
-      <line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/>
-      <path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/>
-      <path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/>
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+      {/* Body */}
+      <rect x="4" y="2" width="16" height="20" rx="2.5" fill="#3b82f6"/>
+      {/* Display */}
+      <rect x="6" y="4" width="12" height="5" rx="1.5" fill="#eff6ff"/>
+      <rect x="11" y="5.5" width="6" height="2" rx="0.5" fill="#93c5fd"/>
+      {/* Button grid */}
+      <rect x="6" y="11" width="3" height="2.5" rx="0.75" fill="#1d4ed8"/>
+      <rect x="10.5" y="11" width="3" height="2.5" rx="0.75" fill="#1d4ed8"/>
+      <rect x="15" y="11" width="3" height="2.5" rx="0.75" fill="#1d4ed8"/>
+      <rect x="6" y="14.5" width="3" height="2.5" rx="0.75" fill="#1d4ed8"/>
+      <rect x="10.5" y="14.5" width="3" height="2.5" rx="0.75" fill="#1d4ed8"/>
+      <rect x="15" y="14.5" width="3" height="2.5" rx="0.75" fill="#bfdbfe"/>
+      <rect x="6" y="18" width="7" height="2.5" rx="0.75" fill="#93c5fd"/>
+      <rect x="15" y="18" width="3" height="2.5" rx="0.75" fill="#1d4ed8"/>
     </svg>
   ),
+
   legal: ({ size = 28, className }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <path d="M12 3v18"/><path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1"/>
-      <path d="m19 8 3 8a5 5 0 0 1-6 0z"/><path d="m5 8 3 8a5 5 0 0 1-6 0z"/>
-      <path d="M7 21h10"/>
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+      {/* Centre pole */}
+      <rect x="11.25" y="4" width="1.5" height="14" rx="0.75" fill="#92400e"/>
+      {/* Base */}
+      <rect x="7" y="20" width="10" height="2" rx="1" fill="#92400e"/>
+      {/* Balance beam */}
+      <rect x="3.5" y="7" width="17" height="1.5" rx="0.75" fill="#f59e0b"/>
+      {/* Left chain */}
+      <rect x="6" y="8.5" width="1.5" height="4" rx="0.75" fill="#fbbf24"/>
+      {/* Right chain */}
+      <rect x="16.5" y="8.5" width="1.5" height="4" rx="0.75" fill="#fbbf24"/>
+      {/* Left pan */}
+      <ellipse cx="6.75" cy="13.5" rx="3.25" ry="1.25" fill="#fbbf24"/>
+      {/* Right pan */}
+      <ellipse cx="17.25" cy="13.5" rx="3.25" ry="1.25" fill="#fbbf24"/>
     </svg>
   ),
+
   hr: ({ size = 28, className }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-      <path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-      <circle cx="9" cy="7" r="4"/>
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+      {/* Back person (lighter) */}
+      <circle cx="16.5" cy="7.5" r="3" fill="#818cf8"/>
+      <path d="M11 22C11 18.134 13.462 15 16.5 15C19.538 15 22 18.134 22 22Z" fill="#818cf8"/>
+      {/* Front person (darker) */}
+      <circle cx="9" cy="8" r="3.5" fill="#4f46e5"/>
+      <path d="M2 22C2 17.582 5.134 14 9 14C12.866 14 16 17.582 16 22Z" fill="#4f46e5"/>
     </svg>
   ),
+
   construction: ({ size = 28, className }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <path d="M10 10V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5"/>
-      <path d="M14 6a6 6 0 0 1 6 6v3"/><path d="M4 15v-3a6 6 0 0 1 6-6"/>
-      <rect x="2" y="15" width="20" height="4" rx="1"/>
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+      {/* Hat dome */}
+      <path d="M4.5 14C4.5 8.753 7.91 5 12 5C16.09 5 19.5 8.753 19.5 14Z" fill="#fbbf24"/>
+      {/* Brim */}
+      <rect x="2" y="13" width="20" height="3.5" rx="1.75" fill="#f59e0b"/>
+      {/* Centre ridge on dome */}
+      <rect x="11.25" y="5" width="1.5" height="8" rx="0.75" fill="#fde68a"/>
     </svg>
   ),
+
   data: ({ size = 28, className }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <path d="M3 3v16a2 2 0 0 0 2 2h16"/>
-      <path d="M7 11h8"/><path d="M7 16h12"/><path d="M7 6h3"/>
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+      {/* Axes */}
+      <rect x="3" y="3" width="1.5" height="16" rx="0.75" fill="#6d28d9"/>
+      <rect x="3" y="18" width="18" height="1.5" rx="0.75" fill="#6d28d9"/>
+      {/* Three bars */}
+      <rect x="5.5" y="12" width="4" height="7" rx="1" fill="#ddd6fe"/>
+      <rect x="11" y="8" width="4" height="11" rx="1" fill="#a78bfa"/>
+      <rect x="16.5" y="4" width="4" height="15" rx="1" fill="#7c3aed"/>
     </svg>
   ),
+
   education: ({ size = 28, className }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <path d="M12 7v14"/>
-      <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+      {/* Left page */}
+      <path d="M3 5C3 4 4 3 5 3L11 3L11 19L5 19C4 19 3 18 3 17Z" fill="#0ea5e9"/>
+      {/* Right page */}
+      <path d="M13 3L19 3C20 3 21 4 21 5L21 17C21 18 20 19 19 19L13 19Z" fill="#38bdf8"/>
+      {/* Spine */}
+      <rect x="11" y="3" width="2" height="16" fill="#0284c7"/>
+      {/* Lines left */}
+      <rect x="5" y="7" width="5" height="1.5" rx="0.75" fill="#7dd3fc"/>
+      <rect x="5" y="10.5" width="5" height="1.5" rx="0.75" fill="#7dd3fc"/>
+      <rect x="5" y="14" width="3" height="1.5" rx="0.75" fill="#7dd3fc"/>
+      {/* Lines right */}
+      <rect x="14" y="7" width="5" height="1.5" rx="0.75" fill="#bae6fd"/>
+      <rect x="14" y="10.5" width="5" height="1.5" rx="0.75" fill="#bae6fd"/>
+      <rect x="14" y="14" width="3" height="1.5" rx="0.75" fill="#bae6fd"/>
     </svg>
   ),
 }
