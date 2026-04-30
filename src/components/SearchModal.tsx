@@ -162,7 +162,7 @@ export default function SearchModal({ onClose, onCategory, onWizard, initialValu
           <div className="search-modal-suggestions">
             <div className="search-modal-section-label">Try searching for</div>
             {SUGGESTIONS.map((s) => (
-              <div key={s} className="search-modal-suggestion" onClick={() => setValue(s)}>
+              <div key={s} className="search-modal-suggestion" onClick={() => { setValue(s); inputRef.current?.focus() }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, opacity: 0.45 }}>
                   <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
                 </svg>
