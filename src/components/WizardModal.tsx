@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { CATEGORIES, Category } from '@/data/tools'
 import {
   planWizard,
@@ -49,16 +49,24 @@ export default function WizardModal({ query, onClose, onCategory }: WizardModalP
   const signals = useMemo(() => extractSignals(query), [query])
   const previewMatches = useMemo(() => scoreTools(query, 3), [query])
 
-  const [step, setStep] = useState(0)
   const [answers, setAnswers] = useState<Record<string, string>>({})
+  const [editingId, setEditingId] = useState<string | null>(null)
+  const resultsRef = useRef<HTMLDivElement>(null)
 
-  const isResults = step === plan.questions.length
+  const allAnswered = plan.questions.length === 0 || plan.questions.every(q => answers[q.id] !== undefined)
+
+  // Which question card is currently expanded
+  const activeId = editingId ?? plan.questions.find(q => answers[q.id] === undefined)?.id ?? null
+
+  // Active question tip
+  const activeQ = plan.questions.find(q => q.id === activeId)
 
   const results = useMemo<WizardResult[]>(() => {
-    if (!isResults) return []
-    const merged = mergeAnswers(plan.prefilled, answers)
-    return getWizardResults(query, merged)
-  }, [isResults, query, answers, plan.prefilled])
+    if (!allAnswered) return []
+    return getWizardResults(query, mergeAnswers(plan.prefilled, answers))
+  }, [allAnswered, query, answers, plan.prefilled])
+
+  const prefilledEntries = Object.entries(plan.prefilled)
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
@@ -70,9 +78,28 @@ export default function WizardModal({ query, onClose, onCategory }: WizardModalP
     }
   }, [onClose])
 
-  function handleAnswer(value: string) {
-    setAnswers(prev => ({ ...prev, [plan.questions[step].id]: value }))
-    setStep(s => s + 1)
+  function handleAnswer(qId: string, value: string) {
+    const newAnswers = { ...answers, [qId]: value }
+    setAnswers(newAnswers)
+    setEditingId(null)
+
+    const currentIdx = plan.questions.findIndex(q => q.id === qId)
+    const nextQ = plan.questions[currentIdx + 1]
+    const nowAllAnswered = plan.questions.every(q => newAnswers[q.id] !== undefined)
+
+    setTimeout(() => {
+      if (nowAllAnswered) {
+        resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      } else if (nextQ) {
+        document.getElementById(`wq-${nextQ.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }
+    }, 80)
+  }
+
+  function getState(qId: string): 'active' | 'answered' | 'pending' {
+    if (qId === activeId) return 'active'
+    if (answers[qId] !== undefined) return 'answered'
+    return 'pending'
   }
 
   function handleSelect(r: WizardResult) {
@@ -81,16 +108,13 @@ export default function WizardModal({ query, onClose, onCategory }: WizardModalP
   }
 
   function handleRestart() {
-    setStep(0)
     setAnswers({})
+    setEditingId(null)
   }
 
-  const currentQ = plan.questions[step]
   const bestPick = results[0]
   const runnerUps = results.slice(1)
   const isClose = runnerUps.length > 0 && runnerUps[0].adjustedScore / (bestPick?.adjustedScore || 1) >= 0.78
-
-  const prefilledEntries = Object.entries(plan.prefilled)
 
   return (
     <div className="wizard-full">
@@ -113,189 +137,205 @@ export default function WizardModal({ query, onClose, onCategory }: WizardModalP
 
       {/* Content */}
       <div className="wizard-full-body">
+        <div className="wizard-layout">
 
-        {/* Question step — two-column layout */}
-        {!isResults && currentQ && (
-          <div className="wizard-layout" key={step}>
+          {/* Cascade column */}
+          <div className="wizard-cascade">
 
-            {/* Main column */}
-            <div className="wizard-step">
-              <div className="wizard-step-label">Question {step + 1} of {plan.questions.length}</div>
-              <h2 className="wizard-question">{currentQ.text}</h2>
-              {currentQ.helper && (
-                <p className="wizard-helper">{currentQ.helper}</p>
-              )}
-              <div className="wizard-options">
-                {currentQ.options.map(opt => (
-                  <button
-                    key={opt.value}
-                    className={`wizard-option${answers[currentQ.id] === opt.value ? ' selected' : ''}`}
-                    onClick={() => handleAnswer(opt.value)}
-                  >
-                    <span className="wizard-option-label">{opt.label}</span>
-                    {opt.hint && <span className="wizard-option-hint">{opt.hint}</span>}
-                  </button>
-                ))}
+            {/* Auto-detected prefilled cards */}
+            {prefilledEntries.map(([qid, v]) => (
+              <div key={qid} className="wizard-card-answered wizard-card-prefilled">
+                <span className="wizard-card-answered-label">Auto-detected from your search</span>
+                <span className="wizard-card-answered-a">{(v as { reason: string }).reason}</span>
               </div>
-              <div className="wizard-footer">
-                <div className="wizard-progress">
-                  {plan.questions.map((_, i) => (
-                    <div key={i} className={`wizard-dot${i === step ? ' active' : i < step ? ' done' : ''}`} />
-                  ))}
-                </div>
-                {step > 0 && (
-                  <button className="wizard-back" onClick={() => setStep(s => s - 1)}>← Back</button>
-                )}
-              </div>
-            </div>
+            ))}
 
-            {/* Helper sidebar */}
-            <aside className="wizard-side">
-              <div className="wizard-side-card">
-                <div className="wizard-side-label">Your search</div>
-                <div className="wizard-side-query">"{query}"</div>
-                <div className="wizard-side-meta">
-                  <span>
-                    <strong>{plan.candidateCount}</strong> matching {plan.candidateCount === 1 ? 'tool' : 'tools'}
-                  </span>
-                  {plan.topCategoryName && (
+            {/* Question cards */}
+            {plan.questions.map(q => {
+              const state = getState(q.id)
+              return (
+                <div key={q.id} id={`wq-${q.id}`} className={`wizard-card-${state}`}>
+                  {state === 'active' && (
                     <>
-                      <span className="wizard-side-meta-dot">·</span>
-                      <span>top category <strong>{plan.topCategoryName}</strong></span>
+                      <h2 className="wizard-question">{q.text}</h2>
+                      {q.helper && <p className="wizard-helper">{q.helper}</p>}
+                      <div className="wizard-options">
+                        {q.options.map(opt => (
+                          <button
+                            key={opt.value}
+                            className="wizard-option"
+                            onClick={() => handleAnswer(q.id, opt.value)}
+                          >
+                            <span className="wizard-option-label">{opt.label}</span>
+                            {opt.hint && <span className="wizard-option-hint">{opt.hint}</span>}
+                          </button>
+                        ))}
+                      </div>
                     </>
                   )}
+                  {state === 'answered' && (
+                    <div className="wizard-card-answered-row">
+                      <span className="wizard-card-answered-q">{q.text}</span>
+                      <span className="wizard-card-answered-a">
+                        {q.options.find(o => o.value === answers[q.id])?.label ?? answers[q.id]}
+                      </span>
+                      <button
+                        className="wizard-card-edit"
+                        onClick={() => {
+                          setEditingId(q.id)
+                          setTimeout(() => {
+                            document.getElementById(`wq-${q.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                          }, 50)
+                        }}
+                      >✎ Edit</button>
+                    </div>
+                  )}
+                  {state === 'pending' && (
+                    <div className="wizard-card-pending-row">
+                      <span className="wizard-card-pending-q">{q.text}</span>
+                    </div>
+                  )}
                 </div>
-              </div>
+              )
+            })}
 
-              {(signals.phrases.length > 0 || prefilledEntries.length > 0) && (
-                <div className="wizard-side-card">
-                  <div className="wizard-side-label">What we picked up</div>
-                  <div className="wizard-signal-list">
-                    {prefilledEntries.map(([qid, v]) => (
-                      <div key={qid} className="wizard-signal">
-                        <span className="wizard-signal-dot" aria-hidden="true" />
-                        <span className="wizard-signal-text">
-                          {v.reason} — <em>auto-applied</em>
-                        </span>
+            {/* Results */}
+            {allAnswered && (
+              <div ref={resultsRef} className="wizard-cascade-results">
+                {results.length === 0 ? (
+                  <>
+                    <p className="wizard-question" style={{ fontSize: '1.6rem' }}>Nothing matched that search.</p>
+                    <p style={{ color: 'var(--fg2)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
+                      Try a different search term or browse by category.
+                    </p>
+                    <button className="wizard-restart" onClick={handleRestart}>← Start over</button>
+                  </>
+                ) : (
+                  <>
+                    <div className="wizard-result-label">Best pick</div>
+                    <div className="wizard-best-pick" onClick={() => handleSelect(bestPick)}>
+                      <span className="wizard-best-badge">Best match</span>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        className="wizard-pick-logo"
+                        src={`https://www.google.com/s2/favicons?domain=${bestPick.tool.logoDomain}&sz=64`}
+                        alt={bestPick.tool.name}
+                        onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
+                      />
+                      <div className="wizard-pick-info">
+                        <div className="wizard-pick-name">{bestPick.tool.name}</div>
+                        <div className="wizard-pick-tagline">{bestPick.tool.tagline}</div>
+                        {(bestPick.strengths.length > 0 || bestPick.mismatches.length > 0) && (
+                          <div className="wizard-chips">
+                            {bestPick.strengths.map(s => <span key={s} className="wizard-chip-strength">{s}</span>)}
+                            {bestPick.mismatches.map(m => <span key={m} className="wizard-chip-mismatch">⚠ {m}</span>)}
+                          </div>
+                        )}
                       </div>
-                    ))}
-                    {signals.phrases.slice(0, 4).map(p => (
-                      <div key={p} className="wizard-signal">
-                        <span className="wizard-signal-dot" aria-hidden="true" />
-                        <span className="wizard-signal-text">Detected phrase: <strong>{p}</strong></span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+                      <div className="wizard-pick-cat">{bestPick.catName}</div>
+                    </div>
 
-              {QUESTION_TIPS[currentQ.id] && (
-                <div className="wizard-side-card wizard-side-tip">
-                  <div className="wizard-side-label">Why we ask</div>
-                  <p className="wizard-side-tip-text">{QUESTION_TIPS[currentQ.id]}</p>
-                </div>
-              )}
-
-              {previewMatches.length > 0 && (
-                <div className="wizard-side-card">
-                  <div className="wizard-side-label">Currently leading</div>
-                  <div className="wizard-side-preview">
-                    {previewMatches.map(m => (
-                      <div key={m.tool.id} className="wizard-side-preview-row">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          className="wizard-side-preview-logo"
-                          src={`https://www.google.com/s2/favicons?domain=${m.tool.logoDomain}&sz=64`}
-                          alt={m.tool.name}
-                          onError={e => { (e.target as HTMLImageElement).style.visibility = 'hidden' }}
-                        />
-                        <div className="wizard-side-preview-text">
-                          <div className="wizard-side-preview-name">{m.tool.name}</div>
-                          <div className="wizard-side-preview-cat">{m.catName}</div>
+                    {runnerUps.length > 0 && (
+                      <>
+                        <div className="wizard-result-label" style={{ marginTop: '2rem' }}>
+                          {isClose ? 'Also a strong fit' : 'Worth a look'}
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="wizard-side-preview-hint">Your answers will reorder these.</div>
-                </div>
-              )}
-            </aside>
-          </div>
-        )}
+                        {runnerUps.map(r => (
+                          <div key={r.tool.id} className="wizard-runner-up" onClick={() => handleSelect(r)}>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              className="wizard-runner-logo"
+                              src={`https://www.google.com/s2/favicons?domain=${r.tool.logoDomain}&sz=64`}
+                              alt={r.tool.name}
+                              onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
+                            />
+                            <div className="wizard-runner-info">
+                              <div className="wizard-runner-name">{r.tool.name}</div>
+                              <div className="wizard-runner-tagline">{r.tool.tagline}</div>
+                              {(r.strengths.length > 0 || r.mismatches.length > 0) && (
+                                <div className="wizard-runner-badges">
+                                  {r.strengths.map(s => <span key={s} className="wizard-chip-strength">{s}</span>)}
+                                  {r.mismatches.map(m => <span key={m} className="wizard-chip-mismatch">⚠ {m}</span>)}
+                                </div>
+                              )}
+                            </div>
+                            <div className="wizard-runner-cat">{r.catName}</div>
+                          </div>
+                        ))}
+                      </>
+                    )}
 
-        {/* No results */}
-        {isResults && results.length === 0 && (
-          <div className="wizard-step" key="empty" style={{ maxWidth: 620 }}>
-            <p className="wizard-question" style={{ fontSize: '1.6rem' }}>Nothing matched that search.</p>
-            <p style={{ color: 'var(--fg2)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
-              Try a different search term or browse by category.
-            </p>
-            <button className="wizard-restart" onClick={handleRestart}>← Start over</button>
-          </div>
-        )}
-
-        {/* Results */}
-        {isResults && results.length > 0 && (
-          <div className="wizard-step" key="results" style={{ maxWidth: 620 }}>
-
-            <div className="wizard-result-label">Best pick</div>
-
-            <div className="wizard-best-pick" onClick={() => handleSelect(bestPick)}>
-              <span className="wizard-best-badge">Best match</span>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                className="wizard-pick-logo"
-                src={`https://www.google.com/s2/favicons?domain=${bestPick.tool.logoDomain}&sz=64`}
-                alt={bestPick.tool.name}
-                onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
-              />
-              <div className="wizard-pick-info">
-                <div className="wizard-pick-name">{bestPick.tool.name}</div>
-                <div className="wizard-pick-tagline">{bestPick.tool.tagline}</div>
-                {(bestPick.strengths.length > 0 || bestPick.mismatches.length > 0) && (
-                  <div className="wizard-chips">
-                    {bestPick.strengths.map(s => <span key={s} className="wizard-chip-strength">{s}</span>)}
-                    {bestPick.mismatches.map(m => <span key={m} className="wizard-chip-mismatch">⚠ {m}</span>)}
-                  </div>
+                    <button className="wizard-restart" onClick={handleRestart}>← Start over</button>
+                  </>
                 )}
               </div>
-              <div className="wizard-pick-cat">{bestPick.catName}</div>
+            )}
+          </div>
+
+          {/* Helper sidebar */}
+          <aside className="wizard-side">
+            <div className="wizard-side-card">
+              <div className="wizard-side-label">Your search</div>
+              <div className="wizard-side-query">"{query}"</div>
+              <div className="wizard-side-meta">
+                <span>
+                  <strong>{plan.candidateCount}</strong> matching {plan.candidateCount === 1 ? 'tool' : 'tools'}
+                </span>
+                {plan.topCategoryName && (
+                  <>
+                    <span className="wizard-side-meta-dot">·</span>
+                    <span>top category <strong>{plan.topCategoryName}</strong></span>
+                  </>
+                )}
+              </div>
             </div>
 
-            {runnerUps.length > 0 && (
-              <>
-                <div className="wizard-result-label" style={{ marginTop: '2rem' }}>
-                  {isClose ? 'Also a strong fit' : 'Worth a look'}
-                </div>
-                {runnerUps.map(r => (
-                  <div key={r.tool.id} className="wizard-runner-up" onClick={() => handleSelect(r)}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      className="wizard-runner-logo"
-                      src={`https://www.google.com/s2/favicons?domain=${r.tool.logoDomain}&sz=64`}
-                      alt={r.tool.name}
-                      onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
-                    />
-                    <div className="wizard-runner-info">
-                      <div className="wizard-runner-name">{r.tool.name}</div>
-                      <div className="wizard-runner-tagline">{r.tool.tagline}</div>
-                      {(r.strengths.length > 0 || r.mismatches.length > 0) && (
-                        <div className="wizard-runner-badges">
-                          {r.strengths.map(s => <span key={s} className="wizard-chip-strength">{s}</span>)}
-                          {r.mismatches.map(m => <span key={m} className="wizard-chip-mismatch">⚠ {m}</span>)}
-                        </div>
-                      )}
+            {signals.phrases.length > 0 && (
+              <div className="wizard-side-card">
+                <div className="wizard-side-label">What we picked up</div>
+                <div className="wizard-signal-list">
+                  {signals.phrases.slice(0, 4).map(p => (
+                    <div key={p} className="wizard-signal">
+                      <span className="wizard-signal-dot" aria-hidden="true" />
+                      <span className="wizard-signal-text">Detected phrase: <strong>{p}</strong></span>
                     </div>
-                    <div className="wizard-runner-cat">{r.catName}</div>
-                  </div>
-                ))}
-              </>
+                  ))}
+                </div>
+              </div>
             )}
 
-            <button className="wizard-restart" onClick={handleRestart}>← Start over</button>
-          </div>
-        )}
+            {activeQ && QUESTION_TIPS[activeQ.id] && (
+              <div className="wizard-side-card wizard-side-tip">
+                <div className="wizard-side-label">Why we ask</div>
+                <p className="wizard-side-tip-text">{QUESTION_TIPS[activeQ.id]}</p>
+              </div>
+            )}
 
+            {previewMatches.length > 0 && (
+              <div className="wizard-side-card">
+                <div className="wizard-side-label">Currently leading</div>
+                <div className="wizard-side-preview">
+                  {previewMatches.map(m => (
+                    <div key={m.tool.id} className="wizard-side-preview-row">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        className="wizard-side-preview-logo"
+                        src={`https://www.google.com/s2/favicons?domain=${m.tool.logoDomain}&sz=64`}
+                        alt={m.tool.name}
+                        onError={e => { (e.target as HTMLImageElement).style.visibility = 'hidden' }}
+                      />
+                      <div className="wizard-side-preview-text">
+                        <div className="wizard-side-preview-name">{m.tool.name}</div>
+                        <div className="wizard-side-preview-cat">{m.catName}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="wizard-side-preview-hint">Your answers will reorder these.</div>
+              </div>
+            )}
+          </aside>
+        </div>
       </div>
     </div>
   )

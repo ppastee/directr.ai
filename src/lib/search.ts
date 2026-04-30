@@ -14,10 +14,10 @@ const STOP_WORDS = new Set([
   'have','has','had','do','does','did','will','would','should','could','can','may','might','must',
   'i','me','my','mine','we','us','our','you','your','yours','they','them','their','it','its',
   'this','that','these','those','some','any','all','no','not','only','just','very','really',
-  'want','need','looking','looking','help','make','create','build','use','using','so','then',
+  'want','need','looking','looking','help','make','create','use','using','so','then',
   'how','what','which','who','where','when','why','because','than','also','too',
-  'one','two','three','few','many','much','more','less','best','better',
-  'tool','tools','app','apps','ai','please','thanks','thank',
+  'one','two','three','few','many','much','more','less',
+  'ai','please','thanks','thank',
 ])
 
 // Multi-word phrases worth boosting if they appear together in the query.
@@ -45,6 +45,12 @@ const PHRASE_INTENT: Record<string, string[]> = {
   'full-stack':           ['coding'],
   'web app':              ['coding'],
   'mobile app':           ['coding'],
+  'build an app':         ['coding'],
+  'build a app':          ['coding'],
+  'tracking app':         ['coding'],
+  'fitness app':          ['coding'],
+  'health app':           ['coding'],
+  'app that':             ['coding'],
   'concept art':          ['image'],
   'product photo':        ['image'],
   'product shots':        ['image'],
@@ -85,8 +91,8 @@ const CATEGORY_CUES: Record<string, string[]> = {
   animation:    ['video','animate','animation','reels','tiktok','youtube','short','clip','footage','film','movie'],
   image:        ['image','photo','picture','illustration','poster','logo','icon','visual','art','artwork','headshot'],
   writing:      ['write','copy','blog','article','essay','script','story','novel','headline','tagline','newsletter'],
-  coding:       ['code','coding','program','developer','dev','api','app','website','frontend','backend','script'],
-  audio:        ['voice','audio','music','song','track','podcast','transcribe','transcript','dub','dubbing','tts'],
+  coding:       ['code','coding','program','developer','dev','api','app','apps','application','website','site','frontend','backend','script','build','building','builder','builders','tracker','tracking','mobile'],
+  audio:        ['voice','audio','music','song','podcast','transcribe','transcript','dub','dubbing','tts'],
   chat:         ['chat','assistant','answer','answers','question','questions','reasoning','research','summarize','summary'],
   '3d':         ['3d','model','mesh','character','environment','asset','sculpt','rig','rigged','texture'],
   productivity: ['notes','meeting','meetings','schedule','calendar','task','tasks','workflow','automation','presentation'],
@@ -141,8 +147,10 @@ export function extractSignals(query: string): SearchSignals {
     }
   }
   for (const w of words) {
+    const stem = w.length > 4 && w.endsWith('s') ? w.slice(0, -1) : w
     for (const [catId, cues] of Object.entries(CATEGORY_CUES)) {
-      if (cues.includes(w)) categoryBias[catId] = (categoryBias[catId] ?? 0) + 1
+      if (cues.includes(w) || (stem !== w && cues.includes(stem)))
+        categoryBias[catId] = (categoryBias[catId] ?? 0) + 1
     }
   }
   return { words, phrases, categoryBias }
@@ -190,7 +198,7 @@ export function scoreTools(query: string, limit = 7): Result[] {
       // Category-context boost: if query implies this category, lift the
       // tool by a multiplier so detailed queries don't get overwhelmed by
       // off-category coincidental keyword hits.
-      if (catCue > 0 && score > 0) score *= (1 + catCue * 0.18)
+      if (catCue > 0 && score > 0) score *= (1 + catCue * 0.30)
 
       if (score > 0) results.push({ tool, catId, catName, score })
     }
