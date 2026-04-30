@@ -104,12 +104,14 @@ const icons: Record<string, (props: IconProps) => React.ReactElement> = {
       {/* Axes */}
       <rect x="3" y="3" width="1.5" height="16" rx="0.75" fill="#15803d"/>
       <rect x="3" y="18" width="18" height="1.5" rx="0.75" fill="#15803d"/>
-      {/* Ascending bars */}
-      <rect x="5.5" y="13" width="3" height="6" rx="1" fill="#22c55e"/>
-      <rect x="10.25" y="9" width="3" height="10" rx="1" fill="#22c55e"/>
-      <rect x="15" y="5" width="3" height="14" rx="1" fill="#22c55e"/>
-      {/* Trend line */}
-      <path d="M7 14L11.75 10L16.5 6" stroke="#86efac" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      {/* Area fill under line */}
+      <path d="M4.5 16L8 11L12 13L16 7L21 9L21 18.5L4.5 18.5Z" fill="#bbf7d0"/>
+      {/* Line */}
+      <path d="M4.5 16L8 11L12 13L16 7L21 9" stroke="#22c55e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      {/* Dots */}
+      <circle cx="8" cy="11" r="1.5" fill="#15803d"/>
+      <circle cx="12" cy="13" r="1.5" fill="#15803d"/>
+      <circle cx="16" cy="7" r="1.5" fill="#15803d"/>
     </svg>
   ),
 
