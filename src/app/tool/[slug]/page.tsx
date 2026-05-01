@@ -95,10 +95,44 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     ],
   }
 
+  const freeAnswer = tool.freeTierLabel === 'Free'
+    ? `Yes, ${tool.name} is completely free to use.`
+    : tool.freeTierLabel === 'Free tier available'
+    ? `${tool.name} offers a free tier with limited features. Paid plans start at ${tool.price}.`
+    : tool.freeTierLabel === 'Free trial'
+    ? `${tool.name} offers a free trial. After the trial, paid plans start at ${tool.price}.`
+    : `${tool.name} does not offer a free plan. Pricing starts at ${tool.price}.`
+
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: `Is ${tool.name} free?`,
+        acceptedAnswer: { '@type': 'Answer', text: freeAnswer },
+      },
+      {
+        '@type': 'Question',
+        name: `What is ${tool.name} used for?`,
+        acceptedAnswer: { '@type': 'Answer', text: `${tool.name} is used for ${tool.tags.join(', ')}. ${tool.desc}` },
+      },
+      {
+        '@type': 'Question',
+        name: `What are the best ${tool.name} alternatives?`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `The best alternatives to ${tool.name} are listed on our ${cat?.name ?? ''} AI tools page at directr.com.au/category/${cat?.slug ?? ''}. We compare pricing, features, and ratings across all top ${cat?.name?.toLowerCase() ?? ''} AI tools.`,
+        },
+      },
+    ],
+  }
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(toolSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <ToolRoute tool={tool} categoryId={categoryId} />
     </>
   )
