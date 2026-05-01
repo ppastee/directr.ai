@@ -19,6 +19,7 @@ export default function sitemap() {
 
   return [
     { url: BASE, lastModified: new Date(), changeFrequency: 'daily' as const, priority: 1 },
+    { url: `${BASE}/tools/free`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.9 },
     ...categoryUrls,
     ...toolUrls,
   ]

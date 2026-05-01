@@ -235,12 +235,20 @@ All icons: `viewBox="0 0 24 24"` · `strokeWidth="1.75"` · stroke-based · `fil
 - Sitemap updated with all tool URLs (~100+ entries)
 - Anchor text on alternatives cards is descriptive ("View Synthesia →" not "View →")
 
+## SEO
+
+Full SEO strategy and session roadmap lives in **`SEO.md`** — read that file before starting any SEO work. It contains the keyword map, pSEO build plan, schema gaps, and session-by-session tasks.
+
+**Next SEO session (Session 3):** WebSite + Organization schema on homepage, FAQPage schema on all category + tool pages, homepage crawlability fix, alt text on tool logos.
+
+---
+
 ## Outstanding Work (priority order)
 
-1. **Persistent theme** — save to `localStorage`
-2. **"List a Tool" API** — wire ListToolModal form to POST /api/submit-tool
-3. **More tools** — expand beyond current set, especially 3D (only 4 tools)
-4. **Session 3 SEO** — TBD (structured data / JSON-LD schema, review schema on tool pages?)
+1. **Session 3 SEO** — See SEO.md for full details
+2. **Persistent theme** — save to `localStorage`
+3. **"List a Tool" API** — wire ListToolModal form to POST /api/submit-tool
+4. **More tools** — expand beyond current set, especially 3D (only 4 tools)
 
 ---
 

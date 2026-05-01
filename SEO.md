@@ -24,12 +24,12 @@
 | Organization schema | ✅ Done | Homepage |
 | Core Web Vitals audit | ❌ Not done | Run Lighthouse |
 | Google Search Console | ❌ Not confirmed | Verify ownership + submit sitemap |
-| Use-case landing pages | ❌ Not built | pSEO opportunity — hundreds of pages |
+| Use-case landing pages | 🔶 Partial | `/tools/free` live (28K/mo keyword); profession/task pages still to build |
 | Comparison pages | ❌ Not built | High intent, mid competition |
 | Alternatives pages | ❌ Not built | Tool-level, very high CTR |
 | Blog / content hub | ❌ Not built | E-E-A-T authority signal |
 | Internal linking strategy | ❌ Not done | Needs audit |
-| AI Overview optimization | ❌ Not done | Answer-first content rewrites |
+| AI Overview optimization | ✅ Done | Answer-first paragraphs on all 8 category pages |
 | Off-page / community | ❌ Not done | Reddit, PH, newsletters |
 
 ---

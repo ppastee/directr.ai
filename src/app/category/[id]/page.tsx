@@ -135,7 +135,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
-      <CategoryRoute cat={cat} />
+      <CategoryRoute cat={cat} faqs={faqs} />
     </>
   )
 }

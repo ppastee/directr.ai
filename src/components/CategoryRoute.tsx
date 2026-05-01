@@ -8,7 +8,9 @@ import Nav from './Nav'
 import CategoryPage from './CategoryPage'
 import AnimatedBg from './AnimatedBg'
 
-function Inner({ cat }: { cat: Category }) {
+interface FAQ { q: string; a: string }
+
+function Inner({ cat, faqs }: { cat: Category; faqs: FAQ[] }) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const highlightId = searchParams.get('highlight') ? parseInt(searchParams.get('highlight')!) : null
@@ -35,16 +37,17 @@ function Inner({ cat }: { cat: Category }) {
           cat={cat}
           onHome={() => router.push('/')}
           highlightedToolId={highlightId}
+          faqs={faqs}
         />
       </div>
     </>
   )
 }
 
-export default function CategoryRoute({ cat }: { cat: Category }) {
+export default function CategoryRoute({ cat, faqs }: { cat: Category; faqs: FAQ[] }) {
   return (
     <Suspense>
-      <Inner cat={cat} />
+      <Inner cat={cat} faqs={faqs} />
     </Suspense>
   )
 }

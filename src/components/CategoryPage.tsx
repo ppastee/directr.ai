@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import { TOOLS, Category, Tool, nameToSlug } from '@/data/tools'
 import ToolCard from './ToolCard'
 
+interface FAQ { q: string; a: string }
+
 function monthlyPrice(price: string): number {
   const lower = price.toLowerCase()
   if (lower === 'free' || lower.startsWith('free')) return 0
@@ -13,6 +15,17 @@ function monthlyPrice(price: string): number {
 }
 
 const SORT_OPTIONS = ['best-match', 'highest-rated', 'lowest-price', 'most-reviews', 'newest']
+
+const CAT_ANSWERS: Record<string, string> = {
+  animation:    'The best AI animation tools in 2026 are Runway, Pika, and Kling AI. Runway leads for professional video generation with cinema-quality outputs; Pika is fastest for social clips; Kling AI offers the best free tier for beginners. All three can produce video from a text prompt in under a minute.',
+  image:        'The best AI image generators in 2026 are Midjourney, Adobe Firefly, and Flux. Midjourney produces the most artistic results; Adobe Firefly is the top pick for commercial use thanks to its copyright-safe training data; Flux is the leading open-source model with no subscription required.',
+  writing:      'The best AI writing tools in 2026 are Claude, ChatGPT, and Jasper. Claude and ChatGPT handle long-form content, research, and complex drafts with the most natural results. Jasper is purpose-built for marketing teams that need brand-consistent copy at scale.',
+  coding:       'The best AI coding tools in 2026 are Cursor, GitHub Copilot, and Claude Code. Cursor leads for full IDE integration and multi-file edits; Copilot for inline tab completions in VS Code; Claude Code for complex, agentic software development from the command line.',
+  audio:        'The best AI audio tools in 2026 are ElevenLabs, Suno, and Descript. ElevenLabs leads for hyper-realistic voice cloning and text-to-speech narration; Suno for full song generation from a text prompt; Descript for podcast editing with AI-powered transcription and filler-word removal.',
+  chat:         'The best AI chatbots in 2026 are Claude, ChatGPT, and Perplexity. Claude leads for writing, coding, and nuanced reasoning; ChatGPT for breadth and the largest plugin ecosystem; Perplexity for real-time web search with cited sources instead of hallucinated answers.',
+  '3d':         'The best AI 3D tools in 2026 are Meshy, Luma AI, and Spline AI. Meshy leads for text-to-3D model generation with game-ready exports; Luma AI for photorealistic NeRF capture from video footage; Spline AI for building interactive 3D experiences directly in the browser.',
+  productivity: 'The best AI productivity tools in 2026 are Notion AI, Otter.ai, and Reclaim. Notion AI leads for in-document writing and knowledge management; Otter.ai for automatic meeting transcription with speaker identification; Reclaim for intelligent calendar scheduling that protects focus time.',
+}
 
 const CAT_INTROS: Record<string, string> = {
   animation:    'A few years ago, a 30-second animated video cost thousands and a week of back-and-forth with an agency. Now you type what you want and hit generate. These tools handle avatars, voiceovers, motion graphics, and full video production — whether you\'re making training content, ads, or just something that actually stops the scroll.',
@@ -52,12 +65,14 @@ interface CategoryPageProps {
   cat: Category
   onHome: () => void
   highlightedToolId?: number | null
+  faqs?: FAQ[]
 }
 
-export default function CategoryPage({ cat, onHome, highlightedToolId }: CategoryPageProps) {
+export default function CategoryPage({ cat, onHome, highlightedToolId, faqs = [] }: CategoryPageProps) {
   const router = useRouter()
   const rawTools = TOOLS[cat.id] ?? TOOLS.animation
   const [sort, setSort] = useState('best-match')
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [activeHighlight, setActiveHighlight] = useState<number | null>(highlightedToolId ?? null)
   const [showAll, setShowAll] = useState(false)
 
@@ -84,10 +99,13 @@ export default function CategoryPage({ cat, onHome, highlightedToolId }: Categor
               {' / '}
               {cat.name}
             </div>
-            <h1 className="cat-page-title">Best {cat.name} AI Tools</h1>
+            <h1 className="cat-page-title">Best {cat.name} AI Tools 2026</h1>
             <p className="cat-page-sub">
               Comparing {sorted.length} tools · Prices updated April 2026
             </p>
+            {CAT_ANSWERS[cat.id] && (
+              <p className="cat-page-answer">{CAT_ANSWERS[cat.id]}</p>
+            )}
             {CAT_INTROS[cat.id] && (
               <p className="cat-page-intro">{CAT_INTROS[cat.id]}</p>
             )}
@@ -135,6 +153,31 @@ export default function CategoryPage({ cat, onHome, highlightedToolId }: Categor
             <button className="show-more-btn" onClick={() => setShowAll(o => !o)}>
               {showAll ? 'Show less' : `Show all ${sorted.length} tools`}
             </button>
+          )}
+
+          {faqs.length > 0 && (
+            <section className="faq-section" aria-label="Frequently asked questions">
+              <h2 className="faq-section-title">Frequently Asked Questions</h2>
+              <dl className="faq-list">
+                {faqs.map((faq, i) => (
+                  <div key={i} className={`faq-item${openFaq === i ? ' open' : ''}`}>
+                    <dt>
+                      <button
+                        className="faq-question"
+                        onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                        aria-expanded={openFaq === i}
+                      >
+                        <span>{faq.q}</span>
+                        <span className="faq-chevron">{openFaq === i ? '−' : '+'}</span>
+                      </button>
+                    </dt>
+                    {openFaq === i && (
+                      <dd className="faq-answer">{faq.a}</dd>
+                    )}
+                  </div>
+                ))}
+              </dl>
+            </section>
           )}
 
           <div className="footer">
