@@ -1293,6 +1293,48 @@ body.theme-studio {
 }
 .free-cat-tab.active .free-cat-count { opacity: 0.85; }
 
+/* ── ALTERNATIVES PAGE ── */
+.alt-page { max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
+.alt-hero {
+  display: flex; gap: 1.5rem; align-items: flex-start;
+  padding: 2.5rem 0 2rem; border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+.alt-hero-logo { flex-shrink: 0; margin-top: 0.25rem; }
+.alt-h1 {
+  font-family: var(--heading-font); font-size: 2rem; font-weight: 700;
+  color: var(--fg); margin: 0 0 0.75rem; line-height: 1.2;
+}
+.alt-intro { font-size: 0.95rem; color: var(--fg2); line-height: 1.65; max-width: 680px; margin: 0; }
+.alt-body-text { font-size: 0.95rem; color: var(--fg2); line-height: 1.65; max-width: 680px; }
+.alt-use-cases {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem; margin-top: 0.25rem;
+}
+.alt-use-case-card {
+  display: block; padding: 1.25rem; border-radius: 12px;
+  border: var(--card-border); background: var(--bg2);
+  text-decoration: none; transition: border-color 0.15s, box-shadow 0.15s;
+}
+.alt-use-case-card:hover { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.alt-use-case-label {
+  font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--accent); font-weight: 600; margin-bottom: 0.35rem;
+}
+.alt-use-case-tool { font-size: 0.95rem; font-weight: 700; color: var(--fg); margin-bottom: 0.5rem; }
+.alt-use-case-reason { font-size: 0.82rem; color: var(--fg2); line-height: 1.55; margin: 0; }
+.alt-cta {
+  display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;
+  padding: 1.5rem; border-radius: 12px; background: var(--accent-bg);
+  border: 1px solid var(--accent); margin-top: 2rem;
+}
+.alt-cta-text { font-size: 0.95rem; color: var(--fg2); margin: 0; }
+@media (max-width: 600px) {
+  .alt-h1 { font-size: 1.5rem; }
+  .alt-hero { flex-direction: column; gap: 1rem; }
+  .alt-use-cases { grid-template-columns: 1fr; }
+}
+
 /* ── FOOTER ── */
 .footer {
   border-top: 1px solid var(--border); padding: 2rem;
