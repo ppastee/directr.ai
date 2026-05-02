@@ -136,9 +136,9 @@ export default function CategoryPage({ cat, onHome, highlightedToolId, faqs = []
             ))}
           </div>
 
-          {sorted.length > 4 && (
-            <button className="show-more-btn" onClick={() => setShowAll(o => !o)}>
-              {showAll ? 'Show less' : `Show all ${sorted.length} tools`}
+          {!showAll && sorted.length > 4 && (
+            <button className="show-more-btn" onClick={() => setShowAll(true)}>
+              Show all {sorted.length} tools
             </button>
           )}
 
