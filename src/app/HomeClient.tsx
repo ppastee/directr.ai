@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Category } from '@/data/tools'
+import { Category, TOOLS, nameToSlug } from '@/data/tools'
 import Nav from '@/components/Nav'
 import HomePage from '@/components/HomePage'
 import WizardModal from '@/components/WizardModal'
@@ -35,7 +35,11 @@ export default function HomeClient() {
   }, [])
 
   function handleCategory(cat: Category, toolId?: number) {
-    router.push(`/category/${cat.slug}${toolId ? `?highlight=${toolId}` : ''}`)
+    if (toolId) {
+      const tool = TOOLS[cat.id]?.find(t => t.id === toolId)
+      if (tool) { router.push(`/tool/${nameToSlug(tool.name)}`); return }
+    }
+    router.push(`/category/${cat.slug}`)
   }
 
   function handleHome() {
