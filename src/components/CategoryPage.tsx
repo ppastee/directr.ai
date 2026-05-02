@@ -135,7 +135,6 @@ export default function CategoryPage({ cat, onHome, highlightedToolId, faqs = []
           <div className="tool-grid">
             {sorted.map((t, i) => (
               <div key={t.id} data-tool-id={t.id}
-                ref={i === sorted.length - 1 ? lastToolRef : undefined}
                 style={{ '--tool-i': i } as React.CSSProperties}
               >
                 <ToolCard
@@ -145,6 +144,7 @@ export default function CategoryPage({ cat, onHome, highlightedToolId, faqs = []
               </div>
             ))}
           </div>
+          <div ref={lastToolRef} style={{ height: 0 }} />
 
           {!lastInView && sorted.length > 4 && (
             <button className="show-more-btn" onClick={() => lastToolRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })}>
