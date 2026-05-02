@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { TOOLS, Category, Tool, nameToSlug } from '@/data/tools'
 import ToolCard from './ToolCard'
@@ -64,7 +64,8 @@ export default function CategoryPage({ cat, onHome, highlightedToolId, faqs = []
   const [sort, setSort] = useState('best-match')
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [activeHighlight, setActiveHighlight] = useState<number | null>(highlightedToolId ?? null)
-  const [showAll, setShowAll] = useState(false)
+  const [lastInView, setLastInView] = useState(false)
+  const lastToolRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!highlightedToolId) return
@@ -78,6 +79,15 @@ export default function CategoryPage({ cat, onHome, highlightedToolId, faqs = []
   }, [highlightedToolId])
 
   const sorted = useMemo(() => sortTools(rawTools, sort), [rawTools, sort])
+
+  useEffect(() => {
+    setLastInView(false)
+    const el = lastToolRef.current
+    if (!el) return
+    const obs = new IntersectionObserver(([e]) => setLastInView(e.isIntersecting), { threshold: 0.1 })
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [sorted])
 
   return (
     <div className="page">
@@ -125,7 +135,7 @@ export default function CategoryPage({ cat, onHome, highlightedToolId, faqs = []
           <div className="tool-grid">
             {sorted.map((t, i) => (
               <div key={t.id} data-tool-id={t.id}
-                className={!showAll && i >= 4 ? 'tool-row-hidden' : ''}
+                ref={i === sorted.length - 1 ? lastToolRef : undefined}
                 style={{ '--tool-i': i } as React.CSSProperties}
               >
                 <ToolCard
@@ -136,8 +146,8 @@ export default function CategoryPage({ cat, onHome, highlightedToolId, faqs = []
             ))}
           </div>
 
-          {!showAll && sorted.length > 4 && (
-            <button className="show-more-btn" onClick={() => setShowAll(true)}>
+          {!lastInView && sorted.length > 4 && (
+            <button className="show-more-btn" onClick={() => lastToolRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })}>
               Show all {sorted.length} tools
             </button>
           )}
