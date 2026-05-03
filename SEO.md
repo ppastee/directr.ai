@@ -18,17 +18,17 @@
 | ItemList schema | ✅ Done | Category pages |
 | BreadcrumbList schema | ✅ Done | Tool + category pages |
 | Homepage JSON-LD | ✅ Done | WebSite + SearchAction + Organization |
-| FAQ schema | ✅ Done | All 8 category pages + all tool pages |
+| FAQ schema | ✅ Done | All 16 category pages + all tool pages |
 | HowTo schema | ❌ Missing | Use-case pages |
 | WebSite schema | ✅ Done | With SearchAction (sitelinks search) |
 | Organization schema | ✅ Done | Homepage |
 | Core Web Vitals audit | ❌ Not done | Run Lighthouse |
 | Google Search Console | ❌ Not confirmed | Verify ownership + submit sitemap |
-| Use-case landing pages | 🔶 Partial | `/tools/free` live (28K/mo keyword); profession/task pages still to build |
-| Comparison pages | ❌ Not built | High intent, mid competition |
-| Alternatives pages | ❌ Not built | Tool-level, very high CTR |
+| Use-case landing pages | 🔶 Partial | `/tools/free` live; profession/task pages still to build (Session 7) |
+| Comparison pages | ✅ Done | 8 high-volume pairs at /compare/[pair] |
+| Alternatives pages | ✅ Done | All tools at /alternatives/[slug] |
 | Blog / content hub | ❌ Not built | E-E-A-T authority signal |
-| Internal linking strategy | ❌ Not done | Needs audit |
+| Internal linking strategy | ✅ Done | Related cats on category pages; alternatives + compare on tool pages |
 | AI Overview optimization | ✅ Done | Answer-first paragraphs on all 8 category pages |
 | Off-page / community | ❌ Not done | Reddit, PH, newsletters |
 
