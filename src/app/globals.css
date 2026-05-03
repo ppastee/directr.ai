@@ -1387,6 +1387,28 @@ body.theme-studio {
   .vs-choose-grid { grid-template-columns: 1fr; }
 }
 
+/* ── USE-CASE HOW-TO STEPS ── */
+.uc-steps-section { margin-top: 3rem; max-width: 680px; }
+.uc-steps-title {
+  font-family: var(--heading-font); font-size: 1.35rem;
+  color: var(--fg); margin-bottom: 1.25rem;
+}
+.uc-steps-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+.uc-step {
+  display: flex; gap: 1rem; align-items: flex-start;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1.1rem 1.25rem;
+}
+.uc-step-num {
+  flex-shrink: 0; width: 28px; height: 28px;
+  background: var(--accent); color: #fff;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: 700; margin-top: 0.1rem;
+}
+.uc-step-content { flex: 1; }
+.uc-step-name { display: block; font-size: 0.95rem; font-weight: 600; color: var(--fg); margin-bottom: 0.3rem; }
+.uc-step-text { font-size: 0.875rem; color: var(--fg2); line-height: 1.55; margin: 0; }
+
 /* ── FOOTER ── */
 .footer {
   border-top: 1px solid var(--border); padding: 2rem;

@@ -19,12 +19,12 @@
 | BreadcrumbList schema | ✅ Done | Tool + category pages |
 | Homepage JSON-LD | ✅ Done | WebSite + SearchAction + Organization |
 | FAQ schema | ✅ Done | All 16 category pages + all tool pages |
-| HowTo schema | ❌ Missing | Use-case pages |
+| HowTo schema | ✅ Done | All 20 task pages at /tools/[task] |
 | WebSite schema | ✅ Done | With SearchAction (sitelinks search) |
 | Organization schema | ✅ Done | Homepage |
 | Core Web Vitals audit | ❌ Not done | Run Lighthouse |
 | Google Search Console | ❌ Not confirmed | Verify ownership + submit sitemap |
-| Use-case landing pages | 🔶 Partial | `/tools/free` live; profession/task pages still to build (Session 7) |
+| Use-case landing pages | ✅ Done | `/tools/free` + 20 profession pages + 20 task pages live (Session 7) |
 | Comparison pages | ✅ Done | 8 high-volume pairs at /compare/[pair] |
 | Alternatives pages | ✅ Done | All tools at /alternatives/[slug] |
 | Blog / content hub | ❌ Not built | E-E-A-T authority signal |
