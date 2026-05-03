@@ -2,7 +2,8 @@
 
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import { TOOLS, Category, Tool, nameToSlug } from '@/data/tools'
+import Link from 'next/link'
+import { TOOLS, CATEGORIES, Category, Tool, nameToSlug } from '@/data/tools'
 import ToolCard from './ToolCard'
 
 interface FAQ { q: string; a: string }
@@ -15,6 +16,25 @@ function monthlyPrice(price: string): number {
 }
 
 const SORT_OPTIONS = ['best-match', 'highest-rated', 'lowest-price', 'most-reviews', 'newest']
+
+const RELATED_CATS: Record<string, string[]> = {
+  animation:    ['image', 'audio', 'productivity'],
+  image:        ['animation', '3d', 'writing'],
+  writing:      ['chat', 'productivity', 'marketing'],
+  coding:       ['chat', 'productivity', 'data'],
+  audio:        ['animation', 'productivity', 'writing'],
+  chat:         ['writing', 'coding', 'productivity'],
+  '3d':         ['animation', 'image', 'productivity'],
+  productivity: ['writing', 'coding', 'chat'],
+  marketing:    ['writing', 'image', 'data'],
+  finance:      ['data', 'productivity', 'accounting'],
+  accounting:   ['finance', 'productivity', 'legal'],
+  legal:        ['hr', 'productivity', 'writing'],
+  hr:           ['productivity', 'legal', 'writing'],
+  construction: ['data', 'productivity', 'finance'],
+  data:         ['finance', 'coding', 'productivity'],
+  education:    ['productivity', 'writing', 'chat'],
+}
 
 
 const CAT_INTROS: Record<string, string> = {
@@ -175,6 +195,22 @@ export default function CategoryPage({ cat, onHome, highlightedToolId, faqs = []
                 ))}
               </dl>
             </section>
+          )}
+
+          {RELATED_CATS[cat.id] && (
+            <div className="related-cats-section">
+              <h2 className="related-cats-title">Browse related categories</h2>
+              <div className="related-cats-row">
+                {RELATED_CATS[cat.id]
+                  .map((id) => CATEGORIES.find((c) => c.id === id))
+                  .filter(Boolean)
+                  .map((c) => (
+                    <Link key={c!.id} href={`/category/${c!.slug}`} className="related-cat-pill">
+                      {c!.name}
+                    </Link>
+                  ))}
+              </div>
+            </div>
           )}
 
           <div className="footer">

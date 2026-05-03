@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Tool, Category, TOOLS, nameToSlug } from '@/data/tools'
 import { PRICING } from '@/data/pricing'
+import { VS_PAIRS } from '@/data/vs'
 
 function Stars({ n }: { n: number }) {
   const full = Math.round(n)
@@ -299,6 +300,36 @@ export default function ToolDetailPage({ tool, categoryId, cat }: Props) {
           </div>
         </div>
       )}
+
+      {/* Internal links: alternatives + compare pages */}
+      {(() => {
+        const slug = nameToSlug(tool.name)
+        const compareLinks = Object.entries(VS_PAIRS)
+          .filter(([, v]) => v.a === slug || v.b === slug)
+          .map(([pair, v]) => {
+            const otherSlug = v.a === slug ? v.b : v.a
+            const otherName = otherSlug.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ')
+            return { pair, otherName }
+          })
+        return (
+          <div className="tool-detail-section">
+            <h2 className="tool-detail-section-title">Explore further</h2>
+            <div className="related-cats-row">
+              <Link href={`/alternatives/${slug}`} className="related-cat-pill">
+                {tool.name} alternatives
+              </Link>
+              {compareLinks.map(({ pair, otherName }) => (
+                <Link key={pair} href={`/compare/${pair}`} className="related-cat-pill">
+                  {tool.name} vs {otherName}
+                </Link>
+              ))}
+              <Link href={`/category/${cat.slug}`} className="related-cat-pill">
+                All {cat.name} tools
+              </Link>
+            </div>
+          </div>
+        )
+      })()}
 
       <div style={{ height: '4rem' }} />
     </div>
