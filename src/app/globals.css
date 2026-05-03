@@ -1335,6 +1335,46 @@ body.theme-studio {
   .alt-use-cases { grid-template-columns: 1fr; }
 }
 
+/* ── COMPARE PAGES ── */
+.vs-hero {
+  display: flex; align-items: center; gap: 1.5rem;
+  padding: 2rem 0 1.5rem; border-bottom: 1px solid var(--border);
+  margin-bottom: 0.5rem; flex-wrap: wrap;
+}
+.vs-hero-side { display: flex; align-items: center; gap: 1rem; flex: 1; min-width: 160px; }
+.vs-hero-name { font-size: 1.1rem; font-weight: 700; color: var(--fg); }
+.vs-hero-price { font-size: 0.8rem; color: var(--fg3); margin-top: 0.2rem; }
+.vs-badge {
+  font-size: 1rem; font-weight: 800; color: var(--fg3);
+  background: var(--bg3); border-radius: 8px; padding: 0.35rem 0.7rem; flex-shrink: 0;
+}
+.vs-strengths-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.vs-strengths-list {
+  list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-direction: column; gap: 0.6rem;
+}
+.vs-strengths-list li {
+  font-size: 0.88rem; color: var(--fg2); line-height: 1.5;
+  padding-left: 1.2rem; position: relative;
+}
+.vs-strengths-list li::before {
+  content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; font-size: 0.8rem;
+}
+.vs-choose-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.vs-choose-card { background: var(--bg2); border: var(--card-border); border-radius: 10px; padding: 1.25rem; }
+.vs-choose-label {
+  font-size: 0.8rem; font-weight: 700; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.6rem;
+}
+.vs-cta-link {
+  font-size: 0.85rem; font-weight: 600; color: var(--accent);
+  text-decoration: none; display: inline-block; margin-top: 0.75rem;
+}
+.vs-cta-link:hover { text-decoration: underline; }
+@media (max-width: 768px) {
+  .vs-strengths-grid { grid-template-columns: 1fr; }
+  .vs-choose-grid { grid-template-columns: 1fr; }
+}
+
 /* ── FOOTER ── */
 .footer {
   border-top: 1px solid var(--border); padding: 2rem;
