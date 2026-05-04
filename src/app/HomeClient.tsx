@@ -7,9 +7,11 @@ import Nav from '@/components/Nav'
 import HomePage from '@/components/HomePage'
 import WizardModal from '@/components/WizardModal'
 import AnimatedBg from '@/components/AnimatedBg'
+import IntroOverlay, { shouldShowIntro } from '@/components/IntroOverlay'
 
 export default function HomeClient() {
   const router = useRouter()
+  const [showIntro, setShowIntro] = useState(() => shouldShowIntro())
   const [heroScrolled, setHeroScrolled] = useState(false)
   const [wizardOpen, setWizardOpen] = useState(false)
   const [wizardQuery, setWizardQuery] = useState('')
@@ -55,6 +57,7 @@ export default function HomeClient() {
 
   return (
     <>
+      {showIntro && <IntroOverlay onDone={() => setShowIntro(false)} />}
       <AnimatedBg />
       <div style={{ position: 'relative', zIndex: 1 }}>
         <Nav

@@ -1712,3 +1712,20 @@ thead .compare-col-hero { border-bottom: 2px solid var(--accent); }
   .finder-tool-list { display: none; }
   .finder-card-header { margin-bottom: 0; gap: 0.6rem; }
 }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   INTRO OVERLAY
+   ═══════════════════════════════════════════════════════════════ */
+.intro-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: #000;
+  will-change: opacity, transform;
+}
+.intro-overlay.intro-out {
+  animation: introExit 0.42s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+}
+@keyframes introExit {
+  0%   { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.03); }
+}
