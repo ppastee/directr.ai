@@ -28,6 +28,14 @@ interface HomePageProps {
 
 const PILLS = ['Animate a video', 'Generate images', 'Write copy', 'Build a chatbot', 'Create music']
 
+const HEADLINES = [
+  { text: '"you can go any direction you choose"', quoted: true },
+  { text: "Matching people to AI tools since '26", quoted: false },
+  { text: "There's an AI tool for any task", quoted: false },
+  { text: 'You type the task. We find the tools', quoted: false },
+]
+
+
 const TYPEWRITER_PHRASES = [
   'animate a product demo...',
   'clone my voice for a podcast...',
@@ -112,9 +120,17 @@ export default function HomePage({ onCategory, onWizard }: HomePageProps) {
       <div className="hero">
         <div className="hero-eyebrow">The AI Tools Search Engine</div>
 
-        <h1 className="hero-title">
-          &ldquo;you can go any <em>direction</em>{' '}you choose&rdquo;
-        </h1>
+        <div className="hero-title-wrap">
+          <div className="hero-title-track">
+            {[...HEADLINES, HEADLINES[0]].map((h, i) => (
+              <h1 key={i} className="hero-title">
+                {h.quoted ? (
+                  <>&ldquo;you can go any <em>direction</em>{' '}you choose&rdquo;</>
+                ) : h.text}
+              </h1>
+            ))}
+          </div>
+        </div>
 
         <div
           className={`search-bar${isSearching ? ' is-searching' : ''}`}
