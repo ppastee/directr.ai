@@ -127,7 +127,7 @@ export const TOOLS: Record<string, Tool[]> = {
       name: 'Pika',
       emoji: '⚡',
       logoDomain: 'pika.art',
-      url: 'https://pika.style/?via=directr',
+      url: 'https://pika.art',
       tagline: 'Fast, expressive video creation',
       desc: 'Creates cinematic clips from text or images with strong motion control and a wide range of visual styles. Popular with social content creators and marketers who need polished, platform-ready video fast — and with directors who want to iterate on a concept before committing to a shoot. Solid free tier to get started without a credit card.',
       price: 'From $8/mo',
