@@ -106,6 +106,14 @@ const CATEGORY_CUES: Record<string, string[]> = {
   education:    ['learn','learning','tutor','tutoring','study','student','studying','course','quiz','flashcard'],
 }
 
+// Word-boundary match — prevents "sure" from hitting "ensure", etc.
+// We intentionally skip word-boundary checks on tool *names* (handled
+// separately with startsWith / includes) so "gpt" still finds "ChatGPT".
+function wordInText(w: string, text: string): boolean {
+  const escaped = w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  return new RegExp(`\\b${escaped}\\b`, 'i').test(text)
+}
+
 function tokenize(query: string): string[] {
   return query
     .toLowerCase()
@@ -183,15 +191,18 @@ export function scoreTools(query: string, limit = 7): Result[] {
       }
 
       // Word hits — capped per word so common words can't dominate.
+      // Names use substring matching (intentional: "gpt" finds "ChatGPT").
+      // All other fields use word-boundary matching to prevent false hits
+      // like "sure" matching inside "ensure".
       for (const w of words) {
         let wordScore = 0
-        if (name === w)              wordScore += 120
-        else if (name.startsWith(w)) wordScore += 80
-        else if (name.includes(w))   wordScore += 50
-        if (tagline.includes(w))     wordScore += 30
-        if (tags.includes(w))        wordScore += 35
-        if (desc.includes(w))        wordScore += 10
-        if (cat.includes(w))         wordScore += 25
+        if (name === w)                wordScore += 120
+        else if (name.startsWith(w))   wordScore += 80
+        else if (name.includes(w))     wordScore += 50
+        if (wordInText(w, tagline))    wordScore += 30
+        if (wordInText(w, tags))       wordScore += 35
+        if (wordInText(w, desc))       wordScore += 10
+        if (wordInText(w, cat))        wordScore += 25
         score += wordScore
       }
 
@@ -200,7 +211,10 @@ export function scoreTools(query: string, limit = 7): Result[] {
       // off-category coincidental keyword hits.
       if (catCue > 0 && score > 0) score *= (1 + catCue * 0.30)
 
-      if (score > 0) results.push({ tool, catId, catName, score })
+      // Require a minimum score to filter out pure coincidental description
+      // matches (score 10 each). A meaningful hit should reach a tagline (30),
+      // tag (35), or name (50+) to be surfaced.
+      if (score >= 20) results.push({ tool, catId, catName, score })
     }
   }
 

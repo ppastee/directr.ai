@@ -32,6 +32,9 @@ export interface WizardPlan {
   topCategoryId: string | null
   topCategoryName: string | null
   candidateCount: number
+  // True when the query has no recognisable category or tool signal.
+  // The UI should show a "no results" message rather than irrelevant questions.
+  noIntent: boolean
 }
 
 // ── Universal questions ────────────────────────────────────────────────────
@@ -622,8 +625,34 @@ function applyInference(query: string): Record<string, { value: string; reason: 
 // ── Plan the wizard for a query ────────────────────────────────────────────
 
 export function planWizard(query: string): WizardPlan {
+  const signals = extractSignals(query)
   const results = scoreTools(query, 0)
   const candidateCount = results.length
+
+  // ── Intent gate ──────────────────────────────────────────────────────────
+  // hasCategorySignal: the query contained a recognised category cue or
+  //   multi-word phrase (e.g. "animate", "blog post", "voice clone").
+  // hasStrongNameMatch: at least one tool name starts with or equals a query
+  //   word (score ≥ 80), meaning the user is looking for a specific tool.
+  //
+  // If neither is true, we have no reliable signal to pick a category or
+  // meaningful questions. Return early so the UI shows "no results" instead
+  // of asking questions that are completely unrelated to what was typed.
+  const hasCategorySignal = Object.keys(signals.categoryBias).length > 0
+  const maxScore = candidateCount > 0 ? Math.max(...results.map(r => r.score)) : 0
+  const hasStrongNameMatch = maxScore >= 80
+
+  if (!hasCategorySignal && !hasStrongNameMatch) {
+    return {
+      questions: [],
+      prefilled: {},
+      topCategoryId: null,
+      topCategoryName: null,
+      candidateCount: 0,
+      noIntent: true,
+    }
+  }
+  // ─────────────────────────────────────────────────────────────────────────
 
   const catScores: Record<string, number> = {}
   for (const r of results) catScores[r.catId] = (catScores[r.catId] ?? 0) + r.score
@@ -633,8 +662,12 @@ export function planWizard(query: string): WizardPlan {
 
   const prefilled = applyInference(query)
 
-  // Pick the question bank for the top category, then add universal Qs.
-  const bank = topCatId && CATEGORY_QUESTIONS[topCatId] ? CATEGORY_QUESTIONS[topCatId] : []
+  // Only pull category-specific questions when the query itself expressed a
+  // category intent. If the match was purely by tool name (e.g. "Midjourney"),
+  // skip category questions — the user likely knows the tool already.
+  const bank = hasCategorySignal && topCatId && CATEGORY_QUESTIONS[topCatId]
+    ? CATEGORY_QUESTIONS[topCatId]
+    : []
   const all: Question[] = [...bank, BUDGET_QUESTION, SKILL_QUESTION]
 
   // Drop any question whose answer was already inferred.
@@ -645,7 +678,14 @@ export function planWizard(query: string): WizardPlan {
   const limit = Object.keys(prefilled).length >= 2 ? 3 : 4
   const questions = remaining.slice(0, limit)
 
-  return { questions, prefilled, topCategoryId: topCatId, topCategoryName: topCatName, candidateCount }
+  return {
+    questions,
+    prefilled,
+    topCategoryId: hasCategorySignal ? topCatId : null,
+    topCategoryName: hasCategorySignal ? topCatName : null,
+    candidateCount,
+    noIntent: false,
+  }
 }
 
 // Backwards-compat shim used elsewhere.

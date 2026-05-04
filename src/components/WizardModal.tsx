@@ -62,9 +62,9 @@ export default function WizardModal({ query, onClose, onCategory }: WizardModalP
   const activeQ = plan.questions.find(q => q.id === activeId)
 
   const results = useMemo<WizardResult[]>(() => {
-    if (!allAnswered) return []
+    if (!allAnswered || plan.noIntent) return []
     return getWizardResults(query, mergeAnswers(plan.prefilled, answers))
-  }, [allAnswered, query, answers, plan.prefilled])
+  }, [allAnswered, plan.noIntent, query, answers, plan.prefilled])
 
   const prefilledEntries = Object.entries(plan.prefilled)
 
@@ -204,11 +204,19 @@ export default function WizardModal({ query, onClose, onCategory }: WizardModalP
               <div ref={resultsRef} className="wizard-cascade-results">
                 {results.length === 0 ? (
                   <>
-                    <p className="wizard-question" style={{ fontSize: '1.6rem' }}>Nothing matched that search.</p>
-                    <p style={{ color: 'var(--fg2)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
-                      Try a different search term or browse by category.
+                    <p className="wizard-question" style={{ fontSize: '1.6rem' }}>
+                      {plan.noIntent
+                        ? 'No results found.'
+                        : 'Nothing matched that search.'}
                     </p>
-                    <button className="wizard-restart" onClick={handleRestart}>← Start over</button>
+                    <p style={{ color: 'var(--fg2)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
+                      {plan.noIntent
+                        ? 'We couldn\'t find an AI tool for that. Try describing what you want to do — for example, "generate images", "write a blog post", or "clone my voice".'
+                        : 'Try a different search term or browse by category.'}
+                    </p>
+                    <button className="wizard-restart" onClick={plan.noIntent ? onClose : handleRestart}>
+                      {plan.noIntent ? '← Back to search' : '← Start over'}
+                    </button>
                   </>
                 ) : (
                   <>
