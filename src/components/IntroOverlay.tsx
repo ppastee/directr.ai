@@ -52,7 +52,7 @@ export default function IntroOverlay({ onDone }: { onDone: () => void }) {
   }, [])
 
   return (
-    <div className={`intro-overlay${out ? ' intro-out' : ''}`} aria-hidden="true">
+    <div className={`intro-overlay${wiping ? ' intro-wiping' : ''}${out ? ' intro-out' : ''}`} aria-hidden="true">
       <video
         ref={videoRef}
         src="/intro.mp4"
@@ -61,7 +61,6 @@ export default function IntroOverlay({ onDone }: { onDone: () => void }) {
         playsInline
         onEnded={exit}
       />
-      {wiping && <div className="intro-wipe" />}
     </div>
   )
 }
