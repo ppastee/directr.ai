@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 let _shown = false
 
 // Tweak this until the cut lands right after the blue icon fully forms
-const MOBILE_CUT_TIME = 1.5 // seconds
+const MOBILE_CUT_TIME = 2.5 // seconds
 
 export function shouldShowIntro(): boolean {
   if (_shown) return false
@@ -32,7 +32,7 @@ export default function IntroOverlay({ onDone }: { onDone: () => void }) {
     function onTimeUpdate() {
       if (video && video.currentTime >= MOBILE_CUT_TIME) {
         video.pause()
-        setTimeout(exit, 1000)
+        exit()
       }
     }
     video.addEventListener('timeupdate', onTimeUpdate)
