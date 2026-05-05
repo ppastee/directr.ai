@@ -274,7 +274,7 @@ body.theme-studio {
 }
 .search-bar:hover { border-color: color-mix(in srgb, var(--accent) 50%, var(--border)); }
 .search-typewriter {
-  flex: 1; padding: 0.95rem 1.2rem;
+  flex: 1; min-width: 0; padding: 0.95rem 1.2rem;
   font-size: 0.95rem; color: var(--fg3);
   font-family: var(--body-font);
   text-align: left; pointer-events: none;
@@ -1742,7 +1742,7 @@ thead .compare-col-hero { border-bottom: 2px solid var(--accent); }
    ═══════════════════════════════════════════════════════════════ */
 .intro-overlay {
   position: fixed; inset: 0; z-index: 9999;
-  background: #000;
+  background: #000; overflow: hidden;
   will-change: opacity, transform;
 }
 .intro-overlay.intro-out {
