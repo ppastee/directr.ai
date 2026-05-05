@@ -1754,6 +1754,13 @@ thead .compare-col-hero { border-bottom: 2px solid var(--accent); }
   background: #000; overflow: hidden;
   will-change: opacity, transform;
 }
+.intro-overlay video {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%; min-height: 100%;
+  width: auto; height: auto;
+}
 .intro-overlay.intro-out {
   animation: introExit 0.42s cubic-bezier(0.55, 0, 1, 0.45) forwards;
 }
