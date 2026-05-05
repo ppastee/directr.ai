@@ -1784,7 +1784,7 @@ thead .compare-col-hero { border-bottom: 2px solid var(--accent); }
     animation-name: intro-wipe-desktop;
   }
   @keyframes intro-wipe-desktop {
-    0%   { clip-path: circle(0% at 38% 50%); }
-    100% { clip-path: circle(160% at 38% 50%); }
+    0%   { clip-path: circle(0% at 30% 57%); }
+    100% { clip-path: circle(160% at 30% 57%); }
   }
 }

@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from 'react'
 
 let _shown = false
 
-// Adjust until the cut lands right after the blue icon fully forms on mobile
-const MOBILE_CUT_TIME = 4 // seconds
+const MOBILE_CUT_TIME = 3 // seconds — adjust until cut lands after icon forms
+const DESKTOP_CUT_BEFORE_END = 1 // seconds before video end to trigger on desktop
 // How long to hold the fully-formed logo before the wipe starts
 const PRE_WIPE_HOLD = 400 // ms
 
@@ -33,12 +33,20 @@ export default function IntroOverlay({ onDone }: { onDone: () => void }) {
     }, PRE_WIPE_HOLD)
   }
 
-  // On mobile, cut the video early — before the full logo text appears
+  // Mobile: cut early before full logo text appears
+  // Desktop: cut 1s before video ends
   useEffect(() => {
     const video = videoRef.current
-    if (!video || window.innerWidth >= 768) return
+    if (!video) return
+    const isMobile = window.innerWidth < 768
+    let fired = false
     function onTimeUpdate() {
-      if (video && video.currentTime >= MOBILE_CUT_TIME) {
+      if (fired) return
+      const cutAt = isMobile
+        ? MOBILE_CUT_TIME
+        : video.duration ? video.duration - DESKTOP_CUT_BEFORE_END : Infinity
+      if (video.currentTime >= cutAt) {
+        fired = true
         video.pause()
         exit()
       }
@@ -63,7 +71,7 @@ export default function IntroOverlay({ onDone }: { onDone: () => void }) {
         autoPlay
         muted
         playsInline
-        onEnded={exit}
+        onEnded={() => { if (!wiping) exit() }}
       />
       {wiping && <div className="intro-wipe" />}
     </div>
