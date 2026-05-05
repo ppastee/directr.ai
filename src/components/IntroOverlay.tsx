@@ -4,8 +4,10 @@ import { useEffect, useRef, useState } from 'react'
 
 let _shown = false
 
-// Tweak this until the cut lands right after the blue icon fully forms
-const MOBILE_CUT_TIME = 3 // seconds
+// Adjust until the cut lands right after the blue icon fully forms on mobile
+const MOBILE_CUT_TIME = 4 // seconds
+// How long to hold the fully-formed logo before the wipe starts
+const PRE_WIPE_HOLD = 400 // ms
 
 export function shouldShowIntro(): boolean {
   if (_shown) return false
@@ -22,11 +24,13 @@ export default function IntroOverlay({ onDone }: { onDone: () => void }) {
   }, [])
 
   function exit() {
-    setWiping(true)
     setTimeout(() => {
-      setOut(true)
-      setTimeout(onDone, 80)
-    }, 650)
+      setWiping(true)
+      setTimeout(() => {
+        setOut(true)
+        setTimeout(onDone, 80)
+      }, 700)
+    }, PRE_WIPE_HOLD)
   }
 
   // On mobile, cut the video early — before the full logo text appears
@@ -44,15 +48,15 @@ export default function IntroOverlay({ onDone }: { onDone: () => void }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // Fallback: if video fails to load/play, bail out after 5s
+  // Fallback: bail out after 8s
   useEffect(() => {
-    const t = setTimeout(exit, 5000)
+    const t = setTimeout(exit, 8000)
     return () => clearTimeout(t)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
-    <div className={`intro-overlay${wiping ? ' intro-wiping' : ''}${out ? ' intro-out' : ''}`} aria-hidden="true">
+    <div className={`intro-overlay${out ? ' intro-out' : ''}`} aria-hidden="true">
       <video
         ref={videoRef}
         src="/intro.mp4"
@@ -61,6 +65,7 @@ export default function IntroOverlay({ onDone }: { onDone: () => void }) {
         playsInline
         onEnded={exit}
       />
+      {wiping && <div className="intro-wipe" />}
     </div>
   )
 }

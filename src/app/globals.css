@@ -1765,15 +1765,26 @@ thead .compare-col-hero { border-bottom: 2px solid var(--accent); }
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
-.intro-overlay.intro-wiping video {
-  transform-origin: 35% 52%;
-  animation: intro-logo-zoom 0.75s cubic-bezier(0.4, 0, 1, 1) forwards;
-}
-@keyframes intro-logo-zoom {
-  0%   { transform: translate(-50%, -50%) translateZ(0) scale(1); }
-  100% { transform: translate(-50%, -50%) translateZ(0) scale(30); }
-}
 .intro-overlay.intro-out {
   opacity: 0;
   transition: opacity 0.08s ease;
+}
+/* White circle expands from the logo icon position */
+.intro-wipe {
+  position: absolute; inset: 0; z-index: 2;
+  background: #f7f6f2;
+  animation: intro-wipe-mobile 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes intro-wipe-mobile {
+  0%   { clip-path: circle(0% at 18% 50%); }
+  100% { clip-path: circle(160% at 18% 50%); }
+}
+@media (min-width: 768px) {
+  .intro-wipe {
+    animation-name: intro-wipe-desktop;
+  }
+  @keyframes intro-wipe-desktop {
+    0%   { clip-path: circle(0% at 38% 50%); }
+    100% { clip-path: circle(160% at 38% 50%); }
+  }
 }
