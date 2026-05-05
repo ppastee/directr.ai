@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 let _shown = false
 
 // Tweak this until the cut lands right after the blue icon fully forms
-const MOBILE_CUT_TIME = 2.5 // seconds
+const MOBILE_CUT_TIME = 3 // seconds
 
 export function shouldShowIntro(): boolean {
   if (_shown) return false
