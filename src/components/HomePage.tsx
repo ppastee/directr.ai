@@ -147,7 +147,13 @@ export default function HomePage({ onCategory, onWizard }: HomePageProps) {
           </div>
           <div className="search-btn" aria-hidden="true">Find my match</div>
         </div>
-        <p className="search-hint">Describe what you want to do — we'll ask a few questions and recommend the best tool</p>
+        <div className="search-flow">
+          <span>describe your task</span>
+          <span className="search-flow-arrow">→</span>
+          <span>answer a few questions</span>
+          <span className="search-flow-arrow">→</span>
+          <span>get matched to the best tool</span>
+        </div>
 
         <div className="hero-pills">
           {PILLS.map((p, i) => (
