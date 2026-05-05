@@ -148,11 +148,11 @@ export default function HomePage({ onCategory, onWizard }: HomePageProps) {
           <div className="search-btn" aria-hidden="true">Find my match</div>
         </div>
         <div className="search-flow">
-          <span>describe your task</span>
+          <span>Describe your task</span>
           <span className="search-flow-arrow">→</span>
-          <span>answer a few questions</span>
+          <span>Answer a few questions</span>
           <span className="search-flow-arrow">→</span>
-          <span>get matched to the best tool</span>
+          <span>Get matched to the best tool</span>
         </div>
 
         <div className="hero-pills">
