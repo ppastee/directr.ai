@@ -32,7 +32,7 @@ export default function IntroOverlay({ onDone }: { onDone: () => void }) {
     function onTimeUpdate() {
       if (video && video.currentTime >= MOBILE_CUT_TIME) {
         video.pause()
-        exit()
+        setTimeout(exit, 1000)
       }
     }
     video.addEventListener('timeupdate', onTimeUpdate)
