@@ -41,7 +41,7 @@ export default function IntroOverlay({ onDone }: { onDone: () => void }) {
     const isMobile = window.innerWidth < 768
     let fired = false
     function onTimeUpdate() {
-      if (fired) return
+      if (fired || !video) return
       const cutAt = isMobile
         ? MOBILE_CUT_TIME
         : video.duration ? video.duration - DESKTOP_CUT_BEFORE_END : Infinity
