@@ -14,6 +14,7 @@ export function shouldShowIntro(): boolean {
 
 export default function IntroOverlay({ onDone }: { onDone: () => void }) {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [wiping, setWiping] = useState(false)
   const [out, setOut] = useState(false)
 
   useEffect(() => {
@@ -21,8 +22,11 @@ export default function IntroOverlay({ onDone }: { onDone: () => void }) {
   }, [])
 
   function exit() {
-    setOut(true)
-    setTimeout(onDone, 420)
+    setWiping(true)
+    setTimeout(() => {
+      setOut(true)
+      setTimeout(onDone, 80)
+    }, 650)
   }
 
   // On mobile, cut the video early — before the full logo text appears
@@ -57,6 +61,7 @@ export default function IntroOverlay({ onDone }: { onDone: () => void }) {
         playsInline
         onEnded={exit}
       />
+      {wiping && <div className="intro-wipe" />}
     </div>
   )
 }
