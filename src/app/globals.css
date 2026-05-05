@@ -1723,6 +1723,9 @@ thead .compare-col-hero { border-bottom: 2px solid var(--accent); }
 
   .hero-pills { display: none; }
 
+  .hero-title { font-size: 1.4rem; height: 4.5rem; }
+  .hero-title-wrap { height: 4.5rem; margin-bottom: 1rem; }
+
   .finder-grid {
     grid-template-columns: 1fr 1fr;
     gap: 0.75rem;

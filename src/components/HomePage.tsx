@@ -37,13 +37,13 @@ const HEADLINES = [
 
 
 const TYPEWRITER_PHRASES = [
-  'animate a product demo...',
-  'clone my voice for a podcast...',
-  'build a full-stack app...',
-  'generate images without watermark...',
-  'write SEO blog articles...',
-  'create studio-quality music...',
-  'transcribe a meeting...',
+  'animate a video...',
+  'clone my voice...',
+  'build an app...',
+  'generate images...',
+  'write a blog post...',
+  'create music...',
+  'transcribe audio...',
 ]
 
 function useTypewriter(phrases: string[], typingMs = 55, deletingMs = 28, pauseMs = 1900) {
