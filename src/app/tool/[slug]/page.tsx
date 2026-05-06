@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { findToolBySlug, getAllToolSlugs, CATEGORIES } from '@/data/tools'
+import { CATEGORIES } from '@/data/tools'
+import { dbFindToolBySlug, dbGetAllToolSlugs, getToolsByCategory } from '@/lib/db'
 import ToolRoute from '@/components/ToolRoute'
 
 const BASE = 'https://directr.com.au'
@@ -25,12 +26,13 @@ const APP_CATEGORY: Record<string, string> = {
 }
 
 export async function generateStaticParams() {
-  return getAllToolSlugs().map(({ slug }) => ({ slug }))
+  const slugs = await dbGetAllToolSlugs()
+  return slugs.map(({ slug }) => ({ slug }))
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
-  const result = findToolBySlug(slug)
+  const result = await dbFindToolBySlug(slug)
   if (!result) return {}
   const { tool, categoryId } = result
   const cat = CATEGORIES.find((c) => c.id === categoryId)
@@ -49,11 +51,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const result = findToolBySlug(slug)
+  const result = await dbFindToolBySlug(slug)
   if (!result) notFound()
 
   const { tool, categoryId } = result
   const cat = CATEGORIES.find((c) => c.id === categoryId)
+  const categoryTools = await getToolsByCategory(categoryId)
   const url = `${BASE}/tool/${slug}`
 
   const priceMatch = tool.price.match(/\$(\d+(?:\.\d+)?)/)
@@ -133,7 +136,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(toolSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <ToolRoute tool={tool} categoryId={categoryId} />
+      <ToolRoute tool={tool} categoryId={categoryId} categoryTools={categoryTools} />
     </>
   )
 }

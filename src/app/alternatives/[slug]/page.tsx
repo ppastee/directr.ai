@@ -1,18 +1,20 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { findToolBySlug, getAllToolSlugs, CATEGORIES, TOOLS, nameToSlug } from '@/data/tools'
+import { CATEGORIES, nameToSlug } from '@/data/tools'
+import { dbFindToolBySlug, dbGetAllToolSlugs, getToolsByCategory } from '@/lib/db'
 import { COMPARISONS } from '@/data/comparisons'
 import AlternativesRoute from '@/components/AlternativesRoute'
 
 const BASE = 'https://directr.com.au'
 
 export async function generateStaticParams() {
-  return getAllToolSlugs().map(({ slug }) => ({ slug }))
+  const slugs = await dbGetAllToolSlugs()
+  return slugs.map(({ slug }) => ({ slug }))
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
-  const result = findToolBySlug(slug)
+  const result = await dbFindToolBySlug(slug)
   if (!result) return {}
   const { tool, categoryId } = result
   const cat = CATEGORIES.find((c) => c.id === categoryId)
@@ -34,7 +36,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const result = findToolBySlug(slug)
+  const result = await dbFindToolBySlug(slug)
   if (!result) notFound()
 
   const { tool, categoryId } = result
@@ -43,8 +45,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
   const entry = COMPARISONS[slug]
   const url = `${BASE}/alternatives/${slug}`
+  const categoryTools = await getToolsByCategory(categoryId)
 
-  const alternatives = (TOOLS[categoryId] ?? [])
+  const alternatives = categoryTools
     .filter((t) => t.id !== tool.id)
     .sort((a, b) => b.rating - a.rating)
 
@@ -118,7 +121,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <AlternativesRoute tool={tool} categoryId={categoryId} entry={entry} />
+      <AlternativesRoute tool={tool} categoryId={categoryId} entry={entry} categoryTools={categoryTools} />
     </>
   )
 }

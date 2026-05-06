@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { TOOLS, CATEGORIES, nameToSlug } from '@/data/tools'
+import { CATEGORIES, nameToSlug } from '@/data/tools'
+import { getAllTools } from '@/lib/db'
 import FreeToolsClient, { FreeTool } from '@/components/FreeToolsClient'
 
 const BASE = 'https://directr.com.au'
@@ -29,7 +30,7 @@ const FREE_FAQS = [
 
 export const metadata: Metadata = {
   title: 'Free AI Tools in 2026 — No Credit Card Required',
-  description: `Browse ${Object.values(TOOLS).flat().filter((t) => t.free).length} free AI tools — ChatGPT, Claude, Adobe Firefly, GitHub Copilot, ElevenLabs, and more. Filter by category. Free plans and free tiers, updated April 2026.`,
+  description: 'Browse free AI tools — ChatGPT, Claude, Adobe Firefly, GitHub Copilot, ElevenLabs, and more. Filter by category. Free plans and free tiers, updated April 2026.',
   alternates: { canonical: `${BASE}/tools/free` },
   openGraph: {
     title: 'Free AI Tools in 2026 — No Credit Card Required',
@@ -38,11 +39,12 @@ export const metadata: Metadata = {
   },
 }
 
-export default function Page() {
+export default async function Page() {
+  const allTools = await getAllTools()
   const freeTools: FreeTool[] = []
 
   for (const cat of CATEGORIES) {
-    const tools = TOOLS[cat.id] ?? []
+    const tools = allTools[cat.id] ?? []
     for (const t of tools) {
       if (t.free) {
         freeTools.push({ ...t, categoryId: cat.id, categoryName: cat.name })
@@ -50,7 +52,6 @@ export default function Page() {
     }
   }
 
-  // Sort by rating desc
   freeTools.sort((a, b) => b.rating - a.rating)
 
   const itemListSchema = {

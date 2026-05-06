@@ -1,4 +1,5 @@
-import { TOOLS, CATEGORIES, Tool } from '@/data/tools'
+import { Tool, Category } from '@/data/tools'
+import type { ToolsMap } from './db'
 
 export interface Result {
   tool: Tool
@@ -164,7 +165,7 @@ export function extractSignals(query: string): SearchSignals {
   return { words, phrases, categoryBias }
 }
 
-export function scoreTools(query: string, limit = 7): Result[] {
+export function scoreTools(query: string, tools: ToolsMap, categories: Category[], limit = 7): Result[] {
   const q = query.toLowerCase().trim()
   if (!q) return []
   const { words, phrases, categoryBias } = extractSignals(q)
@@ -172,11 +173,11 @@ export function scoreTools(query: string, limit = 7): Result[] {
 
   const results: Result[] = []
 
-  for (const [catId, tools] of Object.entries(TOOLS)) {
-    const catName = CATEGORIES.find(c => c.id === catId)?.name ?? catId
+  for (const [catId, catTools] of Object.entries(tools)) {
+    const catName = categories.find(c => c.id === catId)?.name ?? catId
     const catCue = (categoryBias[catId] ?? 0)
 
-    for (const tool of tools) {
+    for (const tool of catTools) {
       let score = 0
       const name = tool.name.toLowerCase()
       const tagline = tool.tagline.toLowerCase()

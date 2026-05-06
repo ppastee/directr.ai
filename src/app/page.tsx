@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import HomeClient from './HomeClient'
+import { getAllTools, getCategories } from '@/lib/db'
 
 const BASE = 'https://directr.com.au'
 
@@ -35,17 +36,18 @@ const orgSchema = {
   logo: `${BASE}/logo-icon.png`,
 }
 
-export default function Page() {
+export default async function Page() {
+  const [allTools, categories] = await Promise.all([getAllTools(), getCategories()])
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
       <section className="sr-only">
         <h1>AI Tools Directory — Find the Best AI Tools for Any Task (2026)</h1>
-        <p>Directr is an AI tools search engine and directory. Search and compare 63+ AI tools across 8 categories including animation, image generation, writing, coding, audio, chat, 3D, and productivity. All tools include unbiased ratings, real pricing, free tier details, and weekly updates.</p>
+        <p>Directr is an AI tools search engine and directory. Search and compare 139+ AI tools across 16 categories including animation, image generation, writing, coding, audio, chat, 3D, productivity, marketing, finance, legal, HR, and more. All tools include unbiased ratings, real pricing, free tier details, and weekly updates.</p>
         <p>Browse by category or search by intent — describe what you want to do and Directr finds the right AI tool for your task. Updated weekly with the latest AI tools, pricing changes, and new releases.</p>
       </section>
-      <HomeClient />
+      <HomeClient allTools={allTools} categories={categories} />
     </>
   )
 }

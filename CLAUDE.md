@@ -133,16 +133,24 @@ All themes define: `--bg --bg2 --bg3 --fg --fg2 --fg3 --muted --accent --accent2
 
 **TOOLS** defined first, then **CATEGORIES** derived — `count` is always `TOOLS[id].length`, never hardcoded.
 
-**Current tool counts:**
-- animation: 11 tools
-- image: 9 tools
+**Current tool counts (verified May 2026):**
+- animation: 14 tools
+- image: 11 tools
 - writing: 8 tools
-- coding: 10 tools
-- audio: 7 tools
-- chat: 7 tools (Claude added April 2026)
-- 3d: 4 tools
-- productivity: 7 tools
-- **Total: 63 tools**
+- coding: 12 tools
+- audio: 9 tools
+- chat: 10 tools
+- 3d: 8 tools — note: key is `'3d'` (quoted) in TOOLS object, not `3d`
+- productivity: 9 tools
+- marketing: 8 tools
+- finance: 8 tools
+- accounting: 6 tools
+- legal: 7 tools
+- hr: 8 tools
+- construction: 7 tools
+- data: 7 tools
+- education: 7 tools
+- **Total: 139 tools across 16 categories**
 
 **Removed:** Phind (shut down Jan 2026), Luma Genie (sunset Jan 2026)
 
@@ -212,9 +220,12 @@ All icons: `viewBox="0 0 24 24"` · `strokeWidth="1.75"` · stroke-based · `fil
 **Nothing else to touch** — search, category grid, filters, sort, animations are all generic.
 
 ### ID Convention
-- animation: 1–11 · image: 101–109 · writing: 201–208 · coding: 301–310
-- audio: 401–407 · chat: 501–508 · 3d: 601–605 · productivity: 701–707
-- Each new category gets the next hundreds block: 801–, 901–, 1001–, etc.
+- animation: 1–14 · image: 101–111 · writing: 201–208 · coding: 301–312
+- audio: 401–409 · chat: 501–511 · 3d: 601–609 · productivity: 701–709
+- marketing: 801–808 · finance: 901–908 · accounting: 1001–1006
+- legal: 1101–1107 · hr: 1201–1208 · construction: 1301–1307
+- data: 1401–1407 · education: 1501–1507
+- Next new category starts at: **1601–**
 
 ---
 
@@ -248,7 +259,7 @@ Full SEO strategy and session roadmap lives in **`SEO.md`** — read that file b
 1. **Session 3 SEO** — See SEO.md for full details
 2. **Persistent theme** — save to `localStorage`
 3. **"List a Tool" API** — wire ListToolModal form to POST /api/submit-tool
-4. **More tools** — expand beyond current set, especially 3D (only 4 tools)
+4. **More tools** — expand beyond current set; all 16 categories now populated
 
 ---
 

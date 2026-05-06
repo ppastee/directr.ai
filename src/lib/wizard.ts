@@ -1,5 +1,8 @@
 import { scoreTools, extractSignals, Result } from './search'
-import { Tool, CATEGORIES } from '@/data/tools'
+import { Tool, Category } from '@/data/tools'
+import type { ToolsMap } from './db'
+
+export { extractSignals }
 
 export interface QuestionOption {
   value: string
@@ -624,9 +627,9 @@ function applyInference(query: string): Record<string, { value: string; reason: 
 
 // ── Plan the wizard for a query ────────────────────────────────────────────
 
-export function planWizard(query: string): WizardPlan {
+export function planWizard(query: string, tools: ToolsMap, categories: Category[]): WizardPlan {
   const signals = extractSignals(query)
-  const results = scoreTools(query, 0)
+  const results = scoreTools(query, tools, categories, 0)
   const candidateCount = results.length
 
   // ── Intent gate ──────────────────────────────────────────────────────────
@@ -658,7 +661,7 @@ export function planWizard(query: string): WizardPlan {
   for (const r of results) catScores[r.catId] = (catScores[r.catId] ?? 0) + r.score
   const ranked = Object.entries(catScores).sort((a, b) => b[1] - a[1])
   const topCatId = ranked[0]?.[0] ?? null
-  const topCatName = topCatId ? CATEGORIES.find(c => c.id === topCatId)?.name ?? null : null
+  const topCatName = topCatId ? categories.find(c => c.id === topCatId)?.name ?? null : null
 
   const prefilled = applyInference(query)
 
@@ -688,9 +691,8 @@ export function planWizard(query: string): WizardPlan {
   }
 }
 
-// Backwards-compat shim used elsewhere.
-export function getQuestionsForQuery(query: string): Question[] {
-  return planWizard(query).questions
+export function getQuestionsForQuery(query: string, tools: ToolsMap, categories: Category[]): Question[] {
+  return planWizard(query, tools, categories).questions
 }
 
 // ── Answer-based score adjustment ──────────────────────────────────────────
@@ -878,8 +880,8 @@ function applyWeights(r: Result, answers: Record<string, string>): WizardResult 
   }
 }
 
-export function getWizardResults(query: string, answers: Record<string, string>): WizardResult[] {
-  const base = scoreTools(query, 0)
+export function getWizardResults(query: string, answers: Record<string, string>, tools: ToolsMap, categories: Category[]): WizardResult[] {
+  const base = scoreTools(query, tools, categories, 0)
   if (!base.length) return []
   return base
     .map(r => applyWeights(r, answers))
@@ -898,5 +900,3 @@ export function mergeAnswers(
   return out
 }
 
-// Re-export so the modal can use signals for the helper panel.
-export { extractSignals }

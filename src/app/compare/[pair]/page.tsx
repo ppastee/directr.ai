@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { findToolBySlug } from '@/data/tools'
+import { dbFindToolBySlug } from '@/lib/db'
 import { VS_PAIRS, getAllVsPairs } from '@/data/vs'
 import ComparisonRoute from '@/components/ComparisonRoute'
 
@@ -14,8 +14,9 @@ export async function generateMetadata({ params }: { params: Promise<{ pair: str
   const { pair } = await params
   const vs = VS_PAIRS[pair]
   if (!vs) return {}
-  const toolA = findToolBySlug(vs.a)?.tool
-  const toolB = findToolBySlug(vs.b)?.tool
+  const [resA, resB] = await Promise.all([dbFindToolBySlug(vs.a), dbFindToolBySlug(vs.b)])
+  const toolA = resA?.tool
+  const toolB = resB?.tool
   if (!toolA || !toolB) return {}
   const url = `${BASE}/compare/${pair}`
   const title = `${toolA.name} vs ${toolB.name}: Which is Better in 2026?`
@@ -33,8 +34,7 @@ export default async function Page({ params }: { params: Promise<{ pair: string 
   const vs = VS_PAIRS[pair]
   if (!vs) notFound()
 
-  const resultA = findToolBySlug(vs.a)
-  const resultB = findToolBySlug(vs.b)
+  const [resultA, resultB] = await Promise.all([dbFindToolBySlug(vs.a), dbFindToolBySlug(vs.b)])
   if (!resultA || !resultB) notFound()
 
   const { tool: toolA } = resultA

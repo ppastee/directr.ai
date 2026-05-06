@@ -2,16 +2,20 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Category, TOOLS, nameToSlug } from '@/data/tools'
+import { Category, nameToSlug } from '@/data/tools'
+import type { ToolsMap } from '@/lib/db'
 import Nav from '@/components/Nav'
 import HomePage from '@/components/HomePage'
 import WizardModal from '@/components/WizardModal'
 import AnimatedBg from '@/components/AnimatedBg'
-import IntroOverlay, { shouldShowIntro } from '@/components/IntroOverlay'
 
-export default function HomeClient() {
+interface HomeClientProps {
+  allTools: ToolsMap
+  categories: Category[]
+}
+
+export default function HomeClient({ allTools, categories }: HomeClientProps) {
   const router = useRouter()
-  const [showIntro, setShowIntro] = useState(() => shouldShowIntro())
   const [heroScrolled, setHeroScrolled] = useState(false)
   const [wizardOpen, setWizardOpen] = useState(false)
   const [wizardQuery, setWizardQuery] = useState('')
@@ -38,7 +42,7 @@ export default function HomeClient() {
 
   function handleCategory(cat: Category, toolId?: number) {
     if (toolId) {
-      const tool = TOOLS[cat.id]?.find(t => t.id === toolId)
+      const tool = allTools[cat.id]?.find(t => t.id === toolId)
       if (tool) { router.push(`/tool/${nameToSlug(tool.name)}`); return }
     }
     router.push(`/category/${cat.slug}`)
@@ -57,8 +61,7 @@ export default function HomeClient() {
 
   return (
     <>
-      {showIntro && <IntroOverlay onDone={() => setShowIntro(false)} />}
-      <AnimatedBg />
+<AnimatedBg />
       <div style={{ position: 'relative', zIndex: 1 }}>
         <Nav
           onHome={handleHome}
@@ -67,13 +70,15 @@ export default function HomeClient() {
           onCategory={handleCategory}
           currentQuery={wizardOpen ? wizardQuery : ''}
         />
-        <HomePage onCategory={handleCategory} onWizard={handleWizard} />
+        <HomePage onCategory={handleCategory} onWizard={handleWizard} allTools={allTools} categories={categories} />
       </div>
       {wizardOpen && (
         <WizardModal
           query={wizardQuery}
           onClose={() => setWizardOpen(false)}
           onCategory={handleCategory}
+          allTools={allTools}
+          categories={categories}
         />
       )}
     </>

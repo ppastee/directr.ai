@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useRef, useState, useMemo } from 'react'
-import { CATEGORIES, Category } from '@/data/tools'
+import { Category } from '@/data/tools'
+import type { ToolsMap } from '@/lib/db'
 import { scoreTools } from '@/lib/search'
 
 const TYPEWRITER_PHRASES = [
@@ -60,8 +61,17 @@ export default function SearchModal({ onClose, onCategory, onWizard, initialValu
   const [value, setValue] = useState(initialValue)
   const inputRef = useRef<HTMLInputElement>(null)
   const typewriterText = useTypewriter(TYPEWRITER_PHRASES)
+  const [allTools, setAllTools] = useState<ToolsMap>({})
+  const [categories, setCategories] = useState<Category[]>([])
 
-  const results = useMemo(() => scoreTools(value), [value])
+  useEffect(() => {
+    fetch('/api/tools').then(r => r.json()).then(d => {
+      setAllTools(d.tools ?? {})
+      setCategories(d.categories ?? [])
+    })
+  }, [])
+
+  const results = useMemo(() => scoreTools(value, allTools, categories), [value, allTools, categories])
   const hasResults = results.length > 0
 
   useEffect(() => {
@@ -81,7 +91,7 @@ export default function SearchModal({ onClose, onCategory, onWizard, initialValu
   }, [onClose])
 
   function handleSelect(catId: string, toolId: number) {
-    const cat = CATEGORIES.find(c => c.id === catId)
+    const cat = categories.find(c => c.id === catId)
     if (cat) { onCategory(cat, toolId); onClose() }
   }
 

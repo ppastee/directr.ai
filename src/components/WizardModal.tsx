@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { CATEGORIES, Category } from '@/data/tools'
+import { Category } from '@/data/tools'
+import type { ToolsMap } from '@/lib/db'
 import {
   planWizard,
   getWizardResults,
@@ -15,6 +16,8 @@ interface WizardModalProps {
   query: string
   onClose: () => void
   onCategory: (cat: Category, toolId?: number) => void
+  allTools: ToolsMap
+  categories: Category[]
 }
 
 const QUESTION_TIPS: Record<string, string> = {
@@ -44,10 +47,10 @@ const QUESTION_TIPS: Record<string, string> = {
   quality: 'Production-quality TTS sounds nothing like draft TTS.',
 }
 
-export default function WizardModal({ query, onClose, onCategory }: WizardModalProps) {
-  const plan = useMemo(() => planWizard(query), [query])
+export default function WizardModal({ query, onClose, onCategory, allTools, categories }: WizardModalProps) {
+  const plan = useMemo(() => planWizard(query, allTools, categories), [query, allTools, categories])
   const signals = useMemo(() => extractSignals(query), [query])
-  const previewMatches = useMemo(() => scoreTools(query, 3), [query])
+  const previewMatches = useMemo(() => scoreTools(query, allTools, categories, 3), [query, allTools, categories])
 
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -63,8 +66,8 @@ export default function WizardModal({ query, onClose, onCategory }: WizardModalP
 
   const results = useMemo<WizardResult[]>(() => {
     if (!allAnswered || plan.noIntent) return []
-    return getWizardResults(query, mergeAnswers(plan.prefilled, answers))
-  }, [allAnswered, plan.noIntent, query, answers, plan.prefilled])
+    return getWizardResults(query, mergeAnswers(plan.prefilled, answers), allTools, categories)
+  }, [allAnswered, plan.noIntent, query, answers, plan.prefilled, allTools, categories])
 
   const prefilledEntries = Object.entries(plan.prefilled)
 
@@ -103,7 +106,7 @@ export default function WizardModal({ query, onClose, onCategory }: WizardModalP
   }
 
   function handleSelect(r: WizardResult) {
-    const cat = CATEGORIES.find(c => c.id === r.catId)
+    const cat = categories.find(c => c.id === r.catId)
     if (cat) { onCategory(cat, r.tool.id); onClose() }
   }
 

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { CATEGORIES, TOOLS, nameToSlug } from '@/data/tools'
+import { CATEGORIES, nameToSlug } from '@/data/tools'
+import { getToolsByCategory } from '@/lib/db'
 import CategoryRoute from '@/components/CategoryRoute'
 
 const CATEGORY_FAQS: Record<string, { q: string; a: string }[]> = {
@@ -128,12 +129,13 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const { id } = await params
   const cat = CATEGORIES.find((c) => c.slug === id)
   if (!cat) return {}
-  const tools = TOOLS[cat.id] ?? []
+  const tools = await getToolsByCategory(cat.id)
   const topTools = tools.slice(0, 3).map((t) => t.name).join(', ')
+  const count = tools.length
   const url = `${BASE}/category/${cat.slug}`
   return {
-    title: `Best ${cat.name} AI Tools 2026 — Compare ${cat.count} Tools`,
-    description: `Compare the ${cat.count} best AI tools for ${cat.name.toLowerCase()} in 2026. Top picks: ${topTools}. Unbiased ratings, real pricing and reviews — updated weekly.`,
+    title: `Best ${cat.name} AI Tools 2026 — Compare ${count} Tools`,
+    description: `Compare the ${count} best AI tools for ${cat.name.toLowerCase()} in 2026. Top picks: ${topTools}. Unbiased ratings, real pricing and reviews — updated weekly.`,
     alternates: { canonical: url },
     openGraph: {
       title: `Best ${cat.name} AI Tools 2026`,
@@ -148,7 +150,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   const cat = CATEGORIES.find((c) => c.slug === id)
   if (!cat) notFound()
 
-  const tools = TOOLS[cat.id] ?? []
+  const tools = await getToolsByCategory(cat.id)
   const url = `${BASE}/category/${cat.slug}`
 
   const itemListSchema = {
@@ -191,7 +193,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
-      <CategoryRoute cat={cat} faqs={faqs} />
+      <CategoryRoute cat={cat} tools={tools} allCategories={CATEGORIES} faqs={faqs} />
     </>
   )
 }

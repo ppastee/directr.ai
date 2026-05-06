@@ -1,23 +1,12 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { TOOLS, CATEGORIES, nameToSlug } from '@/data/tools'
+import { CATEGORIES, nameToSlug } from '@/data/tools'
+import { getAllTools } from '@/lib/db'
 import { PROFESSIONS, getProfessionBySlug, getAllProfessionSlugs } from '@/data/professions'
 import { TASKS, getTaskBySlug, getAllTaskSlugs } from '@/data/tasks'
 import UseCaseClient, { UseCaseTool } from '@/components/UseCaseClient'
 
 const BASE = 'https://directr.com.au'
-
-// Flat map of tool id → tool + category info
-function buildToolMap() {
-  const map = new Map<number, UseCaseTool>()
-  for (const cat of CATEGORIES) {
-    const tools = TOOLS[cat.id] ?? []
-    for (const t of tools) {
-      map.set(t.id, { ...t, categoryId: cat.id, categoryName: cat.name })
-    }
-  }
-  return map
-}
 
 export function generateStaticParams() {
   return [
@@ -62,7 +51,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const toolMap = buildToolMap()
+  const allTools = await getAllTools()
+  const toolMap = new Map<number, UseCaseTool>()
+  for (const cat of CATEGORIES) {
+    for (const t of allTools[cat.id] ?? []) {
+      toolMap.set(t.id, { ...t, categoryId: cat.id, categoryName: cat.name })
+    }
+  }
 
   const profession = getProfessionBySlug(slug)
   if (profession) {

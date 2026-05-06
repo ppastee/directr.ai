@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Tool, Category, CATEGORIES } from '@/data/tools'
+// CATEGORIES for static cat lookup; categoryTools come from server props
 import { ComparisonEntry } from '@/data/comparisons'
 import Nav from './Nav'
 import AnimatedBg from './AnimatedBg'
@@ -12,9 +13,10 @@ interface Props {
   tool: Tool
   categoryId: string
   entry: ComparisonEntry | undefined
+  categoryTools: Tool[]
 }
 
-export default function AlternativesRoute({ tool, categoryId, entry }: Props) {
+export default function AlternativesRoute({ tool, categoryId, entry, categoryTools }: Props) {
   const router = useRouter()
   const cat = CATEGORIES.find((c) => c.id === categoryId) as Category
 
@@ -32,7 +34,7 @@ export default function AlternativesRoute({ tool, categoryId, entry }: Props) {
           onWizard={(q) => router.push(`/?q=${encodeURIComponent(q)}`)}
           onCategory={(c) => router.push(`/category/${c.slug}`)}
         />
-        <AlternativesPage tool={tool} categoryId={categoryId} cat={cat} entry={entry} />
+        <AlternativesPage tool={tool} categoryId={categoryId} cat={cat} entry={entry} categoryTools={categoryTools} />
       </div>
     </>
   )

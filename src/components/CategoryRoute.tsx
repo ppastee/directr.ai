@@ -3,14 +3,14 @@
 import { Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
-import { Category } from '@/data/tools'
+import { Category, Tool } from '@/data/tools'
 import Nav from './Nav'
 import CategoryPage from './CategoryPage'
 import AnimatedBg from './AnimatedBg'
 
 interface FAQ { q: string; a: string }
 
-function Inner({ cat, faqs }: { cat: Category; faqs: FAQ[] }) {
+function Inner({ cat, tools, allCategories, faqs }: { cat: Category; tools: Tool[]; allCategories: Category[]; faqs: FAQ[] }) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const highlightId = searchParams.get('highlight') ? parseInt(searchParams.get('highlight')!) : null
@@ -35,6 +35,8 @@ function Inner({ cat, faqs }: { cat: Category; faqs: FAQ[] }) {
         />
         <CategoryPage
           cat={cat}
+          tools={tools}
+          allCategories={allCategories}
           onHome={() => router.push('/')}
           highlightedToolId={highlightId}
           faqs={faqs}
@@ -44,10 +46,10 @@ function Inner({ cat, faqs }: { cat: Category; faqs: FAQ[] }) {
   )
 }
 
-export default function CategoryRoute({ cat, faqs }: { cat: Category; faqs: FAQ[] }) {
+export default function CategoryRoute({ cat, tools, allCategories, faqs }: { cat: Category; tools: Tool[]; allCategories: Category[]; faqs: FAQ[] }) {
   return (
     <Suspense>
-      <Inner cat={cat} faqs={faqs} />
+      <Inner cat={cat} tools={tools} allCategories={allCategories} faqs={faqs} />
     </Suspense>
   )
 }

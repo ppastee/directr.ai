@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { CATEGORIES, Category, Tool } from '@/data/tools'
+import { Category, Tool } from '@/data/tools'
+import type { ToolsMap } from '@/lib/db'
 import { scoreTools } from '@/lib/search'
 
 function ResultLogo({ tool }: { tool: Tool }) {
@@ -23,18 +24,20 @@ interface SearchResultsPageProps {
   onHome: () => void
   onCategory: (cat: Category, toolId?: number) => void
   onNewSearch: (query: string) => void
+  allTools: ToolsMap
+  categories: Category[]
 }
 
-export default function SearchResultsPage({ query, onHome, onCategory, onNewSearch }: SearchResultsPageProps) {
+export default function SearchResultsPage({ query, onHome, onCategory, onNewSearch, allTools, categories }: SearchResultsPageProps) {
   const [input, setInput] = useState(query)
-  const results = useMemo(() => scoreTools(query, 0), [query])
+  const results = useMemo(() => scoreTools(query, allTools, categories, 0), [query, allTools, categories])
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter' && input.trim()) onNewSearch(input.trim())
   }
 
   function handleSelect(catId: string, toolId: number) {
-    const cat = CATEGORIES.find(c => c.id === catId)
+    const cat = categories.find(c => c.id === catId)
     if (cat) onCategory(cat, toolId)
   }
 

@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { CATEGORIES, TOOLS, Category, Tool } from '@/data/tools'
+import { Category, Tool } from '@/data/tools'
+import type { ToolsMap } from '@/lib/db'
 import SearchModal from './SearchModal'
 import CategoryIcon from './CategoryIcon'
 
@@ -24,6 +25,8 @@ function ToolItemLogo({ tool }: { tool: Tool }) {
 interface HomePageProps {
   onCategory: (cat: Category) => void
   onWizard: (query: string) => void
+  allTools: ToolsMap
+  categories: Category[]
 }
 
 const PILLS = ['Animate a video', 'Generate images', 'Write copy', 'Build a chatbot', 'Create music']
@@ -75,7 +78,7 @@ function useTypewriter(phrases: string[], typingMs = 55, deletingMs = 28, pauseM
 }
 
 
-export default function HomePage({ onCategory, onWizard }: HomePageProps) {
+export default function HomePage({ onCategory, onWizard, allTools, categories }: HomePageProps) {
   const [searchInitial, setSearchInitial] = useState('')
   const [searchOpen, setSearchOpen] = useState(false)
   const [isSearching, setIsSearching] = useState(false)
@@ -175,8 +178,8 @@ export default function HomePage({ onCategory, onWizard }: HomePageProps) {
           <h2 className="section-title">What are you building?</h2>
         </div>
         <div ref={gridRef} className={`finder-grid${gridVisible ? ' grid-visible' : ''}`}>
-          {CATEGORIES.map((c, idx) => {
-            const topTools = (TOOLS[c.id] ?? []).slice(0, 4)
+          {categories.map((c, idx) => {
+            const topTools = (allTools[c.id] ?? []).slice(0, 4)
             return (
               <div
                 key={c.id}

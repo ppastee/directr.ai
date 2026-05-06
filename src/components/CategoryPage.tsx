@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { TOOLS, CATEGORIES, Category, Tool, nameToSlug } from '@/data/tools'
+import { Category, Tool, nameToSlug } from '@/data/tools'
 import ToolCard from './ToolCard'
 
 interface FAQ { q: string; a: string }
@@ -73,14 +73,15 @@ function sortTools(tools: Tool[], sort: string): Tool[] {
 
 interface CategoryPageProps {
   cat: Category
+  tools: Tool[]
+  allCategories: Category[]
   onHome: () => void
   highlightedToolId?: number | null
   faqs?: FAQ[]
 }
 
-export default function CategoryPage({ cat, onHome, highlightedToolId, faqs = [] }: CategoryPageProps) {
+export default function CategoryPage({ cat, tools: rawTools, allCategories, onHome, highlightedToolId, faqs = [] }: CategoryPageProps) {
   const router = useRouter()
-  const rawTools = TOOLS[cat.id] ?? TOOLS.animation
   const [sort, setSort] = useState('best-match')
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [activeHighlight, setActiveHighlight] = useState<number | null>(highlightedToolId ?? null)
@@ -202,7 +203,7 @@ export default function CategoryPage({ cat, onHome, highlightedToolId, faqs = []
               <h2 className="related-cats-title">Browse related categories</h2>
               <div className="related-cats-row">
                 {RELATED_CATS[cat.id]
-                  .map((id) => CATEGORIES.find((c) => c.id === id))
+                  .map((id) => allCategories.find((c) => c.id === id))
                   .filter(Boolean)
                   .map((c) => (
                     <Link key={c!.id} href={`/category/${c!.slug}`} className="related-cat-pill">

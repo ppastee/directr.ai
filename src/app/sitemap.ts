@@ -1,11 +1,14 @@
-import { CATEGORIES, getAllToolSlugs } from '@/data/tools'
+import { CATEGORIES } from '@/data/tools'
+import { dbGetAllToolSlugs } from '@/lib/db'
 import { getAllVsPairs } from '@/data/vs'
 import { getAllProfessionSlugs } from '@/data/professions'
 import { getAllTaskSlugs } from '@/data/tasks'
 
 const BASE = 'https://directr.com.au'
 
-export default function sitemap() {
+export default async function sitemap() {
+  const slugRows = await dbGetAllToolSlugs()
+
   const categoryUrls = CATEGORIES.map((c) => ({
     url: `${BASE}/category/${c.slug}`,
     lastModified: new Date(),
@@ -13,14 +16,14 @@ export default function sitemap() {
     priority: 0.8,
   }))
 
-  const toolUrls = getAllToolSlugs().map(({ slug }) => ({
+  const toolUrls = slugRows.map(({ slug }) => ({
     url: `${BASE}/tool/${slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
   }))
 
-  const alternativeUrls = getAllToolSlugs().map(({ slug }) => ({
+  const alternativeUrls = slugRows.map(({ slug }) => ({
     url: `${BASE}/alternatives/${slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,

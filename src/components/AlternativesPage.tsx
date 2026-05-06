@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Tool, Category, TOOLS, nameToSlug } from '@/data/tools'
+import { Tool, Category, nameToSlug } from '@/data/tools'
 import { ComparisonEntry } from '@/data/comparisons'
 
 function Stars({ n }: { n: number }) {
@@ -95,10 +95,10 @@ interface Props {
   categoryId: string
   cat: Category
   entry: ComparisonEntry | undefined
+  categoryTools: Tool[]
 }
 
-export default function AlternativesPage({ tool, categoryId, cat, entry }: Props) {
-  const categoryTools = TOOLS[categoryId] ?? []
+export default function AlternativesPage({ tool, cat, entry, categoryTools }: Props) {
 
   const alternatives = categoryTools
     .filter((t) => t.id !== tool.id)

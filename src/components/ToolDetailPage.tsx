@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Tool, Category, TOOLS, nameToSlug } from '@/data/tools'
+import { Tool, Category, nameToSlug } from '@/data/tools'
 import { PRICING } from '@/data/pricing'
 import { VS_PAIRS } from '@/data/vs'
 
@@ -73,11 +73,11 @@ interface Props {
   tool: Tool
   categoryId: string
   cat: Category
+  categoryTools: Tool[]
 }
 
-export default function ToolDetailPage({ tool, categoryId, cat }: Props) {
+export default function ToolDetailPage({ tool, cat, categoryTools }: Props) {
   const plans = PRICING[tool.id] ?? []
-  const categoryTools = TOOLS[categoryId] ?? []
 
   const comparators = categoryTools
     .filter((t) => t.id !== tool.id)
