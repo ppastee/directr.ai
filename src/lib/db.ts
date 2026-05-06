@@ -34,6 +34,10 @@ function buildCategories(toolsMap: ToolsMap): Category[] {
   }))
 }
 
+const STATIC_NAME_BY_ID: Record<number, string> = Object.values(STATIC_TOOLS)
+  .flat()
+  .reduce((acc, t) => { acc[t.id] = t.name; return acc }, {} as Record<number, string>)
+
 const fetchAllToolsFromDB = unstable_cache(
   async (): Promise<ToolsMap | null> => {
     const sb = getSupabase()
@@ -44,7 +48,10 @@ const fetchAllToolsFromDB = unstable_cache(
     for (const row of data) {
       const cat = row.category as string
       if (!map[cat]) map[cat] = []
-      map[cat].push(fromRow(row as Record<string, unknown>))
+      const tool = fromRow(row as Record<string, unknown>)
+      // Use static name as source of truth to avoid DB encoding issues
+      if (STATIC_NAME_BY_ID[tool.id]) tool.name = STATIC_NAME_BY_ID[tool.id]
+      map[cat].push(tool)
     }
     return map
   },
