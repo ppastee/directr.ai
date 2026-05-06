@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useMemo } from 'react'
 import { Category } from '@/data/tools'
 import type { ToolsMap } from '@/lib/db'
 import { scoreTools } from '@/lib/search'
+import { buildVocabulary, correctQuery } from '@/lib/spellcheck'
 
 const TYPEWRITER_PHRASES = [
   'animate a product demo...',
@@ -59,6 +60,7 @@ interface SearchModalProps {
 
 export default function SearchModal({ onClose, onCategory, onWizard, initialValue = '' }: SearchModalProps) {
   const [value, setValue] = useState(initialValue)
+  const [correctionDismissed, setCorrectionDismissed] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const typewriterText = useTypewriter(TYPEWRITER_PHRASES)
   const [allTools, setAllTools] = useState<ToolsMap>({})
@@ -71,7 +73,16 @@ export default function SearchModal({ onClose, onCategory, onWizard, initialValu
     })
   }, [])
 
-  const results = useMemo(() => scoreTools(value, allTools, categories), [value, allTools, categories])
+  const vocab = useMemo(() => buildVocabulary(allTools, categories), [allTools, categories])
+
+  const correction = useMemo(() => {
+    if (!value.trim() || !vocab.list.length || correctionDismissed) return null
+    const result = correctQuery(value, vocab.set, vocab.list)
+    return result.wasChanged ? result : null
+  }, [value, vocab, correctionDismissed])
+
+  const effectiveQuery = correction ? correction.corrected : value
+  const results = useMemo(() => scoreTools(effectiveQuery, allTools, categories), [effectiveQuery, allTools, categories])
   const hasResults = results.length > 0
 
   useEffect(() => {
@@ -97,7 +108,7 @@ export default function SearchModal({ onClose, onCategory, onWizard, initialValu
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter' && value.trim()) {
-      onWizard(value.trim())
+      onWizard(effectiveQuery.trim())
       onClose()
     }
   }
@@ -116,7 +127,7 @@ export default function SearchModal({ onClose, onCategory, onWizard, initialValu
               ref={inputRef}
               className="search-modal-input"
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e) => { setValue(e.target.value); setCorrectionDismissed(false) }}
               onKeyDown={handleKeyDown}
             />
             {!value && (
@@ -136,6 +147,21 @@ export default function SearchModal({ onClose, onCategory, onWizard, initialValu
             esc
           </button>
         </div>
+
+        {/* Spell correction hint */}
+        {correction && (
+          <div className="search-correction-bar">
+            <span className="search-correction-label">Showing results for</span>
+            <span className="search-correction-query">{correction.corrected}</span>
+            <button
+              className="search-correction-original"
+              onClick={() => setCorrectionDismissed(true)}
+              title="Search with your original spelling"
+            >
+              Search instead for &ldquo;{value}&rdquo;
+            </button>
+          </div>
+        )}
 
         {/* Results */}
         {hasResults ? (
@@ -159,7 +185,7 @@ export default function SearchModal({ onClose, onCategory, onWizard, initialValu
             ))}
             <button
               className="search-modal-wizard-cta"
-              onClick={() => { onWizard(value.trim()); onClose() }}
+              onClick={() => { onWizard(effectiveQuery.trim()); onClose() }}
             >
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>

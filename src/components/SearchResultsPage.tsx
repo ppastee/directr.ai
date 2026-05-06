@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Category, Tool } from '@/data/tools'
 import type { ToolsMap } from '@/lib/db'
 import { scoreTools } from '@/lib/search'
+import { buildVocabulary, correctQuery } from '@/lib/spellcheck'
 
 function ResultLogo({ tool }: { tool: Tool }) {
   const [failed, setFailed] = useState(false)
@@ -30,7 +31,20 @@ interface SearchResultsPageProps {
 
 export default function SearchResultsPage({ query, onHome, onCategory, onNewSearch, allTools, categories }: SearchResultsPageProps) {
   const [input, setInput] = useState(query)
-  const results = useMemo(() => scoreTools(query, allTools, categories, 0), [query, allTools, categories])
+  const [correctionDismissed, setCorrectionDismissed] = useState(false)
+
+  useEffect(() => { setCorrectionDismissed(false) }, [query])
+
+  const vocab = useMemo(() => buildVocabulary(allTools, categories), [allTools, categories])
+
+  const correction = useMemo(() => {
+    if (!query.trim() || !vocab.list.length || correctionDismissed) return null
+    const result = correctQuery(query, vocab.set, vocab.list)
+    return result.wasChanged ? result : null
+  }, [query, vocab, correctionDismissed])
+
+  const effectiveQuery = correction ? correction.corrected : query
+  const results = useMemo(() => scoreTools(effectiveQuery, allTools, categories, 0), [effectiveQuery, allTools, categories])
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter' && input.trim()) onNewSearch(input.trim())
@@ -67,10 +81,23 @@ export default function SearchResultsPage({ query, onHome, onCategory, onNewSear
           </button>
         </div>
 
+        {correction && (
+          <div className="srp-correction-bar">
+            <span className="search-correction-label">Showing results for</span>
+            <span className="search-correction-query">{correction.corrected}</span>
+            <button
+              className="search-correction-original"
+              onClick={() => setCorrectionDismissed(true)}
+            >
+              Search instead for &ldquo;{query}&rdquo;
+            </button>
+          </div>
+        )}
+
         <div className="srp-meta">
           {results.length > 0
-            ? <><strong>{results.length}</strong> tools match &ldquo;{query}&rdquo;</>
-            : <>No results for &ldquo;{query}&rdquo;</>
+            ? <><strong>{results.length}</strong> tools match &ldquo;{effectiveQuery}&rdquo;</>
+            : <>No results for &ldquo;{effectiveQuery}&rdquo;</>
           }
         </div>
       </div>
