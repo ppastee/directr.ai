@@ -10,6 +10,7 @@ export const maxDuration = 60
 const RECIPIENT = 'platformdirectr.ai@gmail.com'
 
 export async function GET(request: Request) {
+  try {
   const authHeader = request.headers.get('authorization')
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}` && process.env.NODE_ENV === 'production') {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -76,4 +77,7 @@ Be factual and concise. Do not fabricate anything. If you're unsure about someth
   })
 
   return NextResponse.json({ ok: true, briefing })
+  } catch (err: any) {
+    return NextResponse.json({ error: err?.message ?? String(err) }, { status: 500 })
+  }
 }
