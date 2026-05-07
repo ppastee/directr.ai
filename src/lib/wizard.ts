@@ -201,6 +201,7 @@ const CATEGORY_QUESTIONS: Record<string, Question[]> = {
       options: [
         { value: 'cloud',   label: 'Cloud is fine',         hint: 'Most tools work this way' },
         { value: 'private', label: 'Must stay private',     hint: 'On-prem or self-hosted' },
+        { value: 'unsure',  label: "Not sure yet" },
       ],
     },
   ],
@@ -228,8 +229,9 @@ const CATEGORY_QUESTIONS: Record<string, Question[]> = {
       id: 'cloning',
       text: 'Need voice cloning?',
       options: [
-        { value: 'yes', label: 'Yes — clone my voice' },
-        { value: 'no',  label: 'No, stock voices are fine' },
+        { value: 'yes',   label: 'Yes — clone my voice' },
+        { value: 'no',    label: 'No, stock voices are fine' },
+        { value: 'unsure', label: "Not sure yet" },
       ],
     },
   ],
@@ -258,8 +260,9 @@ const CATEGORY_QUESTIONS: Record<string, Question[]> = {
       id: 'citations',
       text: 'Need verified citations?',
       options: [
-        { value: 'yes', label: 'Yes — must cite sources' },
-        { value: 'no',  label: "No, I'll fact-check" },
+        { value: 'yes',    label: 'Yes — must cite sources' },
+        { value: 'no',     label: "No, I'll fact-check" },
+        { value: 'unsure', label: "Not sure" },
       ],
     },
   ],
