@@ -1088,6 +1088,51 @@ body.theme-studio {
 }
 .wizard-restart:hover { color: var(--accent); }
 
+/* ── WIZARD AI ENHANCEMENTS ── */
+
+/* Loading state (plan + ranking) */
+.wizard-ai-loading {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1rem; padding: 3rem 1.5rem;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 12px; text-align: center;
+  animation: wizardCardIn 0.22s cubic-bezier(0.16,1,0.3,1) both;
+}
+.wizard-ai-ranking { padding: 2.5rem 1.5rem; }
+
+.wizard-ai-spinner {
+  width: 28px; height: 28px;
+  border: 2.5px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: wizardSpin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes wizardSpin {
+  to { transform: rotate(360deg); }
+}
+.wizard-ai-loading-text {
+  color: var(--fg2); font-size: 0.95rem; margin: 0;
+}
+
+/* Sidebar intent summary card */
+.wizard-ai-intent-card {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+.wizard-ai-intent-text {
+  font-size: 0.875rem; color: var(--fg); line-height: 1.5; margin: 0;
+}
+
+/* AI reason text below tool tagline */
+.wizard-ai-reason {
+  font-size: 0.82rem; color: var(--accent); line-height: 1.45;
+  margin-bottom: 0.5rem; font-style: italic;
+}
+.wizard-ai-reason-small {
+  font-size: 0.8rem; margin-bottom: 0.3rem;
+}
+
 /* ── LIST A TOOL MODAL ── */
 .list-modal {
   background: var(--bg);

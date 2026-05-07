@@ -25,6 +25,7 @@ export interface WizardResult {
   adjustedScore: number
   mismatches: string[]
   strengths: string[]
+  aiReason?: string
 }
 
 export interface WizardPlan {
@@ -612,6 +613,21 @@ const INFERENCE_RULES: InferenceRule[] = [
     patterns: [/\bwebgl\b/, /\bbrowser\b/, /\bweb[- ]based\b/],
     reason: 'Web target' },
 ]
+
+export function getQuestionById(id: string, catId: string | null): Question | null {
+  if (id === 'budget') return BUDGET_QUESTION
+  if (id === 'skill') return SKILL_QUESTION
+  if (id === 'urgency') return URGENCY_QUESTION
+  if (catId && CATEGORY_QUESTIONS[catId]) {
+    const found = CATEGORY_QUESTIONS[catId].find(q => q.id === id)
+    if (found) return found
+  }
+  for (const qs of Object.values(CATEGORY_QUESTIONS)) {
+    const found = qs.find(q => q.id === id)
+    if (found) return found
+  }
+  return null
+}
 
 function applyInference(query: string): Record<string, { value: string; reason: string }> {
   const q = query.toLowerCase()
