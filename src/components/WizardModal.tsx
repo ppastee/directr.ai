@@ -17,6 +17,7 @@ interface WizardModalProps {
   query: string
   onClose: () => void
   onCategory: (cat: Category, toolId?: number) => void
+  onEditQuery: (q: string) => void
   allTools: ToolsMap
   categories: Category[]
 }
@@ -77,7 +78,7 @@ const QUESTION_TIPS: Record<string, string> = {
   quality: 'Production-quality TTS sounds nothing like draft TTS.',
 }
 
-export default function WizardModal({ query, onClose, onCategory, allTools, categories }: WizardModalProps) {
+export default function WizardModal({ query, onClose, onCategory, onEditQuery, allTools, categories }: WizardModalProps) {
   // Existing synchronous plan — used for instant sidebar data and as fallback
   const fallbackPlan = useMemo(() => planWizard(query, allTools, categories), [query, allTools, categories])
   const signals = useMemo(() => extractSignals(query), [query])
@@ -93,6 +94,14 @@ export default function WizardModal({ query, onClose, onCategory, allTools, cate
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [editingId, setEditingId] = useState<string | null>(null)
   const resultsRef = useRef<HTMLDivElement>(null)
+
+  // Query editing
+  const [editingQuery, setEditingQuery] = useState(false)
+  const [editQueryValue, setEditQueryValue] = useState(query)
+  const queryInputRef = useRef<HTMLInputElement>(null)
+
+  // Keep editQueryValue in sync if query prop changes (e.g. parent remounts with new query)
+  useEffect(() => { setEditQueryValue(query) }, [query])
 
   // Loading message cycling
   const [loadingMsgIdx] = useState(() => Math.floor(Math.random() * LOADING_MESSAGES.length))
@@ -243,11 +252,46 @@ export default function WizardModal({ query, onClose, onCategory, allTools, cate
           </svg>
           Back
         </button>
-        <div className="wizard-topbar-chip">
+        <div
+          className={`wizard-topbar-chip${editingQuery ? ' wizard-topbar-chip-editing' : ''}`}
+          onClick={() => {
+            if (!editingQuery) {
+              setEditingQuery(true)
+              setEditQueryValue(query)
+              setTimeout(() => { queryInputRef.current?.select() }, 10)
+            }
+          }}
+          title={editingQuery ? undefined : 'Click to edit your search'}
+        >
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
             <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
           </svg>
-          <span className="wizard-topbar-query">{query}</span>
+          {editingQuery ? (
+            <input
+              ref={queryInputRef}
+              className="wizard-topbar-query-input"
+              value={editQueryValue}
+              onChange={e => setEditQueryValue(e.target.value)}
+              onKeyDown={e => {
+                if (e.key === 'Enter' && editQueryValue.trim()) {
+                  setEditingQuery(false)
+                  onEditQuery(editQueryValue.trim())
+                } else if (e.key === 'Escape') {
+                  setEditingQuery(false)
+                  setEditQueryValue(query)
+                }
+                e.stopPropagation()
+              }}
+              onBlur={() => {
+                setEditingQuery(false)
+                setEditQueryValue(query)
+              }}
+              onClick={e => e.stopPropagation()}
+              autoFocus
+            />
+          ) : (
+            <span className="wizard-topbar-query">{query}</span>
+          )}
         </div>
         <button className="search-modal-esc search-modal-close" onClick={onClose} style={{ flexShrink: 0 }} aria-label="Close">esc</button>
       </div>

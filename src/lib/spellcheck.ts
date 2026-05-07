@@ -111,6 +111,10 @@ const BASE_VOCAB: string[] = [
   'best','top','good','great','cheap','quick','easy','simple','powerful',
   'advanced','smart','intelligent','custom','automated','instant','live',
   'batch','high','low','real','time','large','small','enterprise','solo',
+  // Common prepositions / conjunctions / stopwords (must NOT be corrected)
+  'for','the','and','but','not','with','from','into','that','this',
+  'then','when','what','how','who','which','than','also','just',
+  'more','some','have','will','your','about','like','without',
 ]
 
 export interface SpellCorrection {

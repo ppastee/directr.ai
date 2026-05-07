@@ -59,6 +59,10 @@ export default function HomeClient({ allTools, categories }: HomeClientProps) {
     setWizardOpen(true)
   }
 
+  function handleEditQuery(query: string) {
+    setWizardQuery(query)
+  }
+
   return (
     <>
 <AnimatedBg />
@@ -74,9 +78,11 @@ export default function HomeClient({ allTools, categories }: HomeClientProps) {
       </div>
       {wizardOpen && (
         <WizardModal
+          key={wizardQuery}
           query={wizardQuery}
           onClose={() => setWizardOpen(false)}
           onCategory={handleCategory}
+          onEditQuery={handleEditQuery}
           allTools={allTools}
           categories={categories}
         />

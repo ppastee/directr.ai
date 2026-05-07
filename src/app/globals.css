@@ -721,11 +721,22 @@ body.theme-studio {
   background: var(--accent-bg); color: var(--accent);
   border-radius: 6px; padding: 0.3rem 0.75rem;
   flex: 1; min-width: 0; justify-content: center;
+  cursor: pointer; transition: background 0.15s;
 }
+.wizard-topbar-chip:not(.wizard-topbar-chip-editing):hover {
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+}
+.wizard-topbar-chip-editing { cursor: default; }
 .wizard-topbar-query {
   font-size: 0.875rem; font-weight: 500;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   max-width: 320px;
+}
+.wizard-topbar-query-input {
+  background: none; border: none; outline: none;
+  color: var(--accent); font-size: 0.875rem; font-weight: 500;
+  font-family: var(--body-font);
+  flex: 1; min-width: 0; width: 100%;
 }
 .wizard-full-body {
   flex: 1; overflow-y: auto;
