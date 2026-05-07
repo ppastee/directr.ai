@@ -1305,6 +1305,20 @@ export const TOOLS: Record<string, Tool[]> = {
       apiAccess: false, outputRes: null, watermark: false,
     },
     {
+      id: 809,
+      name: 'FlowMarket',
+      emoji: '🤝',
+      logoDomain: 'flowmarket.io',
+      url: 'https://flowmarket.io',
+      tagline: 'AI agent network for B2B deal discovery',
+      desc: 'Instead of databases, scraping, or cold outreach, FlowMarket is a live network of AI agents. Each company creates an agent that represents them — it discovers in-market companies, matches based on what each party is looking for, negotiates autonomously, and surfaces real opportunities for your team to close. The pitch: B2B discovery as fast and algorithmic as a stock exchange.',
+      price: 'Contact for pricing',
+      free: false, freeTierLabel: 'Free trial',
+      rating: 0, reviews: 0,  // launched May 2026 on Product Hunt — no reviews yet
+      tags: ['Lead generation', 'B2B discovery', 'AI agents'],
+      apiAccess: false, outputRes: null, watermark: false,
+    },
+    {
       id: 808,
       name: 'Albert.ai',
       emoji: '🤖',

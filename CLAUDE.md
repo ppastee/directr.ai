@@ -142,7 +142,7 @@ All themes define: `--bg --bg2 --bg3 --fg --fg2 --fg3 --muted --accent --accent2
 - chat: 10 tools
 - 3d: 8 tools — note: key is `'3d'` (quoted) in TOOLS object, not `3d`
 - productivity: 9 tools
-- marketing: 8 tools
+- marketing: 9 tools
 - finance: 8 tools
 - accounting: 6 tools
 - legal: 7 tools
@@ -150,7 +150,7 @@ All themes define: `--bg --bg2 --bg3 --fg --fg2 --fg3 --muted --accent --accent2
 - construction: 7 tools
 - data: 7 tools
 - education: 7 tools
-- **Total: 139 tools across 16 categories**
+- **Total: 140 tools across 16 categories**
 
 **Removed:** Phind (shut down Jan 2026), Luma Genie (sunset Jan 2026)
 
