@@ -238,16 +238,18 @@ export default function ToolDetailPage({ tool, cat, categoryTools }: Props) {
                     ))}
                   </tr>
                 )}
-                <tr>
-                  <td className="compare-row-label-cell">Watermark</td>
-                  {compareSet.map((t) => (
-                    <td key={t.id} className={t.id === tool.id ? 'compare-col-hero' : ''}>
-                      {t.watermark
-                        ? <span className="cross">Yes</span>
-                        : <span className="check">No</span>}
-                    </td>
-                  ))}
-                </tr>
+                {compareSet.some((t) => t.watermark) && (
+                  <tr>
+                    <td className="compare-row-label-cell">Watermark</td>
+                    {compareSet.map((t) => (
+                      <td key={t.id} className={t.id === tool.id ? 'compare-col-hero' : ''}>
+                        {t.watermark
+                          ? <span className="cross">Yes</span>
+                          : <span className="check">No</span>}
+                      </td>
+                    ))}
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
