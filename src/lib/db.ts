@@ -4,6 +4,10 @@ import { TOOLS as STATIC_TOOLS, CATEGORIES as STATIC_CATS, Tool, Category, nameT
 
 export type ToolsMap = Record<string, Tool[]>
 
+function fixEncoding(s: string): string {
+  return s?.replace(/Äî/g, 'AI') ?? s
+}
+
 function fromRow(row: Record<string, unknown>): Tool {
   return {
     id: row.id as number,
@@ -11,8 +15,8 @@ function fromRow(row: Record<string, unknown>): Tool {
     emoji: row.emoji as string,
     logoDomain: row.logo_domain as string,
     url: row.url as string,
-    tagline: row.tagline as string,
-    desc: row.description as string,
+    tagline: fixEncoding(row.tagline as string),
+    desc: fixEncoding(row.description as string),
     price: row.price as string,
     free: row.free as boolean,
     freeTier: (row.free_tier as string) ?? undefined,
