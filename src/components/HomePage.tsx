@@ -39,7 +39,17 @@ const HEADLINES = [
 ]
 
 
-const TYPEWRITER_PHRASES = [
+const TYPEWRITER_PHRASES_DESKTOP = [
+  'animate a product demo...',
+  'clone my voice for a podcast...',
+  'build a full-stack app...',
+  'generate images without watermark...',
+  'write SEO blog articles...',
+  'create studio-quality music...',
+  'transcribe a meeting...',
+]
+
+const TYPEWRITER_PHRASES_MOBILE = [
   'animate a video...',
   'clone my voice...',
   'build an app...',
@@ -84,7 +94,15 @@ export default function HomePage({ onCategory, onWizard, allTools, categories }:
   const [isSearching, setIsSearching] = useState(false)
   const [gridVisible, setGridVisible] = useState(false)
   const gridRef = useRef<HTMLDivElement>(null)
-  const typewriterText = useTypewriter(TYPEWRITER_PHRASES)
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 640px)')
+    setIsMobile(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+  const typewriterText = useTypewriter(isMobile ? TYPEWRITER_PHRASES_MOBILE : TYPEWRITER_PHRASES_DESKTOP)
 
   useEffect(() => {
     const el = gridRef.current
