@@ -1,5 +1,19 @@
 @AGENTS.md
 
+## ⚠️ ADDING TOOLS — READ FIRST
+
+**Tools live in Supabase, NOT in `src/data/tools.ts`.**
+
+- `tools.ts` is a static fallback only — the site reads from the database at runtime
+- To add a tool: insert a row into the `tools` table in Supabase (Table Editor)
+- Do NOT edit `tools.ts` or `CLAUDE.md` tool counts when adding tools
+- The anon key cannot insert rows (RLS blocks it) — direct Casey to the Supabase dashboard to insert
+- Tool pages (`/tool/[slug]`) are generated from DB via `dbGetAllToolSlugs()` — they won't exist until the row is in Supabase and a redeploy happens
+
+Column mapping: `id, category, name, emoji, logo_domain, url, tagline, description, price, free, free_tier, free_tier_label, rating, reviews, tags, sponsored, api_access, output_res, watermark`
+
+---
+
 ## TOKEN USAGE — READ FIRST
 
 **Every token has immense value. Be obsessively efficient.**
@@ -142,7 +156,7 @@ All themes define: `--bg --bg2 --bg3 --fg --fg2 --fg3 --muted --accent --accent2
 - chat: 10 tools
 - 3d: 8 tools — note: key is `'3d'` (quoted) in TOOLS object, not `3d`
 - productivity: 9 tools
-- marketing: 9 tools
+- marketing: 8 tools
 - finance: 8 tools
 - accounting: 6 tools
 - legal: 7 tools
@@ -150,7 +164,7 @@ All themes define: `--bg --bg2 --bg3 --fg --fg2 --fg3 --muted --accent --accent2
 - construction: 7 tools
 - data: 7 tools
 - education: 7 tools
-- **Total: 140 tools across 16 categories**
+- **Total: 139 tools across 16 categories**
 
 **Removed:** Phind (shut down Jan 2026), Luma Genie (sunset Jan 2026)
 
