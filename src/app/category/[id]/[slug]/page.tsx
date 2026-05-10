@@ -23,6 +23,7 @@ const APP_CATEGORY: Record<string, string> = {
   construction: 'BusinessApplication',
   data: 'BusinessApplication',
   education: 'EducationalApplication',
+  'ai-agents': 'BusinessApplication',
 }
 
 export async function generateStaticParams() {

@@ -34,6 +34,7 @@ const RELATED_CATS: Record<string, string[]> = {
   construction: ['data', 'productivity', 'finance'],
   data:         ['finance', 'coding', 'productivity'],
   education:    ['productivity', 'writing', 'chat'],
+  'ai-agents':  ['coding', 'productivity', 'chat'],
 }
 
 
@@ -54,6 +55,7 @@ const CAT_INTROS: Record<string, string> = {
   construction: 'Construction projects run late and over budget for predictable reasons — and AI is getting very good at predicting them. These tools handle cost estimation, project scheduling, site monitoring, and compliance documentation, giving you visibility and control before small problems become expensive ones.',
   data:         'If your data insights depend entirely on whoever knows SQL being available, that\'s a problem. These tools let you query datasets in plain English, build dashboards without a data engineering degree, and generate reports that actually explain what\'s happening — turning raw numbers into something your whole team can act on.',
   education:    'One-size-fits-all learning doesn\'t fit most people. These tools personalise the pace and path, generate course content on any topic, give learners instant feedback, and make it possible to build genuinely effective training without a dedicated L&D team — whether you\'re teaching yourself or a thousand people.',
+  'ai-agents':  'Chatbots tell you what to do. AI agents actually do it. These tools go beyond conversation — driving browsers, running scheduled jobs, and stitching together multi-step work on your behalf without constant prompting. This is where AI stops being a faster search engine and starts behaving like a coworker who shows up, completes the task, and reports back.',
 }
 
 function sortLabel(s: string) {
