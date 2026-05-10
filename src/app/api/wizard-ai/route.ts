@@ -2,19 +2,13 @@ import { NextRequest } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
 import { getAllTools, getCategories } from '@/lib/db'
 import { scoreTools } from '@/lib/search'
-import { getQuestionById } from '@/lib/wizard'
-import type { Question } from '@/lib/wizard'
+import type { Question, QuestionOption } from '@/lib/wizard'
 
 const CATEGORY_IDS = [
   'animation', 'image', 'writing', 'coding', 'audio', 'chat', '3d',
   'productivity', 'marketing', 'finance', 'accounting', 'legal', 'hr',
   'construction', 'data', 'education',
 ]
-
-const VALID_QUESTION_IDS =
-  'budget, skill, use_case, watermark, commercial, privacy, cloning, citations, ' +
-  'context, duration, realism, volume, voice, project, source, engine, team, ' +
-  'stack, channel, level, scale, firm, subject, quality'
 
 export async function POST(req: NextRequest) {
   const body = await req.json()
@@ -37,41 +31,60 @@ export async function POST(req: NextRequest) {
     const topCandidates = allCandidates.slice(0, 8)
 
     const toolSummaries = topCandidates.length
-      ? topCandidates.map(r => `• ${r.tool.name} [${r.catId}]: ${r.tool.tagline}`).join('\n')
+      ? topCandidates.map(r => {
+          const t = r.tool
+          const free = t.freeTierLabel ? ` · ${t.freeTierLabel}` : ''
+          const api = t.apiAccess ? ' · API' : ''
+          const wm = t.watermark ? ' · watermarks output' : ''
+          const tags = t.tags?.length ? ` · tags: ${t.tags.join(', ')}` : ''
+          return `• ${t.name} [${r.catId}] — ${t.tagline} (${t.price}${free}${api}${wm}${tags})`
+        }).join('\n')
       : '(no keyword matches yet)'
 
     let raw: string | null = null
     try {
       const response = await client.messages.create({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 600,
-        system: `You interpret search queries for an AI tools marketplace. Return JSON only — no markdown, no fences.
+        model: 'claude-opus-4-7',
+        max_tokens: 2000,
+        system: `You design clarifying questions for an AI-tools search wizard. The user just typed a search; the goal of the questions is to discriminate between the actual candidate tools so the final ranking lands on the right one. Return JSON only — no markdown, no fences.
 
-Available categories: ${CATEGORY_IDS.join(', ')}
-Valid question IDs: ${VALID_QUESTION_IDS}`,
+Available categories: ${CATEGORY_IDS.join(', ')}`,
         messages: [{
           role: 'user',
-          content: `Query: "${query}"
+          content: `User query: "${query}"
 
-Top tools currently matching:
+Candidate tools (top keyword matches — these are who we're choosing between):
 ${toolSummaries}
 
-Return this JSON structure exactly:
+Design 0–3 clarifying questions whose answers would meaningfully change which of these candidates wins. Each question MUST:
+- Target a real differentiator visible in the candidate set above (price tier, watermark, API access, output style, use case, scale, etc.) — not a generic survey question.
+- Have 3–5 concrete options. Option labels should describe a real-world situation, not abstract values. Each option may include a short \`hint\` that names the kind of tool it favours.
+- Skip the question entirely if the answer is already implied by the query — put it in \`prefilled\` instead.
+- Be useful: if the user picks differently, a different candidate should win. If two options collapse to the same ranking, drop one.
+
+Return ZERO questions when the query already names a specific tool, or when the candidates are essentially interchangeable for the stated need.
+
+Return this JSON exactly:
 {
-  "categoryId": "one of the available categories, or null if unclear",
-  "intentSummary": "one plain sentence describing what the user wants to accomplish",
+  "categoryId": "<one category id from the list, or null if unclear>",
+  "intentSummary": "<one plain sentence describing what the user wants to accomplish>",
   "prefilled": {
-    "questionId": { "value": "optionValue", "reason": "short phrase shown to user" }
+    "<questionId>": { "value": "<optionValue>", "reason": "<short phrase shown to the user>" }
   },
-  "questionIds": ["2-3 most useful question IDs for this specific query"],
+  "questions": [
+    {
+      "id": "<kebab-case-slug>",
+      "text": "<the question, addressed to the user>",
+      "helper": "<one short line explaining how this changes the recommendation>",
+      "options": [
+        { "value": "<slug>", "label": "<short concrete answer>", "hint": "<optional: names the kind of tool this favours>" }
+      ]
+    }
+  ],
   "noIntent": false
 }
 
-For prefilled, only include entries clearly implied by the query:
-  budget: "free" | "low" | "mid" | "any"
-  skill: "none" | "some" | "dev"
-  use_case: depends on category (e.g. "marketing", "social", "tts", "coding")
-  commercial: "commercial" | "personal" if client/business use is obvious`,
+Set noIntent=true ONLY if the query has no recognisable AI-tool intent at all (e.g. gibberish, a personal question). Use prefilled for anything obvious from the query: budget hints ("free", "cheap", "enterprise"), skill ("developer", "non-technical"), commercial use ("for clients"), watermark concerns, etc. Keep questionIds short and lowercase.`,
         }],
       })
       raw = response.content[0].type === 'text' ? response.content[0].text.trim() : null
@@ -85,7 +98,7 @@ For prefilled, only include entries clearly implied by the query:
       categoryId: string | null
       intentSummary: string
       prefilled: Record<string, { value: string; reason: string }>
-      questionIds: string[]
+      questions: Question[]
       noIntent: boolean
     }
 
@@ -98,11 +111,28 @@ For prefilled, only include entries clearly implied by the query:
     }
 
     const prefilled = parsed.prefilled ?? {}
+
+    // Validate question shape: id + text + 2+ option {value,label}. Drop any question
+    // whose id collides with a prefilled answer (already known).
+    const seen = new Set<string>()
     const questions: Question[] = []
-    for (const id of (parsed.questionIds ?? [])) {
-      if (prefilled[id]) continue
-      const q = getQuestionById(id, parsed.categoryId)
-      if (q) questions.push(q)
+    for (const q of (parsed.questions ?? [])) {
+      if (!q || typeof q.id !== 'string' || typeof q.text !== 'string') continue
+      if (prefilled[q.id] || seen.has(q.id)) continue
+      const opts: QuestionOption[] = []
+      for (const o of (q.options ?? [])) {
+        if (o && typeof o.value === 'string' && typeof o.label === 'string') {
+          opts.push({ value: o.value, label: o.label, hint: typeof o.hint === 'string' ? o.hint : undefined })
+        }
+      }
+      if (opts.length < 2) continue
+      seen.add(q.id)
+      questions.push({
+        id: q.id,
+        text: q.text,
+        helper: typeof q.helper === 'string' ? q.helper : undefined,
+        options: opts,
+      })
     }
 
     return Response.json({
@@ -145,7 +175,7 @@ For prefilled, only include entries clearly implied by the query:
     let raw: string | null = null
     try {
       const response = await client.messages.create({
-        model: 'claude-sonnet-4-6',
+        model: 'claude-opus-4-7',
         max_tokens: 1400,
         system: `You are the recommendation engine for an AI tools marketplace. Rank tools for a specific user's exact need. Return JSON only — no markdown, no fences.`,
         messages: [{
