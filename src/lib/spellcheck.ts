@@ -115,6 +115,18 @@ const BASE_VOCAB: string[] = [
   'for','the','and','but','not','with','from','into','that','this',
   'then','when','what','how','who','which','than','also','just',
   'more','some','have','will','your','about','like','without',
+  // Common English intensifiers and qualifiers users actually type
+  'hyper','super','ultra','mega','extra','mini','micro','semi','sub',
+  'photo-realistic','hyper-realistic','photorealistic','hyperrealistic',
+  'cinematic','aesthetic','minimal','minimalist','vintage','modern',
+  'natural','organic','authentic','dynamic','clean','sleek','bold',
+  // Common verbs users type that aren't tool-specific
+  'making','creating','generating','building','designing','editing',
+  'writing','recording','composing','filming','shooting',
+  // Common nouns / pronouns / connectors
+  'thing','things','stuff','idea','ideas','project','projects','goal',
+  'plan','plans','need','needs','want','wants','help','helps','show',
+  'shows','tell','tells','use','using','used','find','finds','found',
 ]
 
 export interface SpellCorrection {
@@ -156,11 +168,13 @@ export function buildVocabulary(tools: ToolsMap, categories: Category[]): { set:
 }
 
 // Max edit distance allowed based on word length.
-// Shorter words need tighter thresholds to avoid false corrections.
+// Tightened to avoid coercing common English words ("hyper" → "paper") that
+// happen not to be in the tools-domain vocabulary. Distance 2 is too permissive
+// for short words — half the characters can change, which crosses semantic lines.
 function maxDist(len: number): number {
-  if (len <= 2) return 0  // never correct: too many valid short words
-  if (len <= 4) return 1  // "mak" → "make", "vide" → "video"
-  return 2                // "videa" → "video", "animte" → "animate"
+  if (len <= 3) return 0  // never correct: too many valid short words
+  if (len <= 6) return 1  // single-character typos only
+  return 2                // longer words can absorb a 2-edit fix
 }
 
 // Find the best vocabulary match for a single misspelled token.
@@ -170,8 +184,16 @@ function correctWord(
   vocabSet: Set<string>,
   vocabList: string[],
 ): string | null {
-  if (word.length <= 2) return null
+  if (word.length <= 3) return null
   if (vocabSet.has(word)) return null    // already a known word
+
+  // Treat common plurals as known: if the word is "<known><s>" or "<known><es>",
+  // accept it as-is rather than "correcting" it to its own singular.
+  if (word.endsWith('s') && word.length > 3 && vocabSet.has(word.slice(0, -1))) return null
+  if (word.endsWith('es') && word.length > 4 && vocabSet.has(word.slice(0, -2))) return null
+  // Also accept "-ing" / "-ed" forms of known verbs
+  if (word.endsWith('ing') && word.length > 5 && vocabSet.has(word.slice(0, -3))) return null
+  if (word.endsWith('ed') && word.length > 4 && vocabSet.has(word.slice(0, -2))) return null
 
   const threshold = maxDist(word.length)
   if (threshold === 0) return null
