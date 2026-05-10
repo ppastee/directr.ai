@@ -147,10 +147,24 @@ export default function WizardModal({ query, onClose, onCategory, onEditQuery, a
 
     const mergedAnswers = mergeAnswers(activePlan.prefilled, answers)
 
+    // Build human-readable Q&A pairs so the rank LLM can reason about user
+    // context (e.g. "I already pay for ChatGPT Plus") instead of seeing only
+    // opaque option slugs. Includes prefilled answers with their inference reason.
+    const qaPairs: Array<{ q: string; a: string; inferred?: string }> = []
+    for (const q of activePlan.questions) {
+      const v = answers[q.id]
+      if (v === undefined) continue
+      const opt = q.options.find(o => o.value === v)
+      qaPairs.push({ q: q.text, a: opt?.label ?? v })
+    }
+    for (const [qid, info] of Object.entries(activePlan.prefilled)) {
+      qaPairs.push({ q: qid, a: info.value, inferred: info.reason })
+    }
+
     fetch('/api/wizard-ai', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ step: 'rank', query, answers: mergedAnswers }),
+      body: JSON.stringify({ step: 'rank', query, answers: mergedAnswers, qaPairs }),
     })
       .then(r => r.ok ? r.json() : Promise.reject(r))
       .then((data: { results: AIRankEntry[] }) => {

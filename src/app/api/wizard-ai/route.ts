@@ -12,10 +12,11 @@ const CATEGORY_IDS = [
 
 export async function POST(req: NextRequest) {
   const body = await req.json()
-  const { step, query, answers } = body as {
+  const { step, query, answers, qaPairs } = body as {
     step: string
     query: string
     answers?: Record<string, string>
+    qaPairs?: Array<{ q: string; a: string; inferred?: string }>
   }
 
   if (!query?.trim()) {
@@ -168,9 +169,13 @@ Set noIntent=true ONLY if the query has no recognisable AI-tool intent at all (e
       tags: r.tool.tags,
     }))
 
-    const answersText = answers && Object.keys(answers).length
-      ? Object.entries(answers).map(([k, v]) => `${k}=${v}`).join(', ')
-      : 'none provided'
+    const answersText = qaPairs?.length
+      ? qaPairs.map(p => p.inferred
+          ? `• ${p.q}: ${p.a} (inferred from query: ${p.inferred})`
+          : `• ${p.q}: ${p.a}`).join('\n')
+      : answers && Object.keys(answers).length
+        ? Object.entries(answers).map(([k, v]) => `${k}=${v}`).join(', ')
+        : 'none provided'
 
     let raw: string | null = null
     try {
@@ -181,10 +186,17 @@ Set noIntent=true ONLY if the query has no recognisable AI-tool intent at all (e
         messages: [{
           role: 'user',
           content: `User query: "${query}"
-User answers: ${answersText}
+
+User context (their stated answers — read these as facts about the user's situation):
+${answersText}
 
 Tools to rank (rank best-to-worst fit for this specific user):
 ${JSON.stringify(toolDetails)}
+
+CRITICAL — mismatches must reflect the user's actual situation, not the tool's defaults:
+- Only flag a mismatch if it would genuinely affect THIS user given their answers above. If their context already neutralises the concern, OMIT it.
+- Examples of mismatches to OMIT: "no free tier" when the user said they already pay for the parent service (e.g. ChatGPT Plus includes DALL·E 3 and Codex; Google One AI includes Gemini Advanced); "no GUI" when the user said they're a developer building something programmatic; "watermark" when the user said watermarks are fine; "expensive" when the user said price isn't a concern.
+- Strengths must reference the user's stated context too — don't list generic strengths the user doesn't care about.
 
 Return:
 {
@@ -192,9 +204,9 @@ Return:
     {
       "toolId": 123,
       "catId": "categoryId",
-      "reason": "one specific sentence about why this fits or doesn't fit this exact user's stated need",
-      "strengths": ["up to 2 concrete strengths relevant to this user"],
-      "mismatches": ["at most 1 significant mismatch — omit array if none"]
+      "reason": "one specific sentence tying this tool to the user's stated need and context",
+      "strengths": ["up to 2 concrete strengths that matter given the user's answers"],
+      "mismatches": ["at most 1 mismatch that survives the user's context — omit the array entirely if none"]
     }
   ]
 }`,
