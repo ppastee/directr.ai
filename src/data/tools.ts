@@ -234,6 +234,20 @@ export const TOOLS: Record<string, Tool[]> = {
       tags: ['Img-to-video', 'Artistic', 'Animation'],
       apiAccess: false, outputRes: '720p', watermark: true,
     },
+    {
+      id: 15,
+      name: 'Higgsfield AI',
+      emoji: '🔮',
+      logoDomain: 'higgsfield.ai',
+      url: 'https://higgsfield.ai',
+      tagline: '15+ AI video models in one subscription',
+      desc: 'One subscription across 15+ top AI video models — Sora 2, Veo 3.1, Kling 3.0, WAN 2.6, Seedance 2.0, and more — without juggling separate accounts. Soul ID keeps characters consistent across scenes while WAN Camera Controls let you direct specific movements frame-to-frame. Built for creators and studios who want the best model for each job without paying for each individually.',
+      price: 'From $15/mo',
+      free: true, freeTier: '10 credits/day', freeTierLabel: 'Free tier available',
+      rating: 3.7, reviews: 2243,  // Trustpilot verified
+      tags: ['Multi-model', 'Video generation', 'Camera control'],
+      apiAccess: false, outputRes: null, watermark: true,
+    },
   ],
 
   // ── Image Generation ─────────────────────────────────────────────────────
