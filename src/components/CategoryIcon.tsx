@@ -187,6 +187,27 @@ const icons: Record<string, (props: IconProps) => React.ReactElement> = {
     </svg>
   ),
 
+  'ai-agents': ({ size = 28, className }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+      {/* Antenna */}
+      <circle cx="12" cy="2.5" r="1.25" fill="#a78bfa"/>
+      <rect x="11.5" y="3.5" width="1" height="3" fill="#7c3aed"/>
+      {/* Head */}
+      <rect x="4" y="6" width="16" height="13" rx="3" fill="#7c3aed"/>
+      <rect x="6" y="8" width="12" height="9" rx="2" fill="#1e1b4b"/>
+      {/* Eyes */}
+      <circle cx="9.5" cy="12" r="1.25" fill="#a5f3fc"/>
+      <circle cx="14.5" cy="12" r="1.25" fill="#a5f3fc"/>
+      {/* Mouth */}
+      <rect x="9" y="14.75" width="6" height="1.25" rx="0.5" fill="#a5f3fc"/>
+      {/* Ears */}
+      <rect x="2" y="10" width="2" height="5" rx="1" fill="#a78bfa"/>
+      <rect x="20" y="10" width="2" height="5" rx="1" fill="#a78bfa"/>
+      {/* Neck */}
+      <rect x="10" y="19" width="4" height="2" fill="#7c3aed"/>
+    </svg>
+  ),
+
   education: ({ size = 28, className }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
       {/* Left page */}

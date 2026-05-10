@@ -2080,6 +2080,7 @@ const RAW_CATEGORIES = [
   { id: 'construction', icon: '🏗️', name: 'Construction'      },
   { id: 'data',         icon: '📊', name: 'Data & Analytics'  },
   { id: 'education',    icon: '🎓', name: 'Education & Training' },
+  { id: 'ai-agents',    icon: '🤖', name: 'AI Agents'         },
 ]
 
 export const CATEGORIES: Category[] = RAW_CATEGORIES.map((c) => ({

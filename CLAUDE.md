@@ -5,10 +5,11 @@
 **Tools live in Supabase, NOT in `src/data/tools.ts`.**
 
 - `tools.ts` is a static fallback only — the site reads from the database at runtime
-- To add a tool: insert a row into the `tools` table in Supabase (Table Editor)
+- To add a tool: insert a row into the `tools` table in Supabase
 - Do NOT edit `tools.ts` or `CLAUDE.md` tool counts when adding tools
-- The anon key cannot insert rows (RLS blocks it) — direct Casey to the Supabase dashboard to insert
+- **Claude can insert directly** — `SUPABASE_SERVICE_ROLE_KEY` lives in `.env.local`. Run an insert via `npx tsx scripts/<your-script>.ts`. Never echo, log, or commit that key.
 - Tool pages (`/tool/[slug]`) are generated from DB via `dbGetAllToolSlugs()` — they won't exist until the row is in Supabase and a redeploy happens
+- Adding a *new category* requires three code edits in addition to the DB inserts: `RAW_CATEGORIES` in `src/data/tools.ts`, an SVG entry in `src/components/CategoryIcon.tsx`, and a new ID block per the convention below
 
 Column mapping: `id, category, name, emoji, logo_domain, url, tagline, description, price, free, free_tier, free_tier_label, rating, reviews, tags, sponsored, api_access, output_res, watermark`
 
@@ -234,12 +235,12 @@ All icons: `viewBox="0 0 24 24"` · `strokeWidth="1.75"` · stroke-based · `fil
 **Nothing else to touch** — search, category grid, filters, sort, animations are all generic.
 
 ### ID Convention
-- animation: 1–14 · image: 101–111 · writing: 201–208 · coding: 301–312
+- animation: 1–14 · image: 101–111 · writing: 201–208 · coding: 301–
 - audio: 401–409 · chat: 501–511 · 3d: 601–609 · productivity: 701–709
 - marketing: 801–808 · finance: 901–908 · accounting: 1001–1006
 - legal: 1101–1107 · hr: 1201–1208 · construction: 1301–1307
-- data: 1401–1407 · education: 1501–1507
-- Next new category starts at: **1601–**
+- data: 1401–1407 · education: 1501–1507 · ai-agents: 1601–
+- Next new category starts at: **1701–**
 
 ---
 
