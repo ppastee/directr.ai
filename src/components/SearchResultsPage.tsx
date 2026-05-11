@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect } from 'react'
 import { Category, Tool } from '@/data/tools'
 import type { ToolsMap } from '@/lib/db'
-import { scoreTools } from '@/lib/search'
+import { scoreTools, type Result } from '@/lib/search'
 import { buildVocabulary, correctQuery } from '@/lib/spellcheck'
 
 function ResultLogo({ tool }: { tool: Tool }) {
@@ -44,7 +44,38 @@ export default function SearchResultsPage({ query, onHome, onCategory, onNewSear
   }, [query, vocab, correctionDismissed])
 
   const effectiveQuery = correction ? correction.corrected : query
-  const results = useMemo(() => scoreTools(effectiveQuery, allTools, categories, 0), [effectiveQuery, allTools, categories])
+
+  // Server-side hybrid search (embeddings + keyword). Falls back transparently
+  // to client-side keyword scoring on error or while the request is in flight.
+  const [serverResults, setServerResults] = useState<Result[] | null>(null)
+
+  useEffect(() => {
+    if (!effectiveQuery.trim()) {
+      setServerResults(null)
+      return
+    }
+    let cancelled = false
+    fetch('/api/search', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: effectiveQuery }),
+    })
+      .then(r => r.ok ? r.json() : Promise.reject(r))
+      .then((data: { results: Result[] }) => {
+        if (!cancelled) setServerResults(data.results)
+      })
+      .catch(() => {
+        // Leave serverResults null so the keyword fallback below renders.
+      })
+    return () => { cancelled = true }
+  }, [effectiveQuery])
+
+  // While server is loading or on error, fall back to keyword-only
+  const fallbackResults = useMemo(
+    () => scoreTools(effectiveQuery, allTools, categories, 0),
+    [effectiveQuery, allTools, categories],
+  )
+  const results = serverResults ?? fallbackResults
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter' && input.trim()) onNewSearch(input.trim())
