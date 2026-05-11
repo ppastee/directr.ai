@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
     let raw: string | null = null
     try {
       const response = await client.messages.create({
-        model: 'claude-opus-4-7',
+        model: 'claude-sonnet-4-6',
         max_tokens: 2000,
         system: `You design clarifying questions for an AI-tools search wizard. The user just typed a search; the goal of the questions is to discriminate between the actual candidate tools so the final ranking lands on the right one. Return JSON only — no markdown, no fences.
 
@@ -88,6 +88,7 @@ Return this JSON exactly:
 Set noIntent=true ONLY if the query has no recognisable AI-tool intent at all (e.g. gibberish, a personal question). Use prefilled for anything obvious from the query: budget hints ("free", "cheap", "enterprise"), skill ("developer", "non-technical"), commercial use ("for clients"), watermark concerns, etc. Keep questionIds short and lowercase.`,
         }],
       })
+      console.log('[wizard-ai] plan usage', { model: response.model, ...response.usage })
       raw = response.content[0].type === 'text' ? response.content[0].text.trim() : null
     } catch {
       return Response.json({ error: 'api_error' }, { status: 500 })
@@ -155,6 +156,21 @@ Set noIntent=true ONLY if the query has no recognisable AI-tool intent at all (e
       return Response.json({ results: [] })
     }
 
+    // Skip Opus when ranking is already decided by keyword score:
+    //  - only one candidate, or
+    //  - top candidate dominates #2 (≥2× score) and has a strong absolute score.
+    // The client treats missing strengths/mismatches/reason as empty.
+    const top = candidates[0]
+    const second = candidates[1]
+    const dominant = !second || (top.score >= 100 && top.score >= second.score * 2)
+    if (dominant) {
+      const passthrough = candidates.slice(0, second ? 3 : 1).map(r => ({
+        toolId: r.tool.id,
+        catId: r.catId,
+      }))
+      return Response.json({ results: passthrough })
+    }
+
     const toolDetails = candidates.map(r => ({
       id: r.tool.id,
       catId: r.catId,
@@ -212,6 +228,7 @@ Return:
 }`,
         }],
       })
+      console.log('[wizard-ai] rank usage', { model: response.model, ...response.usage })
       raw = response.content[0].type === 'text' ? response.content[0].text.trim() : null
     } catch {
       return Response.json({ error: 'api_error' }, { status: 500 })
