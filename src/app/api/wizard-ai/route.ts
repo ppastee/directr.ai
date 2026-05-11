@@ -150,7 +150,7 @@ Set noIntent=true ONLY if the query has no recognisable AI-tool intent at all (e
   // ── Layer 3: Holistic final ranking ───────────────────────────────────────
   if (step === 'rank') {
     const [tools, categories] = await Promise.all([getAllTools(), getCategories()])
-    const candidates = scoreTools(query, tools, categories, 10)
+    const candidates = scoreTools(query, tools, categories, 8)
 
     if (!candidates.length) {
       return Response.json({ results: [] })
@@ -206,11 +206,16 @@ Set noIntent=true ONLY if the query has no recognisable AI-tool intent at all (e
 User context (their stated answers — read these as facts about the user's situation):
 ${answersText}
 
-Tools to rank (rank best-to-worst fit for this specific user):
+Tools to rank (best-to-worst fit for this specific user):
 ${JSON.stringify(toolDetails)}
 
+CRITICAL — relevance gate (apply BEFORE ranking):
+- These candidates come from a fuzzy keyword search and OFTEN include tools that share a word with the query but don't actually do what the user wants. OMIT any tool whose core purpose doesn't serve the user's stated goal. Do not include it with a "wrong category" mismatch — just drop it from results entirely. A tool earns a slot by being a real option for this need, not by being a near-miss.
+- Examples of tools to OMIT entirely (not return): an HR/recruiting tool when the user wants to build an app; a stock-analysis tool for a creative writing query; a calendar tool when the user wants to generate images. If you find yourself writing "not an X" or "wrong category" as a mismatch, the tool should have been omitted instead.
+- Returning fewer high-quality results is better than padding with off-topic tools. If only 2 of the candidates genuinely fit, return 2.
+
 CRITICAL — mismatches must reflect the user's actual situation, not the tool's defaults:
-- Only flag a mismatch if it would genuinely affect THIS user given their answers above. If their context already neutralises the concern, OMIT it.
+- For tools that DO fit the user's goal, only flag a mismatch if it would genuinely affect THIS user given their answers above. If their context already neutralises the concern, OMIT it.
 - Examples of mismatches to OMIT: "no free tier" when the user said they already pay for the parent service (e.g. ChatGPT Plus includes DALL·E 3 and Codex; Google One AI includes Gemini Advanced); "no GUI" when the user said they're a developer building something programmatic; "watermark" when the user said watermarks are fine; "expensive" when the user said price isn't a concern.
 - Strengths must reference the user's stated context too — don't list generic strengths the user doesn't care about.
 
