@@ -1917,28 +1917,27 @@ thead .compare-col-hero { border-bottom: 2px solid var(--accent); }
   }
 }
 
-/* ── STUCK BUTTON (sticky right-side FAB) ───────────────────────────── */
+/* ── STUCK BUTTON (sticky bottom-right FAB) ─────────────────────────── */
 .stuck-btn-wrap {
   position: fixed;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
+  bottom: 28px;
+  right: 28px;
   z-index: 480;
   display: flex;
-  align-items: center;
+  align-items: flex-end; /* panel bottom aligns with circle bottom */
   flex-direction: row-reverse; /* circle anchored to right */
   pointer-events: none;
   animation: stuck-btn-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
 }
 @keyframes stuck-btn-in {
-  from { opacity: 0; transform: translate(36px, -50%); }
-  to   { opacity: 1; transform: translate(0, -50%); }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .stuck-btn-circle {
   pointer-events: auto;
-  width: 60px; height: 60px;
-  border-radius: 50% 0 0 50%;
+  width: 64px; height: 64px;
+  border-radius: 50%;
   background: var(--accent);
   color: #fff;
   border: none;
@@ -1983,21 +1982,18 @@ thead .compare-col-hero { border-bottom: 2px solid var(--accent); }
   transition: opacity 0.22s ease, transform 0.22s ease;
   background: var(--bg2);
   border: 1px solid var(--border);
-  border-right: none;
-  border-radius: 12px 0 0 12px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.16);
+  border-radius: 14px;
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.18);
   padding: 1rem 1.1rem 1.1rem;
   width: 320px;
-  margin-right: -12px;  /* tuck under the circle's rounded edge */
+  margin-right: 12px; /* small gap between panel and circle */
+  margin-bottom: 4px;
   cursor: pointer;
 }
 .stuck-btn-wrap-open .stuck-btn-panel {
   pointer-events: auto;
   opacity: 1;
   transform: translateX(0);
-}
-.stuck-btn-wrap-open .stuck-btn-circle {
-  border-radius: 50%;
 }
 
 .stuck-btn-panel-title {
@@ -2034,8 +2030,9 @@ thead .compare-col-hero { border-bottom: 2px solid var(--accent); }
 
 /* Hide expand panel on touch / small screens */
 @media (max-width: 640px), (hover: none) {
+  .stuck-btn-wrap { bottom: 20px; right: 20px; }
   .stuck-btn-panel { display: none; }
-  .stuck-btn-circle { width: 52px; height: 52px; border-radius: 50% 0 0 50%; }
+  .stuck-btn-circle { width: 56px; height: 56px; }
 }
 
 /* ── WIZARD INTRO MODAL ─────────────────────────────────────────────── */
