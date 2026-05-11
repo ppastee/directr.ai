@@ -18,6 +18,8 @@ create table if not exists tools (
   api_access      boolean default false,
   output_res      text,
   watermark       boolean default false,
+  embedding       jsonb, -- text-embedding-3-small, 1536 floats. NULL until backfilled.
+  embedding_input text,  -- exact string we embedded; used to detect when re-embed is needed
   updated_at      timestamptz default now()
 );
 

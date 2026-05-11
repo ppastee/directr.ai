@@ -28,7 +28,26 @@ function fromRow(row: Record<string, unknown>): Tool {
     apiAccess: row.api_access as boolean,
     outputRes: row.output_res as string | null,
     watermark: row.watermark as boolean,
+    embedding: Array.isArray(row.embedding) ? (row.embedding as number[]) : undefined,
   }
+}
+
+/** Server-only: returns tools WITH embeddings (large). Don't expose via public JSON. */
+export async function getAllToolsWithEmbeddings(): Promise<ToolsMap> {
+  return await getAllTools()
+}
+
+/** Strip embedding before sending tools to the browser — saves ~1.5MB on every search. */
+export function withoutEmbeddings(tools: ToolsMap): ToolsMap {
+  const out: ToolsMap = {}
+  for (const [catId, catTools] of Object.entries(tools)) {
+    out[catId] = catTools.map(t => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { embedding: _embedding, ...rest } = t
+      return rest as Tool
+    })
+  }
+  return out
 }
 
 function buildCategories(toolsMap: ToolsMap): Category[] {

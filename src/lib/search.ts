@@ -165,6 +165,99 @@ export function extractSignals(query: string): SearchSignals {
   return { words, phrases, categoryBias }
 }
 
+/**
+ * Cosine similarity between two equal-length numeric vectors.
+ * Both vectors from text-embedding-3-small are already L2-normalized,
+ * so this is effectively a dot product — but we don't rely on that
+ * assumption in case the model changes.
+ */
+export function cosineSim(a: number[], b: number[]): number {
+  if (a.length !== b.length) return 0
+  let dot = 0
+  let aMag = 0
+  let bMag = 0
+  for (let i = 0; i < a.length; i++) {
+    dot  += a[i] * b[i]
+    aMag += a[i] * a[i]
+    bMag += b[i] * b[i]
+  }
+  const denom = Math.sqrt(aMag) * Math.sqrt(bMag)
+  return denom === 0 ? 0 : dot / denom
+}
+
+interface HybridOpts {
+  /** Weight for the semantic score in the final blend. Keyword weight = 1 - semanticWeight. */
+  semanticWeight?: number
+  /** Drop tools below this semantic similarity unless they have a keyword hit ≥20. */
+  semanticFloor?: number
+  /** How many results to return. 0 = all. */
+  limit?: number
+}
+
+/**
+ * Hybrid ranking: blends keyword score (existing scoreTools logic) with
+ * cosine similarity to a query embedding. Includes a tool if it either
+ * clears the semantic floor OR has a meaningful keyword hit.
+ *
+ * Falls back to keyword-only when queryEmbedding is missing or empty.
+ */
+export function scoreToolsHybrid(
+  query: string,
+  queryEmbedding: number[] | null | undefined,
+  tools: ToolsMap,
+  categories: Category[],
+  opts: HybridOpts = {},
+): Result[] {
+  const limit = opts.limit ?? 0
+  if (!queryEmbedding || queryEmbedding.length === 0) {
+    return scoreTools(query, tools, categories, limit)
+  }
+
+  const semanticWeight = opts.semanticWeight ?? 0.6
+  const keywordWeight  = 1 - semanticWeight
+  const semanticFloor  = opts.semanticFloor ?? 0.28
+
+  // Run keyword scoring once over the full set. limit=0 returns every match.
+  const keywordResults = scoreTools(query, tools, categories, 0)
+  const keywordScore: Record<number, number> = {}
+  for (const r of keywordResults) keywordScore[r.tool.id] = r.score
+
+  // Walk every tool, compute semantic. Tools without an embedding column
+  // fall through to keyword-only — handy during incremental rollout.
+  type Row = { result: Result; semantic: number; keyword: number }
+  const rows: Row[] = []
+  for (const [catId, catTools] of Object.entries(tools)) {
+    const catName = categories.find(c => c.id === catId)?.name ?? catId
+    for (const tool of catTools) {
+      const kw  = keywordScore[tool.id] ?? 0
+      const sem = tool.embedding ? cosineSim(queryEmbedding, tool.embedding) : 0
+      if (sem < semanticFloor && kw < 20) continue
+      rows.push({
+        result: { tool, catId, catName, score: 0 },
+        semantic: sem,
+        keyword: kw,
+      })
+    }
+  }
+  if (rows.length === 0) return []
+
+  // Min-max normalise both scores within the surviving set, then blend.
+  const semMax = Math.max(...rows.map(r => r.semantic), 0)
+  const semMin = Math.min(...rows.map(r => r.semantic), 0)
+  const kwMax  = Math.max(...rows.map(r => r.keyword), 0)
+  const semRange = semMax - semMin || 1
+  const kwRange  = kwMax || 1
+
+  for (const r of rows) {
+    const normSem = (r.semantic - semMin) / semRange
+    const normKw  = r.keyword / kwRange
+    r.result.score = semanticWeight * normSem + keywordWeight * normKw
+  }
+
+  const sorted = rows.map(r => r.result).sort((a, b) => b.score - a.score)
+  return limit > 0 ? sorted.slice(0, limit) : sorted
+}
+
 export function scoreTools(query: string, tools: ToolsMap, categories: Category[], limit = 7): Result[] {
   const q = query.toLowerCase().trim()
   if (!q) return []

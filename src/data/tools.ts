@@ -27,6 +27,9 @@ export interface Tool {
   apiAccess: boolean
   outputRes: string | null
   watermark: boolean
+  // 1536-dim text-embedding-3-small vector. Only populated when fetched
+  // server-side; stripped before responses reach the browser to keep payload small.
+  embedding?: number[]
 }
 
 // ── TOOLS (source of truth) ──────────────────────────────────────────────────
