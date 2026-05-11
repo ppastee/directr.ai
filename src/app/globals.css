@@ -2006,7 +2006,8 @@ thead .compare-col-hero { border-bottom: 2px solid var(--accent); }
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  margin-top: 0.9rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.5rem;
   padding: 0.55rem 0.95rem;
   background: var(--accent);
   color: #fff;
