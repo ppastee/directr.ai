@@ -2001,44 +2001,6 @@ thead .compare-col-hero { border-bottom: 2px solid var(--accent); }
   opacity: 0;
 }
 
-/* Floating "Click me" hint bubble under the circle */
-.stuck-btn-tap-hint {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--fg);
-  color: var(--bg);
-  font-size: 0.66rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  padding: 4px 8px;
-  border-radius: 6px;
-  white-space: nowrap;
-  pointer-events: none;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  animation: stuck-btn-hint-bob 1.8s ease-in-out infinite;
-  z-index: 2;
-}
-.stuck-btn-tap-hint::before {
-  content: '';
-  position: absolute;
-  top: -4px;
-  left: 50%;
-  transform: translateX(-50%) rotate(45deg);
-  width: 8px; height: 8px;
-  background: var(--fg);
-}
-@keyframes stuck-btn-hint-bob {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%      { transform: translateX(-50%) translateY(2px); }
-}
-.stuck-btn-wrap-open .stuck-btn-tap-hint {
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
 /* CTA button inside the panel — makes "click to start" unmissable */
 .stuck-btn-panel-cta {
   display: inline-flex;

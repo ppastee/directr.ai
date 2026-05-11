@@ -96,7 +96,6 @@ export default function StuckButton({ onClick, hidden = false }: StuckButtonProp
           <path d="M18.2 16l.5 1.3 1.3.5-1.3.5-.5 1.3-.5-1.3-1.3-.5 1.3-.5z" />
         </svg>
         <span className="stuck-btn-circle-label">Stuck?</span>
-        <span className="stuck-btn-tap-hint" aria-hidden="true">Click me</span>
       </button>
     </div>
   )
