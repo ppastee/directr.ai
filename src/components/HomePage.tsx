@@ -167,13 +167,6 @@ export default function HomePage({ onCategory, onSearch, allTools, categories }:
           </div>
           <div className="search-btn" aria-hidden="true">Find my match</div>
         </div>
-        <div className="search-flow">
-          <span>Describe your task</span>
-          <span className="search-flow-arrow">→</span>
-          <span>Answer a few questions</span>
-          <span className="search-flow-arrow">→</span>
-          <span>Get matched to the best tool</span>
-        </div>
 
         <div className="hero-pills">
           {PILLS.map((p, i) => (
