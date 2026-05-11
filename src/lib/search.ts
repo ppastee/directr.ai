@@ -166,6 +166,38 @@ export function extractSignals(query: string): SearchSignals {
 }
 
 /**
+ * Average embedding for each category, computed from its tools' embeddings.
+ * Used as a "category centroid" to bias hybrid scoring towards categories
+ * that the embedding model says the query belongs to — without us needing
+ * to maintain a hand-curated keyword cue list.
+ *
+ * Cached by ToolsMap reference identity, since the underlying tool data
+ * is cached in db.ts already and the same map gets reused across calls.
+ */
+const centroidCache = new WeakMap<ToolsMap, Record<string, number[]>>()
+
+function computeCategoryCentroids(tools: ToolsMap): Record<string, number[]> {
+  const cached = centroidCache.get(tools)
+  if (cached) return cached
+
+  const out: Record<string, number[]> = {}
+  for (const [catId, catTools] of Object.entries(tools)) {
+    const withEmbedding = catTools.filter(t => Array.isArray(t.embedding) && t.embedding.length > 0)
+    if (withEmbedding.length === 0) continue
+    const dim = withEmbedding[0].embedding!.length
+    const sum = new Array<number>(dim).fill(0)
+    for (const t of withEmbedding) {
+      const e = t.embedding!
+      for (let i = 0; i < dim; i++) sum[i] += e[i]
+    }
+    for (let i = 0; i < dim; i++) sum[i] /= withEmbedding.length
+    out[catId] = sum
+  }
+  centroidCache.set(tools, out)
+  return out
+}
+
+/**
  * Cosine similarity between two equal-length numeric vectors.
  * Both vectors from text-embedding-3-small are already L2-normalized,
  * so this is effectively a dot product — but we don't rely on that
@@ -188,16 +220,43 @@ export function cosineSim(a: number[], b: number[]): number {
 interface HybridOpts {
   /** Weight for the semantic score in the final blend. Keyword weight = 1 - semanticWeight. */
   semanticWeight?: number
-  /** Drop tools below this semantic similarity unless they have a keyword hit ≥20. */
-  semanticFloor?: number
+  /**
+   * Saturation point for the keyword score. A keyword score >= kwSaturation
+   * normalises to 1.0; everything else scales linearly below. Used because
+   * keyword scores have no natural upper bound and we don't want min-max
+   * normalisation across the result set (small sets get distorted).
+   */
+  kwSaturation?: number
+  /**
+   * Hard semantic gate. A tool whose cosine similarity is below this is
+   * dropped regardless of keyword score. This is the line that prevents
+   * "Buildots" (construction) from being returned for "build a chatbot"
+   * — the keyword score on the name match is irrelevant when the
+   * embedding model already knows the topics are unrelated.
+   */
+  semanticGate?: number
+  /**
+   * Final blended score floor. Tools whose blended score falls below this
+   * are dropped. Catches tools that clear the semantic gate but still end
+   * up with a weak overall match.
+   */
+  scoreFloor?: number
+  /**
+   * Relative gap filter. Drop tools whose score is less than this fraction
+   * of the top tool's score. Cuts a "long tail" of half-matches without
+   * pruning queries where every result sits in a tight band of relevance.
+   * E.g. 0.78 = keep only tools within 22% of the top score.
+   */
+  gapThreshold?: number
   /** How many results to return. 0 = all. */
   limit?: number
 }
 
 /**
- * Hybrid ranking: blends keyword score (existing scoreTools logic) with
- * cosine similarity to a query embedding. Includes a tool if it either
- * clears the semantic floor OR has a meaningful keyword hit.
+ * Hybrid ranking: blends absolute cosine similarity with a saturated
+ * keyword score. Both signals live on a [0, 1] scale so they can be
+ * blended directly without min-max normalisation distorting small
+ * result sets.
  *
  * Falls back to keyword-only when queryEmbedding is missing or empty.
  */
@@ -213,49 +272,76 @@ export function scoreToolsHybrid(
     return scoreTools(query, tools, categories, limit)
   }
 
-  const semanticWeight = opts.semanticWeight ?? 0.6
+  const semanticWeight = opts.semanticWeight ?? 0.65
   const keywordWeight  = 1 - semanticWeight
-  const semanticFloor  = opts.semanticFloor ?? 0.28
+  const kwSaturation   = opts.kwSaturation ?? 200
+  const semanticGate   = opts.semanticGate ?? 0.22
+  const scoreFloor     = opts.scoreFloor ?? 0.20
+  const gapThreshold   = opts.gapThreshold ?? 0.72
 
   // Run keyword scoring once over the full set. limit=0 returns every match.
   const keywordResults = scoreTools(query, tools, categories, 0)
   const keywordScore: Record<number, number> = {}
   for (const r of keywordResults) keywordScore[r.tool.id] = r.score
 
-  // Walk every tool, compute semantic. Tools without an embedding column
-  // fall through to keyword-only — handy during incremental rollout.
-  type Row = { result: Result; semantic: number; keyword: number }
-  const rows: Row[] = []
+  // Compute query-to-category semantic alignment. The top-aligned categories
+  // get no penalty; everyone else has their final score scaled down. This
+  // is what stops "Buildots" (Construction) winning "build a chatbot" — its
+  // category embedding is far from the chatbot query even when the tool's
+  // own text mentions "build".
+  const centroids = computeCategoryCentroids(tools)
+  const catSimById: Record<string, number> = {}
+  for (const [catId, centroid] of Object.entries(centroids)) {
+    catSimById[catId] = Math.max(0, cosineSim(queryEmbedding, centroid))
+  }
+  const catSimValues = Object.values(catSimById)
+  const catSimMax = catSimValues.length ? Math.max(...catSimValues) : 1
+  const catSimMin = catSimValues.length ? Math.min(...catSimValues) : 0
+  const catSimRange = catSimMax - catSimMin || 1
+
+  const results: Result[] = []
   for (const [catId, catTools] of Object.entries(tools)) {
     const catName = categories.find(c => c.id === catId)?.name ?? catId
     for (const tool of catTools) {
-      const kw  = keywordScore[tool.id] ?? 0
-      const sem = tool.embedding ? cosineSim(queryEmbedding, tool.embedding) : 0
-      if (sem < semanticFloor && kw < 20) continue
-      rows.push({
-        result: { tool, catId, catName, score: 0 },
-        semantic: sem,
-        keyword: kw,
-      })
+      const sem = tool.embedding ? Math.max(0, cosineSim(queryEmbedding, tool.embedding)) : 0
+
+      // Hard semantic gate — drop obvious topic mismatches before keyword
+      // can save them. Tools without an embedding (shouldn't happen post-
+      // backfill) skip the gate so they aren't penalised twice.
+      if (tool.embedding && sem < semanticGate) continue
+
+      const kw      = keywordScore[tool.id] ?? 0
+      const normSem = sem
+      const normKw  = Math.min(1, kw / kwSaturation)
+      let score     = semanticWeight * normSem + keywordWeight * normKw
+
+      // Category alignment penalty: scale down tools whose category is far
+      // from the query's semantic centre. Quadratic curve (alignment²) so
+      // the penalty bites harder for middle-aligned categories — flat
+      // enough at the top that the best-fit category gets no penalty, but
+      // sharp enough through the middle that "second-best" categories are
+      // clearly worse. Range [0.45, 1.0].
+      const catSim = catSimById[catId] ?? 0
+      const catAlignment = (catSim - catSimMin) / catSimRange
+      score *= 0.45 + 0.55 * catAlignment * catAlignment
+
+      if (score < scoreFloor) continue
+
+      results.push({ tool, catId, catName, score })
     }
   }
-  if (rows.length === 0) return []
 
-  // Min-max normalise both scores within the surviving set, then blend.
-  const semMax = Math.max(...rows.map(r => r.semantic), 0)
-  const semMin = Math.min(...rows.map(r => r.semantic), 0)
-  const kwMax  = Math.max(...rows.map(r => r.keyword), 0)
-  const semRange = semMax - semMin || 1
-  const kwRange  = kwMax || 1
+  const sorted = results.sort((a, b) => b.score - a.score)
 
-  for (const r of rows) {
-    const normSem = (r.semantic - semMin) / semRange
-    const normKw  = r.keyword / kwRange
-    r.result.score = semanticWeight * normSem + keywordWeight * normKw
-  }
+  // Relative gap filter: cut tools clearly worse than the best. For
+  // "build apps" the gap to Buildots is ~30% so it gets cut, but for
+  // "edit videos for tiktok" all five tools sit within 15% of the top
+  // so they survive.
+  const top = sorted[0]?.score ?? 0
+  const cutoff = top * gapThreshold
+  const filtered = sorted.filter(r => r.score >= cutoff)
 
-  const sorted = rows.map(r => r.result).sort((a, b) => b.score - a.score)
-  return limit > 0 ? sorted.slice(0, limit) : sorted
+  return limit > 0 ? filtered.slice(0, limit) : filtered
 }
 
 export function scoreTools(query: string, tools: ToolsMap, categories: Category[], limit = 7): Result[] {

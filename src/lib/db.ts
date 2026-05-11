@@ -32,9 +32,33 @@ function fromRow(row: Record<string, unknown>): Tool {
   }
 }
 
-/** Server-only: returns tools WITH embeddings (large). Don't expose via public JSON. */
+/**
+ * Server-only: returns tools WITH embeddings. Bypasses unstable_cache
+ * (which has a 2MB ceiling that the embedding payload — ~4.5MB — exceeds).
+ * Uses a process-level in-memory cache that lives for the lifetime of
+ * the server process. Don't expose via public JSON.
+ */
+let embeddingsCache: { fetchedAt: number; data: ToolsMap } | null = null
+const EMBEDDINGS_TTL_MS = 60 * 60 * 1000 // 1 hour
+
 export async function getAllToolsWithEmbeddings(): Promise<ToolsMap> {
-  return await getAllTools()
+  if (embeddingsCache && Date.now() - embeddingsCache.fetchedAt < EMBEDDINGS_TTL_MS) {
+    return embeddingsCache.data
+  }
+  const sb = getSupabase()
+  if (!sb) return STATIC_TOOLS
+  const { data, error } = await sb.from('tools').select('*').order('id')
+  if (error || !data) return STATIC_TOOLS
+  const map: ToolsMap = {}
+  for (const row of data) {
+    const cat = row.category as string
+    if (!map[cat]) map[cat] = []
+    const tool = fromRow(row as Record<string, unknown>)
+    if (STATIC_NAME_BY_ID[tool.id]) tool.name = STATIC_NAME_BY_ID[tool.id]
+    map[cat].push(tool)
+  }
+  embeddingsCache = { fetchedAt: Date.now(), data: map }
+  return map
 }
 
 /** Strip embedding before sending tools to the browser — saves ~1.5MB on every search. */

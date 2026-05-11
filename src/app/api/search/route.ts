@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server'
-import { getAllTools, getCategories, withoutEmbeddings } from '@/lib/db'
+import { getAllToolsWithEmbeddings, getCategories } from '@/lib/db'
 import { scoreToolsHybrid, scoreTools } from '@/lib/search'
 import type { Tool } from '@/data/tools'
 
@@ -91,7 +91,7 @@ export async function POST(req: NextRequest) {
   const limit = typeof body.limit === 'number' && body.limit > 0 ? body.limit : 0
 
   const [tools, categories, queryEmbedding] = await Promise.all([
-    getAllTools(),
+    getAllToolsWithEmbeddings(),
     getCategories(),
     embedQuery(query),
   ])
