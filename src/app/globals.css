@@ -1917,21 +1917,22 @@ thead .compare-col-hero { border-bottom: 2px solid var(--accent); }
   }
 }
 
-/* ── STUCK BUTTON (sticky bottom-right FAB) ─────────────────────────── */
+/* ── STUCK BUTTON (sticky right-side FAB, aligned with nav padding) ── */
 .stuck-btn-wrap {
   position: fixed;
-  bottom: 28px;
-  right: 28px;
+  top: 50%;
+  right: 2rem; /* matches .nav padding so it lines up with "List a Tool" */
+  transform: translateY(-50%);
   z-index: 480;
   display: flex;
-  align-items: flex-end; /* panel bottom aligns with circle bottom */
+  align-items: center;
   flex-direction: row-reverse; /* circle anchored to right */
   pointer-events: none;
   animation: stuck-btn-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
 }
 @keyframes stuck-btn-in {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translate(24px, -50%); }
+  to   { opacity: 1; transform: translate(0, -50%); }
 }
 
 .stuck-btn-circle {
@@ -2030,7 +2031,7 @@ thead .compare-col-hero { border-bottom: 2px solid var(--accent); }
 
 /* Hide expand panel on touch / small screens */
 @media (max-width: 640px), (hover: none) {
-  .stuck-btn-wrap { bottom: 20px; right: 20px; }
+  .stuck-btn-wrap { right: 1rem; }
   .stuck-btn-panel { display: none; }
   .stuck-btn-circle { width: 56px; height: 56px; }
 }
