@@ -11,8 +11,6 @@ import {
   WizardResult,
   Question,
 } from '@/lib/wizard'
-import { scoreTools } from '@/lib/search'
-
 interface WizardModalProps {
   query: string
   onClose: () => void
@@ -82,7 +80,6 @@ export default function WizardModal({ query, onClose, onCategory, onEditQuery, a
   // Existing synchronous plan — used for instant sidebar data and as fallback
   const fallbackPlan = useMemo(() => planWizard(query, allTools, categories), [query, allTools, categories])
   const signals = useMemo(() => extractSignals(query), [query])
-  const previewMatches = useMemo(() => scoreTools(query, allTools, categories, 3), [query, allTools, categories])
 
   // AI state
   const [aiPlanStatus, setAiPlanStatus] = useState<'loading' | 'ready' | 'error'>('loading')
@@ -531,29 +528,48 @@ export default function WizardModal({ query, onClose, onCategory, onEditQuery, a
               </div>
             )}
 
-            {previewMatches.length > 0 && (
-              <div className="wizard-side-card">
-                <div className="wizard-side-label">Currently leading</div>
-                <div className="wizard-side-preview">
-                  {previewMatches.map(m => (
-                    <div key={m.tool.id} className="wizard-side-preview-row">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        className="wizard-side-preview-logo"
-                        src={`https://www.google.com/s2/favicons?domain=${m.tool.logoDomain}&sz=64`}
-                        alt={m.tool.name}
-                        onError={e => { (e.target as HTMLImageElement).style.visibility = 'hidden' }}
-                      />
-                      <div className="wizard-side-preview-text">
-                        <div className="wizard-side-preview-name">{m.tool.name}</div>
-                        <div className="wizard-side-preview-cat">{m.catName}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="wizard-side-preview-hint">Your answers will reorder these.</div>
-              </div>
-            )}
+            <div className="wizard-side-card wizard-how-card">
+              <div className="wizard-side-label">How this works</div>
+              <ol className="wizard-how-steps">
+                <li className="wizard-how-step" style={{ ['--step-i' as string]: 0 }}>
+                  <span className="wizard-how-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="11" cy="11" r="7" />
+                      <path d="M21 21l-4.3-4.3" />
+                    </svg>
+                  </span>
+                  <div className="wizard-how-text">
+                    <div className="wizard-how-title">You search</div>
+                    <div className="wizard-how-desc">Describe what you&rsquo;re trying to do.</div>
+                  </div>
+                </li>
+                <li className="wizard-how-step" style={{ ['--step-i' as string]: 1 }}>
+                  <span className="wizard-how-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-6l-4 3v-3H6a2 2 0 0 1-2-2z" />
+                      <path d="M9.6 9.6a2.5 2.5 0 1 1 3 2.5c-.5.2-.7.6-.7 1.1" />
+                      <circle cx="11.85" cy="14.7" r="0.55" fill="currentColor" stroke="none" />
+                    </svg>
+                  </span>
+                  <div className="wizard-how-text">
+                    <div className="wizard-how-title">We clarify</div>
+                    <div className="wizard-how-desc">Pick from 1&ndash;3 quick options.</div>
+                  </div>
+                </li>
+                <li className="wizard-how-step" style={{ ['--step-i' as string]: 2 }}>
+                  <span className="wizard-how-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M11 3l1.6 5L18 9.7l-5.4 1.6L11 17l-1.6-5.7L4 9.7l5.4-1.7z" />
+                      <path d="M18.2 16l.5 1.3 1.3.5-1.3.5-.5 1.3-.5-1.3-1.3-.5 1.3-.5z" />
+                    </svg>
+                  </span>
+                  <div className="wizard-how-text">
+                    <div className="wizard-how-title">Best match</div>
+                    <div className="wizard-how-desc">Tools ranked for your context.</div>
+                  </div>
+                </li>
+              </ol>
+            </div>
           </aside>
         </div>
       </div>
