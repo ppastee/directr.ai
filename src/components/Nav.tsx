@@ -49,7 +49,6 @@ export default function Nav({ onHome, showSearch, onWizard, onCategory, currentQ
           initialValue={currentQuery}
           onClose={() => setSearchOpen(false)}
           onWizard={(q) => { onWizard?.(q); setSearchOpen(false) }}
-          onCategory={(cat, toolId) => { onCategory?.(cat, toolId); setSearchOpen(false) }}
         />
       )}
       {showListModal && <ListToolModal onClose={() => setShowListModal(false)} />}

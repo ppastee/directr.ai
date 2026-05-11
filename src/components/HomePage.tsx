@@ -131,7 +131,6 @@ export default function HomePage({ onCategory, onWizard, allTools, categories }:
       {searchOpen && (
         <SearchModal
           onClose={closeSearch}
-          onCategory={onCategory}
           onWizard={onWizard}
           initialValue={searchInitial}
         />

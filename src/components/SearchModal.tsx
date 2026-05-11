@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState, useMemo } from 'react'
 import { Category } from '@/data/tools'
 import type { ToolsMap } from '@/lib/db'
-import { scoreTools } from '@/lib/search'
 import { buildVocabulary, correctQuery } from '@/lib/spellcheck'
 
 const TYPEWRITER_PHRASES = [
@@ -53,12 +52,11 @@ const SUGGESTIONS = [
 
 interface SearchModalProps {
   onClose: () => void
-  onCategory: (cat: Category, toolId?: number) => void
   onWizard: (query: string) => void
   initialValue?: string
 }
 
-export default function SearchModal({ onClose, onCategory, onWizard, initialValue = '' }: SearchModalProps) {
+export default function SearchModal({ onClose, onWizard, initialValue = '' }: SearchModalProps) {
   const [value, setValue] = useState(initialValue)
   const [correctionDismissed, setCorrectionDismissed] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -82,8 +80,7 @@ export default function SearchModal({ onClose, onCategory, onWizard, initialValu
   }, [value, vocab, correctionDismissed])
 
   const effectiveQuery = correction ? correction.corrected : value
-  const results = useMemo(() => scoreTools(effectiveQuery, allTools, categories), [effectiveQuery, allTools, categories])
-  const hasResults = results.length > 0
+  const hasQuery = value.trim().length > 0
 
   useEffect(() => {
     const id = setTimeout(() => {
@@ -100,11 +97,6 @@ export default function SearchModal({ onClose, onCategory, onWizard, initialValu
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
   }, [onClose])
-
-  function handleSelect(catId: string, toolId: number) {
-    const cat = categories.find(c => c.id === catId)
-    if (cat) { onCategory(cat, toolId); onClose() }
-  }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter' && value.trim()) {
@@ -164,25 +156,50 @@ export default function SearchModal({ onClose, onCategory, onWizard, initialValu
         )}
 
         {/* Results */}
-        {hasResults ? (
+        {hasQuery ? (
           <div className="search-modal-results">
-            <div className="search-modal-section-label">Quick results</div>
-            {results.map(({ tool, catId, catName }) => (
-              <div key={tool.id} className="search-result" onClick={() => handleSelect(catId, tool.id)}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  className="search-result-logo"
-                  src={`https://www.google.com/s2/favicons?domain=${tool.logoDomain}&sz=64`}
-                  alt={tool.name}
-                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-                />
-                <div className="search-result-text">
-                  <div className="search-result-name">{tool.name}</div>
-                  <div className="search-result-tagline">{tool.tagline}</div>
-                </div>
-                <div className="search-result-cat">{catName}</div>
-              </div>
-            ))}
+            <div className="search-modal-how">
+              <div className="search-modal-section-label">How this works</div>
+              <ol className="wizard-how-steps">
+                <li className="wizard-how-step" style={{ ['--step-i' as string]: 0 }}>
+                  <span className="wizard-how-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="11" cy="11" r="7" />
+                      <path d="M21 21l-4.3-4.3" />
+                    </svg>
+                  </span>
+                  <div className="wizard-how-text">
+                    <div className="wizard-how-title">You search</div>
+                    <div className="wizard-how-desc">Describe what you&rsquo;re trying to do.</div>
+                  </div>
+                </li>
+                <li className="wizard-how-step" style={{ ['--step-i' as string]: 1 }}>
+                  <span className="wizard-how-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-6l-4 3v-3H6a2 2 0 0 1-2-2z" />
+                      <path d="M9.6 9.6a2.5 2.5 0 1 1 3 2.5c-.5.2-.7.6-.7 1.1" />
+                      <circle cx="11.85" cy="14.7" r="0.55" fill="currentColor" stroke="none" />
+                    </svg>
+                  </span>
+                  <div className="wizard-how-text">
+                    <div className="wizard-how-title">We clarify</div>
+                    <div className="wizard-how-desc">Pick from 1&ndash;3 quick options.</div>
+                  </div>
+                </li>
+                <li className="wizard-how-step" style={{ ['--step-i' as string]: 2 }}>
+                  <span className="wizard-how-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M11 3l1.6 5L18 9.7l-5.4 1.6L11 17l-1.6-5.7L4 9.7l5.4-1.7z" />
+                      <path d="M18.2 16l.5 1.3 1.3.5-1.3.5-.5 1.3-.5-1.3-1.3-.5 1.3-.5z" />
+                    </svg>
+                  </span>
+                  <div className="wizard-how-text">
+                    <div className="wizard-how-title">Best match</div>
+                    <div className="wizard-how-desc">Tools ranked for your context.</div>
+                  </div>
+                </li>
+              </ol>
+            </div>
             <button
               className="search-modal-wizard-cta"
               onClick={() => { onWizard(effectiveQuery.trim()); onClose() }}

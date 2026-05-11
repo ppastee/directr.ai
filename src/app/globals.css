@@ -580,10 +580,6 @@ body.theme-studio {
   border: 1px solid var(--border); color: var(--muted);
 }
 .search-modal-suggestions { padding: 0.9rem 1.1rem 1rem; }
-.search-modal-suggestions-label {
-  font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.6rem;
-}
 .search-modal-suggestion {
   display: flex; align-items: center; gap: 0.75rem;
   padding: 0.65rem 0.5rem; border-radius: 4px;
@@ -593,31 +589,12 @@ body.theme-studio {
 .search-modal-suggestion:hover { background: var(--bg3); }
 .search-modal-section-label {
   font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.6rem;
+  letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.7rem;
 }
 .search-modal-results { padding: 0.9rem 1.1rem 1rem; }
-.search-result {
-  display: flex; align-items: center; gap: 0.75rem;
-  padding: 0.65rem 0.5rem; border-radius: 6px;
-  cursor: pointer; transition: background 0.12s;
-}
-.search-result:hover { background: var(--bg3); }
-.search-result-logo {
-  width: 32px; height: 32px; border-radius: 8px;
-  object-fit: contain; flex-shrink: 0;
-  background: var(--bg3);
-}
-.search-result-text { flex: 1; min-width: 0; }
-.search-result-name { font-size: 0.95rem; font-weight: 600; color: var(--fg); }
-.search-result-tagline {
-  font-size: 0.8rem; color: var(--muted);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.search-result-cat {
-  font-size: 0.75rem; font-weight: 600; color: var(--accent);
-  background: var(--accent-bg);
-  padding: 0.25rem 0.6rem; border-radius: 4px; flex-shrink: 0;
-}
+.search-modal-how { padding: 0.1rem 0.25rem 0.2rem; }
+.search-modal-how .wizard-how-steps { gap: 0.95rem; }
+.search-modal-how .wizard-how-steps::before { top: 24px; bottom: 24px; }
 .search-modal-clear {
   width: 28px; height: 28px; border-radius: 50%;
   background: var(--bg3); border: 1px solid var(--border); cursor: pointer;
