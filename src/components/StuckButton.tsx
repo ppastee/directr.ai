@@ -29,6 +29,18 @@ export default function StuckButton({ onClick, hidden = false }: StuckButtonProp
         <div className="stuck-btn-panel-title">Stuck? We&rsquo;ll help you pick</div>
         <div className="stuck-btn-panel-sub">Answer 3 quick questions and we&rsquo;ll match you with the right tool.</div>
 
+        <button
+          className="stuck-btn-panel-cta"
+          onClick={(e) => { e.stopPropagation(); onClick() }}
+          type="button"
+        >
+          Start the 3-question quiz
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M5 12h14" />
+            <path d="M13 6l6 6-6 6" />
+          </svg>
+        </button>
+
         <div className="stuck-btn-how-label">How this works</div>
         <ol className="wizard-how-steps stuck-btn-how-steps">
           <li className="wizard-how-step" style={{ ['--step-i' as string]: 0 }}>
@@ -75,14 +87,16 @@ export default function StuckButton({ onClick, hidden = false }: StuckButtonProp
       <button
         className="stuck-btn-circle"
         onClick={onClick}
-        aria-label="Stuck? We'll help you pick"
+        aria-label="Stuck? Click to start the quiz"
         aria-expanded={expanded}
       >
+        <span className="stuck-btn-pulse" aria-hidden="true" />
         <svg className="stuck-btn-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <path d="M11 3l1.6 5L18 9.7l-5.4 1.6L11 17l-1.6-5.7L4 9.7l5.4-1.7z" />
           <path d="M18.2 16l.5 1.3 1.3.5-1.3.5-.5 1.3-.5-1.3-1.3-.5 1.3-.5z" />
         </svg>
         <span className="stuck-btn-circle-label">Stuck?</span>
+        <span className="stuck-btn-tap-hint" aria-hidden="true">Click me</span>
       </button>
     </div>
   )

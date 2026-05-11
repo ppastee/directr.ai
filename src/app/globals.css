@@ -1957,11 +1957,14 @@ thead .compare-col-hero { border-bottom: 2px solid var(--accent); }
 }
 .stuck-btn-circle:hover {
   background: color-mix(in srgb, var(--accent) 88%, white 12%);
+  transform: scale(1.04);
 }
 .stuck-btn-sparkle {
   width: 22px; height: 22px;
   opacity: 0.95;
   animation: stuck-btn-sparkle 3.5s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
 }
 @keyframes stuck-btn-sparkle {
   0%, 100% { opacity: 0.9; transform: scale(1) rotate(0deg); }
@@ -1973,6 +1976,99 @@ thead .compare-col-hero { border-bottom: 2px solid var(--accent); }
   letter-spacing: 0.04em;
   text-transform: uppercase;
   opacity: 0.92;
+  position: relative;
+  z-index: 1;
+}
+
+/* Attention pulse — radiating ring to signal "click me" */
+.stuck-btn-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.6;
+  animation: stuck-btn-pulse 2.2s ease-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes stuck-btn-pulse {
+  0%   { transform: scale(1);    opacity: 0.55; }
+  70%  { transform: scale(1.55); opacity: 0; }
+  100% { transform: scale(1.55); opacity: 0; }
+}
+.stuck-btn-wrap-open .stuck-btn-pulse {
+  animation-play-state: paused;
+  opacity: 0;
+}
+
+/* Floating "Click me" hint bubble under the circle */
+.stuck-btn-tap-hint {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--fg);
+  color: var(--bg);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  animation: stuck-btn-hint-bob 1.8s ease-in-out infinite;
+  z-index: 2;
+}
+.stuck-btn-tap-hint::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 8px; height: 8px;
+  background: var(--fg);
+}
+@keyframes stuck-btn-hint-bob {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(2px); }
+}
+.stuck-btn-wrap-open .stuck-btn-tap-hint {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* CTA button inside the panel — makes "click to start" unmissable */
+.stuck-btn-panel-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.9rem;
+  padding: 0.55rem 0.95rem;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-family: var(--body-font);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--accent) 35%, transparent);
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.stuck-btn-panel-cta svg {
+  width: 14px; height: 14px;
+  transition: transform 0.2s ease;
+}
+.stuck-btn-panel-cta:hover {
+  background: color-mix(in srgb, var(--accent) 90%, white 10%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+.stuck-btn-panel-cta:hover svg {
+  transform: translateX(3px);
 }
 
 /* Hover panel — slides out leftward */
