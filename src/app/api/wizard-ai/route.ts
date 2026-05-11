@@ -1,8 +1,33 @@
 import { NextRequest } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
-import { getAllTools, getCategories } from '@/lib/db'
-import { scoreTools } from '@/lib/search'
+import { getAllToolsWithEmbeddings, getCategories } from '@/lib/db'
+import { scoreTools, scoreToolsHybrid, type Result } from '@/lib/search'
+import { embedQuery } from '@/lib/embed'
 import type { Question, QuestionOption } from '@/lib/wizard'
+import type { ToolsMap } from '@/lib/db'
+import type { Category } from '@/data/tools'
+
+/**
+ * Pre-filter shared by both plan and rank steps. Uses hybrid keyword +
+ * semantic scoring when the query embedding is available, with limit=0
+ * for plan (we need the full count) and a configurable cap for rank.
+ *
+ * Falls back to keyword-only scoreTools when the embedding endpoint
+ * fails (no API key, network error). Caller sees the same shape either
+ * way so the LLM prompts don't need to change.
+ */
+async function preFilter(
+  query: string,
+  tools: ToolsMap,
+  categories: Category[],
+  limit: number,
+): Promise<Result[]> {
+  const queryEmbedding = await embedQuery(query)
+  if (queryEmbedding) {
+    return scoreToolsHybrid(query, queryEmbedding, tools, categories, { limit })
+  }
+  return scoreTools(query, tools, categories, limit)
+}
 
 const CATEGORY_IDS = [
   'animation', 'image', 'writing', 'coding', 'audio', 'chat', '3d',
@@ -27,8 +52,8 @@ export async function POST(req: NextRequest) {
 
   // ── Layer 1+2: Interpret query and select personalised questions ───────────
   if (step === 'plan') {
-    const [tools, categories] = await Promise.all([getAllTools(), getCategories()])
-    const allCandidates = scoreTools(query, tools, categories, 0)
+    const [tools, categories] = await Promise.all([getAllToolsWithEmbeddings(), getCategories()])
+    const allCandidates = await preFilter(query, tools, categories, 0)
     const topCandidates = allCandidates.slice(0, 8)
 
     const toolSummaries = topCandidates.length
@@ -54,7 +79,7 @@ Available categories: ${CATEGORY_IDS.join(', ')}`,
           role: 'user',
           content: `User query: "${query}"
 
-Candidate tools (top keyword matches — these are who we're choosing between):
+Candidate tools (top hybrid keyword + semantic matches — these are who we're choosing between):
 ${toolSummaries}
 
 Design 0–3 clarifying questions whose answers would meaningfully change which of these candidates wins. Each question MUST:
@@ -90,7 +115,8 @@ Set noIntent=true ONLY if the query has no recognisable AI-tool intent at all (e
       })
       console.log('[wizard-ai] plan usage', { model: response.model, ...response.usage })
       raw = response.content[0].type === 'text' ? response.content[0].text.trim() : null
-    } catch {
+    } catch (err) {
+      console.error('[wizard-ai] api_error:', err)
       return Response.json({ error: 'api_error' }, { status: 500 })
     }
 
@@ -149,20 +175,21 @@ Set noIntent=true ONLY if the query has no recognisable AI-tool intent at all (e
 
   // ── Layer 3: Holistic final ranking ───────────────────────────────────────
   if (step === 'rank') {
-    const [tools, categories] = await Promise.all([getAllTools(), getCategories()])
-    const candidates = scoreTools(query, tools, categories, 8)
+    const [tools, categories] = await Promise.all([getAllToolsWithEmbeddings(), getCategories()])
+    const candidates = await preFilter(query, tools, categories, 8)
 
     if (!candidates.length) {
       return Response.json({ results: [] })
     }
 
-    // Skip Opus when ranking is already decided by keyword score:
+    // Skip the LLM when the hybrid pre-filter is already decisive:
     //  - only one candidate, or
-    //  - top candidate dominates #2 (≥2× score) and has a strong absolute score.
-    // The client treats missing strengths/mismatches/reason as empty.
+    //  - top candidate dominates #2 (≥1.5× score) and clears 0.4 absolute.
+    // Thresholds calibrated for the [0, 1] hybrid score range — much
+    // smaller than the old keyword-score absolutes (100, 2×).
     const top = candidates[0]
     const second = candidates[1]
-    const dominant = !second || (top.score >= 100 && top.score >= second.score * 2)
+    const dominant = !second || (top.score >= 0.4 && top.score >= second.score * 1.5)
     if (dominant) {
       const passthrough = candidates.slice(0, second ? 3 : 1).map(r => ({
         toolId: r.tool.id,
@@ -196,7 +223,7 @@ Set noIntent=true ONLY if the query has no recognisable AI-tool intent at all (e
     let raw: string | null = null
     try {
       const response = await client.messages.create({
-        model: 'claude-opus-4-7',
+        model: 'claude-sonnet-4-6',
         max_tokens: 1400,
         system: `You are the recommendation engine for an AI tools marketplace. Rank tools for a specific user's exact need. Return JSON only — no markdown, no fences.`,
         messages: [{
@@ -210,7 +237,7 @@ Tools to rank (best-to-worst fit for this specific user):
 ${JSON.stringify(toolDetails)}
 
 CRITICAL — relevance gate (apply BEFORE ranking):
-- These candidates come from a fuzzy keyword search and OFTEN include tools that share a word with the query but don't actually do what the user wants. OMIT any tool whose core purpose doesn't serve the user's stated goal. Do not include it with a "wrong category" mismatch — just drop it from results entirely. A tool earns a slot by being a real option for this need, not by being a near-miss.
+- These candidates come from a hybrid keyword + embedding search that usually returns on-topic tools, but occasional ambiguous queries can still surface a near-miss. OMIT any tool whose core purpose doesn't serve the user's stated goal. Do not include it with a "wrong category" mismatch — just drop it from results entirely. A tool earns a slot by being a real option for this need, not by being a near-miss.
 - Examples of tools to OMIT entirely (not return): an HR/recruiting tool when the user wants to build an app; a stock-analysis tool for a creative writing query; a calendar tool when the user wants to generate images. If you find yourself writing "not an X" or "wrong category" as a mismatch, the tool should have been omitted instead.
 - Returning fewer high-quality results is better than padding with off-topic tools. If only 2 of the candidates genuinely fit, return 2.
 
@@ -235,7 +262,8 @@ Return:
       })
       console.log('[wizard-ai] rank usage', { model: response.model, ...response.usage })
       raw = response.content[0].type === 'text' ? response.content[0].text.trim() : null
-    } catch {
+    } catch (err) {
+      console.error('[wizard-ai] api_error:', err)
       return Response.json({ error: 'api_error' }, { status: 500 })
     }
 

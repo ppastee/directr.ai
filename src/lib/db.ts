@@ -85,11 +85,16 @@ const STATIC_NAME_BY_ID: Record<number, string> = Object.values(STATIC_TOOLS)
   .flat()
   .reduce((acc, t) => { acc[t.id] = t.name; return acc }, {} as Record<number, string>)
 
+// Explicit column list — excluding `embedding`/`embedding_input` keeps this
+// cached payload under Next's 2MB unstable_cache ceiling. Embedding-needing
+// callers use getAllToolsWithEmbeddings() (own cache, no Next wrapper).
+const TOOL_COLUMNS = 'id,category,name,emoji,logo_domain,url,tagline,description,price,free,free_tier,free_tier_label,rating,reviews,tags,sponsored,api_access,output_res,watermark,updated_at'
+
 const fetchAllToolsFromDB = unstable_cache(
   async (): Promise<ToolsMap | null> => {
     const sb = getSupabase()
     if (!sb) return null
-    const { data, error } = await sb.from('tools').select('*').order('id')
+    const { data, error } = await sb.from('tools').select(TOOL_COLUMNS).order('id')
     if (error || !data) return null
     const map: ToolsMap = {}
     for (const row of data) {
