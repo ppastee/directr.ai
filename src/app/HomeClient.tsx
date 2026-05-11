@@ -7,6 +7,9 @@ import type { ToolsMap } from '@/lib/db'
 import Nav from '@/components/Nav'
 import HomePage from '@/components/HomePage'
 import WizardModal from '@/components/WizardModal'
+import WizardIntroModal from '@/components/WizardIntroModal'
+import StuckButton from '@/components/StuckButton'
+import SearchResultsPage from '@/components/SearchResultsPage'
 import AnimatedBg from '@/components/AnimatedBg'
 
 interface HomeClientProps {
@@ -17,8 +20,15 @@ interface HomeClientProps {
 export default function HomeClient({ allTools, categories }: HomeClientProps) {
   const router = useRouter()
   const [heroScrolled, setHeroScrolled] = useState(false)
+
+  // Wizard
   const [wizardOpen, setWizardOpen] = useState(false)
   const [wizardQuery, setWizardQuery] = useState('')
+  const [introOpen, setIntroOpen] = useState(false)
+
+  // Search results overlay
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     document.body.className = 'theme-signal'
@@ -27,8 +37,8 @@ export default function HomeClient({ allTools, categories }: HomeClientProps) {
   useEffect(() => {
     const q = new URLSearchParams(window.location.search).get('q')
     if (q) {
-      setWizardQuery(q)
-      setWizardOpen(true)
+      setSearchQuery(q)
+      setSearchOpen(true)
       window.history.replaceState({}, '', '/')
     }
   }, [])
@@ -51,10 +61,18 @@ export default function HomeClient({ allTools, categories }: HomeClientProps) {
   function handleHome() {
     setWizardOpen(false)
     setWizardQuery('')
+    setSearchOpen(false)
+    setSearchQuery('')
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  function handleWizard(query: string) {
+  function handleSearch(query: string) {
+    setSearchQuery(query)
+    setSearchOpen(true)
+  }
+
+  function handleStartWizard(query: string) {
+    setIntroOpen(false)
     setWizardQuery(query)
     setWizardOpen(true)
   }
@@ -63,19 +81,42 @@ export default function HomeClient({ allTools, categories }: HomeClientProps) {
     setWizardQuery(query)
   }
 
+  const anyModalOpen = wizardOpen || introOpen
+
   return (
     <>
-<AnimatedBg />
+      <AnimatedBg />
       <div style={{ position: 'relative', zIndex: 1 }}>
         <Nav
           onHome={handleHome}
-          showSearch={heroScrolled}
-          onWizard={handleWizard}
+          showSearch={heroScrolled || searchOpen}
+          onSearch={handleSearch}
           onCategory={handleCategory}
-          currentQuery={wizardOpen ? wizardQuery : ''}
+          currentQuery={searchOpen ? searchQuery : (wizardOpen ? wizardQuery : '')}
         />
-        <HomePage onCategory={handleCategory} onWizard={handleWizard} allTools={allTools} categories={categories} />
+        {searchOpen ? (
+          <SearchResultsPage
+            query={searchQuery}
+            onHome={handleHome}
+            onCategory={handleCategory}
+            onNewSearch={(q) => setSearchQuery(q)}
+            allTools={allTools}
+            categories={categories}
+          />
+        ) : (
+          <HomePage onCategory={handleCategory} onSearch={handleSearch} allTools={allTools} categories={categories} />
+        )}
       </div>
+
+      <StuckButton onClick={() => setIntroOpen(true)} hidden={anyModalOpen} />
+
+      {introOpen && (
+        <WizardIntroModal
+          onClose={() => setIntroOpen(false)}
+          onSubmit={handleStartWizard}
+        />
+      )}
+
       {wizardOpen && (
         <WizardModal
           key={wizardQuery}

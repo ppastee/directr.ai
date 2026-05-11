@@ -33,7 +33,7 @@ export default function ToolRoute({ tool, categoryId, categoryTools }: Props) {
         <Nav
           onHome={() => router.push('/')}
           showSearch={true}
-          onWizard={(q) => router.push(`/?q=${encodeURIComponent(q)}`)}
+          onSearch={(q: string) => router.push(`/?q=${encodeURIComponent(q)}`)}
           onCategory={handleCategory}
         />
         <ToolDetailPage tool={tool} categoryId={categoryId} cat={cat} categoryTools={categoryTools} />

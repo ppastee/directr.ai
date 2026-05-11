@@ -8,12 +8,12 @@ import { Category } from '@/data/tools'
 interface NavProps {
   onHome: () => void
   showSearch?: boolean
-  onWizard?: (query: string) => void
+  onSearch?: (query: string) => void
   onCategory?: (cat: Category, toolId?: number) => void
   currentQuery?: string
 }
 
-export default function Nav({ onHome, showSearch, onWizard, onCategory, currentQuery = '' }: NavProps) {
+export default function Nav({ onHome, showSearch, onSearch, onCategory, currentQuery = '' }: NavProps) {
   const [showListModal, setShowListModal] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
 
@@ -48,7 +48,7 @@ export default function Nav({ onHome, showSearch, onWizard, onCategory, currentQ
         <SearchModal
           initialValue={currentQuery}
           onClose={() => setSearchOpen(false)}
-          onWizard={(q) => { onWizard?.(q); setSearchOpen(false) }}
+          onSearch={(q) => { onSearch?.(q); setSearchOpen(false) }}
         />
       )}
       {showListModal && <ListToolModal onClose={() => setShowListModal(false)} />}

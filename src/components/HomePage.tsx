@@ -24,7 +24,7 @@ function ToolItemLogo({ tool }: { tool: Tool }) {
 
 interface HomePageProps {
   onCategory: (cat: Category) => void
-  onWizard: (query: string) => void
+  onSearch: (query: string) => void
   allTools: ToolsMap
   categories: Category[]
 }
@@ -88,7 +88,7 @@ function useTypewriter(phrases: string[], typingMs = 55, deletingMs = 28, pauseM
 }
 
 
-export default function HomePage({ onCategory, onWizard, allTools, categories }: HomePageProps) {
+export default function HomePage({ onCategory, onSearch, allTools, categories }: HomePageProps) {
   const [searchInitial, setSearchInitial] = useState('')
   const [searchOpen, setSearchOpen] = useState(false)
   const [isSearching, setIsSearching] = useState(false)
@@ -131,7 +131,7 @@ export default function HomePage({ onCategory, onWizard, allTools, categories }:
       {searchOpen && (
         <SearchModal
           onClose={closeSearch}
-          onWizard={onWizard}
+          onSearch={onSearch}
           initialValue={searchInitial}
         />
       )}

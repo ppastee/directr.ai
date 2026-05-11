@@ -31,7 +31,7 @@ export default function AlternativesRoute({ tool, categoryId, entry, categoryToo
         <Nav
           onHome={() => router.push('/')}
           showSearch={true}
-          onWizard={(q) => router.push(`/?q=${encodeURIComponent(q)}`)}
+          onSearch={(q: string) => router.push(`/?q=${encodeURIComponent(q)}`)}
           onCategory={(c) => router.push(`/category/${c.slug}`)}
         />
         <AlternativesPage tool={tool} categoryId={categoryId} cat={cat} entry={entry} categoryTools={categoryTools} />

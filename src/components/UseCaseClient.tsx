@@ -49,7 +49,7 @@ export default function UseCaseClient({ slug, h1, label, intro, tools, steps, fa
         <Nav
           onHome={() => router.push('/')}
           showSearch={true}
-          onWizard={(q) => router.push(`/?q=${encodeURIComponent(q)}`)}
+          onSearch={(q: string) => router.push(`/?q=${encodeURIComponent(q)}`)}
           onCategory={handleCategory}
         />
         <div className="page">

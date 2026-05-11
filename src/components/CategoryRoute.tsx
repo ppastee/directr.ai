@@ -30,7 +30,7 @@ function Inner({ cat, tools, allCategories, faqs }: { cat: Category; tools: Tool
         <Nav
           onHome={() => router.push('/')}
           showSearch={true}
-          onWizard={(q) => router.push(`/?q=${encodeURIComponent(q)}`)}
+          onSearch={(q: string) => router.push(`/?q=${encodeURIComponent(q)}`)}
           onCategory={handleCategory}
         />
         <CategoryPage

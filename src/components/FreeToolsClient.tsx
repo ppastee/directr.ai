@@ -47,7 +47,7 @@ export default function FreeToolsClient({ tools, faqs }: Props) {
         <Nav
           onHome={() => router.push('/')}
           showSearch={true}
-          onWizard={(q) => router.push(`/?q=${encodeURIComponent(q)}`)}
+          onSearch={(q: string) => router.push(`/?q=${encodeURIComponent(q)}`)}
           onCategory={handleCategory}
         />
         <div className="page">

@@ -262,7 +262,7 @@ export default function ComparisonRoute({ pair, vs, toolA, toolB }: Props) {
     <>
       <AnimatedBg />
       <div style={{ position: 'relative', zIndex: 1 }}>
-        <Nav onHome={() => { window.location.href = '/' }} showSearch={false} onWizard={() => {}} onCategory={() => {}} currentQuery="" />
+        <Nav onHome={() => { window.location.href = '/' }} showSearch={false} onSearch={() => {}} onCategory={() => {}} currentQuery="" />
         <div style={{ maxWidth: 860, margin: '0 auto', padding: '2rem 1.5rem' }}>
           <Inner vs={vs} toolA={toolA} toolB={toolB} />
         </div>
