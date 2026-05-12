@@ -1857,9 +1857,10 @@ thead .compare-col-hero { border-bottom: 2px solid var(--accent); }
     padding: 1rem;
     min-width: 0;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
-  /* Reserve space for two lines of name + count so every card lands at the
-     same height regardless of how the category name wraps. */
   .finder-cat-name {
     white-space: normal;
     display: -webkit-box;
@@ -1867,7 +1868,6 @@ thead .compare-col-hero { border-bottom: 2px solid var(--accent); }
     -webkit-box-orient: vertical;
     overflow: hidden;
     line-height: 1.2;
-    min-height: 2.4em;
   }
   .finder-tool-list { display: none; }
   .finder-card-header { margin-bottom: 0; gap: 0.6rem; align-items: center; }

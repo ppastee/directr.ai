@@ -148,24 +148,26 @@ All themes define: `--bg --bg2 --bg3 --fg --fg2 --fg3 --muted --accent --accent2
 
 **TOOLS** defined first, then **CATEGORIES** derived — `count` is always `TOOLS[id].length`, never hardcoded.
 
-**Current tool counts (verified May 2026):**
-- animation: 14 tools
-- image: 11 tools
-- writing: 8 tools
-- coding: 12 tools
+**Current tool counts (live from Supabase, 2026-05-12):**
+- coding: 17 tools
+- animation: 15 tools
+- image: 12 tools
+- ai-agents: 11 tools
+- chat: 11 tools
+- 3d: 9 tools — note: key is `'3d'` (quoted) in TOOLS object, not `3d`
 - audio: 9 tools
-- chat: 10 tools
-- 3d: 8 tools — note: key is `'3d'` (quoted) in TOOLS object, not `3d`
+- marketing: 9 tools
 - productivity: 9 tools
-- marketing: 8 tools
 - finance: 8 tools
-- accounting: 6 tools
-- legal: 7 tools
 - hr: 8 tools
+- writing: 8 tools
 - construction: 7 tools
-- data: 7 tools
 - education: 7 tools
-- **Total: 139 tools across 16 categories**
+- legal: 7 tools
+- accounting: 6 tools
+- data: 6 tools
+- **Total: 159 tools across 17 categories**
+- Re-run anytime with `npx tsx scripts/count-tools.ts`
 
 **Removed:** Phind (shut down Jan 2026), Luma Genie (sunset Jan 2026)
 
@@ -274,7 +276,7 @@ Full SEO strategy and session roadmap lives in **`SEO.md`** — read that file b
 1. **Session 3 SEO** — See SEO.md for full details
 2. **Persistent theme** — save to `localStorage`
 3. **"List a Tool" API** — wire ListToolModal form to POST /api/submit-tool
-4. **More tools** — expand beyond current set; all 16 categories now populated
+4. **More tools** — expand beyond current set; all 17 categories now populated
 
 ---
 
