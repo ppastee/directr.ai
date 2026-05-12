@@ -119,6 +119,7 @@ const CATEGORY_CUES: Record<string, string[]> = {
   construction: ['site','building','blueprint','blueprints','rfi','bim','construction','crane','takeoff'],
   data:         ['data','dashboard','analytics','sql','spreadsheet','csv','chart','charts','dataset'],
   education:    ['learn','learning','tutor','tutoring','study','student','studying','course','quiz','flashcard'],
+  'ai-agents':  ['agent','agents','agentic','autonomous','sandbox','sandboxed','sandboxing','self-hosted','selfhosted','runtime','daemon','always-on','background','crawler','crawlers','bot','bots','mcp'],
 }
 
 // Word-boundary match — prevents "sure" from hitting "ensure", etc.
