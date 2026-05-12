@@ -29,7 +29,7 @@ interface HomePageProps {
   categories: Category[]
 }
 
-const PILLS = ['Animate a video', 'Generate images', 'Write copy', 'Build a chatbot', 'Create music']
+const PILLS = ['Animate a video', 'Generate images', 'Write copy', 'Build an AI agent', 'Create music']
 
 const HEADLINES = [
   { text: '"you can go any direction you choose"', quoted: true },
