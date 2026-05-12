@@ -84,6 +84,17 @@ const PHRASE_INTENT: Record<string, string[]> = {
   'candidate sourcing':   ['hr'],
   'video interview':      ['hr'],
   'video interviews':     ['hr'],
+  // Generalist / planning phrases — push the big chatbots forward when the
+  // user is asking for the kind of thinking work an LLM does well.
+  'plan a trip':          ['chat'],
+  'plan my trip':         ['chat'],
+  'organise a trip':      ['chat'],
+  'organize a trip':      ['chat'],
+  'europe trip':          ['chat'],
+  'travel itinerary':     ['chat'],
+  'help me decide':       ['chat'],
+  'help me choose':       ['chat'],
+  'figure out':           ['chat'],
 }
 
 // Single-word category cues used to bias scoring when a detailed query
@@ -91,10 +102,13 @@ const PHRASE_INTENT: Record<string, string[]> = {
 const CATEGORY_CUES: Record<string, string[]> = {
   animation:    ['video','animate','animation','reels','tiktok','youtube','short','clip','footage','film','movie'],
   image:        ['image','photo','picture','illustration','poster','logo','icon','visual','art','artwork','headshot'],
-  writing:      ['write','copy','blog','article','essay','script','story','novel','headline','tagline','newsletter'],
+  // Note: "copy" intentionally NOT here — too ambiguous (copy as verb = clone, eg.
+  // "copy a website UI"). Writing-copy queries still cue via phrases like
+  // "marketing copy", "blog post", or via "write" / "copywriter".
+  writing:      ['write','copywriter','copywriting','blog','article','essay','script','story','novel','headline','tagline','newsletter'],
   coding:       ['code','coding','program','developer','dev','api','app','apps','application','website','site','frontend','backend','script','build','building','builder','builders','tracker','tracking','mobile'],
   audio:        ['voice','audio','music','song','podcast','transcribe','transcript','dub','dubbing','tts'],
-  chat:         ['chat','assistant','answer','answers','question','questions','reasoning','research','summarize','summary'],
+  chat:         ['chat','assistant','answer','answers','question','questions','reasoning','research','summarize','summary','plan','planning','organise','organize','organising','organizing','arrange','figure','decide','choose','brainstorm','explain','advice','recommend','suggest','help','trip','travel','vacation','itinerary','europe','asia','america','africa','japan','paris','london','tokyo'],
   '3d':         ['3d','model','mesh','character','environment','asset','sculpt','rig','rigged','texture'],
   productivity: ['notes','meeting','meetings','schedule','calendar','task','tasks','workflow','automation','presentation'],
   marketing:    ['ad','ads','campaign','seo','social','brand','marketing','outreach'],
@@ -294,6 +308,26 @@ export function scoreToolsHybrid(
   for (const [catId, centroid] of Object.entries(centroids)) {
     catSimById[catId] = Math.max(0, cosineSim(queryEmbedding, centroid))
   }
+
+  // Generalist boost: when the query has no strong specialist signal
+  // (no keyword category cues fired), lift the chat category alignment
+  // up to the leading category. Generalist LLMs (ChatGPT, Claude, Gemini,
+  // Perplexity, etc.) handle planning / advice / "help me organise…"
+  // queries well — but their embeddings emphasise reasoning and research,
+  // so they often miss the candidate pool on travel/planning queries
+  // even though they're the right answer. This keeps them in contention.
+  const { categoryBias } = extractSignals(query)
+  const totalKeywordBias = Object.values(categoryBias).reduce((a, b) => a + b, 0)
+  if (totalKeywordBias === 0 && catSimById['chat'] != null) {
+    const otherMax = Math.max(
+      0,
+      ...Object.entries(catSimById)
+        .filter(([id]) => id !== 'chat')
+        .map(([, v]) => v),
+    )
+    catSimById['chat'] = Math.max(catSimById['chat'], otherMax)
+  }
+
   const catSimValues = Object.values(catSimById)
   const catSimMax = catSimValues.length ? Math.max(...catSimValues) : 1
   const catSimMin = catSimValues.length ? Math.min(...catSimValues) : 0
@@ -350,6 +384,15 @@ export function scoreTools(query: string, tools: ToolsMap, categories: Category[
   const { words, phrases, categoryBias } = extractSignals(q)
   if (!words.length && !phrases.length) return []
 
+  // Multi-word task queries describe a *task*, not a tool name. When the
+  // user types 3+ meaningful words, a non-exact name substring match
+  // ("copy" inside "Copy.ai" for query "copy a websites UI") is much
+  // weaker evidence than a tagline/tag/category hit. Down-weight it so
+  // task semantics dominate over coincidental name overlap.
+  const taskyQuery = words.length >= 3
+  const startsWithBoost = taskyQuery ? 30 : 80
+  const includesBoost   = taskyQuery ? 15 : 50
+
   const results: Result[] = []
 
   for (const [catId, catTools] of Object.entries(tools)) {
@@ -371,14 +414,15 @@ export function scoreTools(query: string, tools: ToolsMap, categories: Category[
       }
 
       // Word hits — capped per word so common words can't dominate.
-      // Names use substring matching (intentional: "gpt" finds "ChatGPT").
+      // Names use substring matching (intentional: "gpt" finds "ChatGPT")
+      // but the substring boost is reduced on multi-word task queries.
       // All other fields use word-boundary matching to prevent false hits
       // like "sure" matching inside "ensure".
       for (const w of words) {
         let wordScore = 0
         if (name === w)                wordScore += 120
-        else if (name.startsWith(w))   wordScore += 80
-        else if (name.includes(w))     wordScore += 50
+        else if (name.startsWith(w))   wordScore += startsWithBoost
+        else if (name.includes(w))     wordScore += includesBoost
         if (wordInText(w, tagline))    wordScore += 30
         if (wordInText(w, tags))       wordScore += 35
         if (wordInText(w, desc))       wordScore += 10
@@ -390,6 +434,13 @@ export function scoreTools(query: string, tools: ToolsMap, categories: Category[
       // tool by a multiplier so detailed queries don't get overwhelmed by
       // off-category coincidental keyword hits.
       if (catCue > 0 && score > 0) score *= (1 + catCue * 0.30)
+      // When the category context is strong (the query expressed clear
+      // intent for this category) but the tool's text doesn't happen to
+      // mention any of the exact query words, give the tool a baseline so
+      // generalists still reach the candidate pool. This is how the big
+      // LLMs surface for "organise a europe trip" — the chat cue is strong
+      // even though "europe" and "trip" aren't in any chat tool's text.
+      else if (catCue >= 2 && score === 0) score = catCue * 12
 
       // Require a minimum score to filter out pure coincidental description
       // matches (score 10 each). A meaningful hit should reach a tagline (30),

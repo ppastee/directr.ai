@@ -127,6 +127,59 @@ const BASE_VOCAB: string[] = [
   'thing','things','stuff','idea','ideas','project','projects','goal',
   'plan','plans','need','needs','want','wants','help','helps','show',
   'shows','tell','tells','use','using','used','find','finds','found',
+  // British/-ise verbs and their forms — frequently typed by AU/UK/NZ
+  // users. Without these "organise", "analyse", "summarise" etc. get
+  // "corrected" to lookalike tool words like "organic".
+  'organise','organised','organising','organisation','organisations',
+  'organize','organized','organizing','organization','organizations',
+  'analyse','analysed','analysing',
+  'analyze','analyzed','analyzing',
+  'summarise','summarised','summarising',
+  'summarize','summarized','summarizing',
+  'recognise','recognised','recognising',
+  'recognize','recognized','recognizing',
+  'realise','realised','realising',
+  'realize','realized','realizing',
+  'prioritise','prioritised','prioritising',
+  'prioritize','prioritized','prioritizing',
+  'optimise','optimised','optimising',
+  'optimize','optimized','optimizing',
+  'customise','customised','customising',
+  'customize','customized','customizing',
+  'personalise','personalised','personalising',
+  'personalize','personalized','personalizing',
+  'memorise','memorize','itemise','itemize','utilise','utilize',
+  'finalise','finalize','minimise','minimize','maximise','maximize',
+  'advertise','exercise','advise','revise','supervise',
+  // Travel / planning vocabulary — common queries that shouldn't be
+  // pulled into the AI-tool vocabulary as typos.
+  'trip','trips','travel','travelling','traveling','traveler','traveller',
+  'vacation','vacations','holiday','holidays','journey','journeys',
+  'itinerary','itineraries','flight','flights','hotel','hotels',
+  'restaurant','restaurants','airbnb','airline','airlines','airport',
+  'route','routes','destination','destinations','sightseeing','packing',
+  'tour','tours','tourist','tourism','passport','visa','visas',
+  'europe','european','asia','asian','america','american','africa','african',
+  'australia','australian','japan','japanese','china','chinese','india','indian',
+  'france','french','germany','german','italy','italian','spain','spanish',
+  'paris','london','tokyo','rome','berlin','madrid','sydney','york','vegas',
+  'beach','beaches','mountain','mountains','city','cities','town','towns',
+  // General task / planning words — generalist chatbots handle these.
+  'arrange','arranging','coordinate','coordinating','prepare','preparing',
+  'decide','deciding','choose','choosing','pick','picking',
+  'figure','figuring','manage','managing','sort','sorting',
+  'compile','compiling','organise','organize',
+  'brainstorm','brainstorming','outline','outlining',
+  'recommend','recommends','suggesting','suggest','suggests',
+  'advice','recommendation','recommendations','suggestion','suggestions',
+  'budget','budgets','budgeting','expense','expenses','cost','costs',
+  'date','dates','day','days','week','weeks','month','months','year','years',
+  'morning','afternoon','evening','night','weekend','weekday',
+  'friend','friends','family','partner','colleague','colleagues',
+  'list','lists','checklist','checklists','step','steps','option','options',
+  'question','questions','answer','answers','explain','explaining',
+  'teach','teaching','learn','learns','understand','understanding',
+  'compare','comparing','review','reviewing','evaluate','evaluating',
 ]
 
 export interface SpellCorrection {
@@ -168,13 +221,13 @@ export function buildVocabulary(tools: ToolsMap, categories: Category[]): { set:
 }
 
 // Max edit distance allowed based on word length.
-// Tightened to avoid coercing common English words ("hyper" → "paper") that
-// happen not to be in the tools-domain vocabulary. Distance 2 is too permissive
-// for short words — half the characters can change, which crosses semantic lines.
+// Single-character typos only at every length — a 2-edit distance is too
+// permissive: real English words frequently sit 2 edits from a tool-domain
+// vocabulary word ("organise" → "organic", "europe" → ...), and the half-cost
+// adjacency rule already lets two adjacent-key fingerslips through at cost 1.0.
 function maxDist(len: number): number {
-  if (len <= 3) return 0  // never correct: too many valid short words
-  if (len <= 6) return 1  // single-character typos only
-  return 2                // longer words can absorb a 2-edit fix
+  if (len <= 4) return 0  // never correct: too many valid short words
+  return 1                // single-character typos only at any length
 }
 
 // Find the best vocabulary match for a single misspelled token.
