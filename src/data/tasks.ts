@@ -166,7 +166,7 @@ export const TASKS: Task[] = [
     label: 'Data Analysis',
     h1: 'Best AI Tools for Data Analysis in 2026',
     intro: 'The best AI tools for data analysis in 2026 are Julius, Tableau, Power BI, and Hex. Julius allows natural language analysis of CSV and spreadsheet data — ask questions like "what is the trend in sales by region?" and get charts and statistical summaries instantly. Tableau and Power BI are the leading business intelligence platforms, both enhanced with AI querying and automated insight generation. Hex is the best AI-native notebook for data scientists working in SQL and Python. Polymer and Rows bring AI analysis to spreadsheet users without requiring code or BI expertise.',
-    toolIds: [1401, 1402, 1403, 1404, 1405, 1406, 1407, 502],
+    toolIds: [1401, 1402, 1403, 1404, 1405, 1407, 502],
     steps: [
       { name: 'Choose your analysis tool', text: 'Use Julius or Polymer for natural language analysis of spreadsheet data without code. Use Hex for collaborative notebook analysis with SQL and Python. Use Tableau or Power BI for interactive dashboards and enterprise BI. Use Obviously AI for no-code predictive modelling.' },
       { name: 'Upload or connect your data', text: 'Upload a CSV, Excel file, or connect to your database or data warehouse. Most tools support direct connections to Google Sheets, PostgreSQL, BigQuery, Snowflake, and other common data sources.' },

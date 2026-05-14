@@ -1933,7 +1933,7 @@ export const TOOLS: Record<string, Tool[]> = {
       apiAccess: false, outputRes: null, watermark: true,
     },
     {
-      id: 1406,
+      id: 809,
       name: 'Obviously AI',
       emoji: '🤖',
       logoDomain: 'obviously.ai',
@@ -2084,6 +2084,7 @@ const RAW_CATEGORIES = [
   { id: 'data',         icon: '📊', name: 'Data & Analytics'  },
   { id: 'education',    icon: '🎓', name: 'Education & Training' },
   { id: 'ai-agents',    icon: '🤖', name: 'AI Agents'         },
+  { id: 'hardware',     icon: '🔌', name: 'Hardware & Wearables' },
 ]
 
 export const CATEGORIES: Category[] = RAW_CATEGORIES.map((c) => ({

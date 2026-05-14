@@ -631,10 +631,10 @@ export const EXAMPLES: Record<number, Example[]> = {
     { title: 'CSV insights surfaced instantly', image: ph(1405, 1) },
     { title: 'No-code filter and chart built', image: ph(1405, 2) },
   ],
-  1406: [ // Obviously AI
-    { title: 'Churn model trained without code', image: ph(1406, 0) },
-    { title: 'Sales forecast generated', image: ph(1406, 1) },
-    { title: 'Lead scoring model deployed', image: ph(1406, 2) },
+  809: [ // Zams (formerly Obviously AI)
+    { title: 'Churn model trained without code', image: ph(809, 0) },
+    { title: 'Sales forecast generated', image: ph(809, 1) },
+    { title: 'Lead scoring model deployed', image: ph(809, 2) },
   ],
   1407: [ // Rows
     { title: 'Stripe data pulled into spreadsheet', image: ph(1407, 0) },

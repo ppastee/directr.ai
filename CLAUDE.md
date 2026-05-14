@@ -148,16 +148,16 @@ All themes define: `--bg --bg2 --bg3 --fg --fg2 --fg3 --muted --accent --accent2
 
 **TOOLS** defined first, then **CATEGORIES** derived — `count` is always `TOOLS[id].length`, never hardcoded.
 
-**Current tool counts (live from Supabase, 2026-05-12):**
-- coding: 17 tools
-- animation: 15 tools
+**Current tool counts (live from Supabase, 2026-05-14):**
+- coding: 19 tools
+- ai-agents: 16 tools
+- animation: 16 tools
 - image: 12 tools
-- ai-agents: 11 tools
 - chat: 11 tools
+- marketing: 10 tools
+- productivity: 10 tools
 - 3d: 9 tools — note: key is `'3d'` (quoted) in TOOLS object, not `3d`
 - audio: 9 tools
-- marketing: 9 tools
-- productivity: 9 tools
 - finance: 8 tools
 - hr: 8 tools
 - writing: 8 tools
@@ -166,7 +166,8 @@ All themes define: `--bg --bg2 --bg3 --fg --fg2 --fg3 --muted --accent --accent2
 - legal: 7 tools
 - accounting: 6 tools
 - data: 6 tools
-- **Total: 159 tools across 17 categories**
+- hardware: 1 tool
+- **Total: 170 tools across 18 categories**
 - Re-run anytime with `npx tsx scripts/count-tools.ts`
 
 **Removed:** Phind (shut down Jan 2026), Luma Genie (sunset Jan 2026)
@@ -237,12 +238,15 @@ All icons: `viewBox="0 0 24 24"` · `strokeWidth="1.75"` · stroke-based · `fil
 **Nothing else to touch** — search, category grid, filters, sort, animations are all generic.
 
 ### ID Convention
-- animation: 1–14 · image: 101–111 · writing: 201–208 · coding: 301–
-- audio: 401–409 · chat: 501–511 · 3d: 601–609 · productivity: 701–709
-- marketing: 801–808 · finance: 901–908 · accounting: 1001–1006
+- animation: 1–16 · image: 101–112 · writing: 201–208 · coding: 301–319
+- audio: 401–409 · chat: 501–512 · 3d: 601–610 · productivity: 701–710
+- marketing: 801–810 · finance: 901–908 · accounting: 1001–1006
 - legal: 1101–1107 · hr: 1201–1208 · construction: 1301–1307
-- data: 1401–1407 · education: 1501–1507 · ai-agents: 1601–
-- Next new category starts at: **1701–**
+- data: 1401–1407 · education: 1501–1507 · ai-agents: 1601–1616
+- hardware: 1701–
+- Next new category starts at: **1801–**
+
+Blocks are extended past the original allocation as categories grow. Keep tools inside their category's block — `npx tsx scripts/count-tools.ts` against Supabase will reveal any off-block IDs (Zams was the last such case, fixed 2026-05-14: 1406 → 809).
 
 ---
 

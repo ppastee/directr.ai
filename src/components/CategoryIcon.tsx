@@ -226,6 +226,32 @@ const icons: Record<string, (props: IconProps) => React.ReactElement> = {
       <rect x="14" y="14" width="3" height="1.5" rx="0.75" fill="#bae6fd"/>
     </svg>
   ),
+
+  hardware: ({ size = 28, className }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+      {/* Chip body */}
+      <rect x="5" y="5" width="14" height="14" rx="1.5" fill="#475569"/>
+      {/* Inner die */}
+      <rect x="8" y="8" width="8" height="8" rx="0.75" fill="#0f172a"/>
+      <rect x="9.5" y="9.5" width="5" height="5" rx="0.5" fill="#22d3ee"/>
+      {/* Pins — top */}
+      <rect x="7" y="2" width="1.5" height="3" rx="0.4" fill="#94a3b8"/>
+      <rect x="11.25" y="2" width="1.5" height="3" rx="0.4" fill="#94a3b8"/>
+      <rect x="15.5" y="2" width="1.5" height="3" rx="0.4" fill="#94a3b8"/>
+      {/* Pins — bottom */}
+      <rect x="7" y="19" width="1.5" height="3" rx="0.4" fill="#94a3b8"/>
+      <rect x="11.25" y="19" width="1.5" height="3" rx="0.4" fill="#94a3b8"/>
+      <rect x="15.5" y="19" width="1.5" height="3" rx="0.4" fill="#94a3b8"/>
+      {/* Pins — left */}
+      <rect x="2" y="7" width="3" height="1.5" rx="0.4" fill="#94a3b8"/>
+      <rect x="2" y="11.25" width="3" height="1.5" rx="0.4" fill="#94a3b8"/>
+      <rect x="2" y="15.5" width="3" height="1.5" rx="0.4" fill="#94a3b8"/>
+      {/* Pins — right */}
+      <rect x="19" y="7" width="3" height="1.5" rx="0.4" fill="#94a3b8"/>
+      <rect x="19" y="11.25" width="3" height="1.5" rx="0.4" fill="#94a3b8"/>
+      <rect x="19" y="15.5" width="3" height="1.5" rx="0.4" fill="#94a3b8"/>
+    </svg>
+  ),
 }
 
 interface CategoryIconProps {

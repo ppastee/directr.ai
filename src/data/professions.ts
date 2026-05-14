@@ -195,7 +195,7 @@ export const PROFESSIONS: Profession[] = [
     label: 'Data Scientists',
     h1: 'Best AI Tools for Data Scientists in 2026',
     intro: 'The best AI tools for data scientists in 2026 are Julius, Hex, Claude, and Cursor. Julius allows natural language analysis of CSV and spreadsheet data — generating charts, running statistical tests, and explaining findings in plain English. Hex is the leading AI-native notebook environment, combining SQL, Python, and AI assistance in a collaborative interface. Claude and ChatGPT write, debug, and explain data science code faster than any other approach. Cursor is the best AI code editor for Python-heavy data science workflows. Obviously AI and Polymer make ML accessible without code.',
-    toolIds: [1401, 1404, 1406, 1407, 502, 302, 501, 1402],
+    toolIds: [1401, 1404, 809, 1407, 502, 302, 501, 1402],
     faqs: [
       { q: 'What are the best AI tools for data scientists?', a: 'The top AI tools for data scientists in 2026 are Julius (natural language data analysis), Hex (AI-native notebooks), Cursor (AI code editor), Claude and ChatGPT (code assistance and explanation), Tableau and Power BI (AI-enhanced visualisation), and Obviously AI (no-code ML). The choice depends on whether you need analysis, model building, or visualisation.' },
       { q: 'Can AI tools replace data scientists?', a: 'No. AI tools automate data cleaning, exploratory analysis, and routine model building — but data science value comes from framing the right questions, understanding domain context, interpreting results, and making decisions under uncertainty. These remain human skills. AI makes data scientists significantly more productive, not redundant.' },
